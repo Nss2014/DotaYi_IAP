@@ -1,0 +1,521 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		07AC68DD1CC0A2820030B298 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 07AC68DC1CC0A2810030B298 /* main.m */; };
+		07AC68E01CC0A2820030B298 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 07AC68DF1CC0A2820030B298 /* AppDelegate.m */; };
+		07AC68E31CC0A2820030B298 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07AC68E21CC0A2820030B298 /* ViewController.m */; };
+		07AC68E61CC0A2820030B298 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07AC68E41CC0A2820030B298 /* Main.storyboard */; };
+		07AC68E81CC0A2820030B298 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07AC68E71CC0A2820030B298 /* Assets.xcassets */; };
+		07AC68EB1CC0A2820030B298 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07AC68E91CC0A2820030B298 /* LaunchScreen.storyboard */; };
+		07AC68F61CC0A2820030B298 /* DotaYi_IAPTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 07AC68F51CC0A2820030B298 /* DotaYi_IAPTests.m */; };
+		07AC69011CC0A2820030B298 /* DotaYi_IAPUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 07AC69001CC0A2820030B298 /* DotaYi_IAPUITests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		07AC68F21CC0A2820030B298 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 07AC68D01CC0A2810030B298 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 07AC68D71CC0A2810030B298;
+			remoteInfo = DotaYi_IAP;
+		};
+		07AC68FD1CC0A2820030B298 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 07AC68D01CC0A2810030B298 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 07AC68D71CC0A2810030B298;
+			remoteInfo = DotaYi_IAP;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		07AC68D81CC0A2810030B298 /* DotaYi_IAP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DotaYi_IAP.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		07AC68DC1CC0A2810030B298 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		07AC68DE1CC0A2820030B298 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		07AC68DF1CC0A2820030B298 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		07AC68E11CC0A2820030B298 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		07AC68E21CC0A2820030B298 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		07AC68E51CC0A2820030B298 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		07AC68E71CC0A2820030B298 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		07AC68EA1CC0A2820030B298 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		07AC68EC1CC0A2820030B298 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		07AC68F11CC0A2820030B298 /* DotaYi_IAPTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DotaYi_IAPTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		07AC68F51CC0A2820030B298 /* DotaYi_IAPTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DotaYi_IAPTests.m; sourceTree = "<group>"; };
+		07AC68F71CC0A2820030B298 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		07AC68FC1CC0A2820030B298 /* DotaYi_IAPUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DotaYi_IAPUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		07AC69001CC0A2820030B298 /* DotaYi_IAPUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DotaYi_IAPUITests.m; sourceTree = "<group>"; };
+		07AC69021CC0A2820030B298 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		07AC68D51CC0A2810030B298 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		07AC68EE1CC0A2820030B298 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		07AC68F91CC0A2820030B298 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		07AC68CF1CC0A2810030B298 = {
+			isa = PBXGroup;
+			children = (
+				07AC68DA1CC0A2810030B298 /* DotaYi_IAP */,
+				07AC68F41CC0A2820030B298 /* DotaYi_IAPTests */,
+				07AC68FF1CC0A2820030B298 /* DotaYi_IAPUITests */,
+				07AC68D91CC0A2810030B298 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		07AC68D91CC0A2810030B298 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				07AC68D81CC0A2810030B298 /* DotaYi_IAP.app */,
+				07AC68F11CC0A2820030B298 /* DotaYi_IAPTests.xctest */,
+				07AC68FC1CC0A2820030B298 /* DotaYi_IAPUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		07AC68DA1CC0A2810030B298 /* DotaYi_IAP */ = {
+			isa = PBXGroup;
+			children = (
+				07AC68DE1CC0A2820030B298 /* AppDelegate.h */,
+				07AC68DF1CC0A2820030B298 /* AppDelegate.m */,
+				07AC68E11CC0A2820030B298 /* ViewController.h */,
+				07AC68E21CC0A2820030B298 /* ViewController.m */,
+				07AC68E41CC0A2820030B298 /* Main.storyboard */,
+				07AC68E71CC0A2820030B298 /* Assets.xcassets */,
+				07AC68E91CC0A2820030B298 /* LaunchScreen.storyboard */,
+				07AC68EC1CC0A2820030B298 /* Info.plist */,
+				07AC68DB1CC0A2810030B298 /* Supporting Files */,
+			);
+			path = DotaYi_IAP;
+			sourceTree = "<group>";
+		};
+		07AC68DB1CC0A2810030B298 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				07AC68DC1CC0A2810030B298 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		07AC68F41CC0A2820030B298 /* DotaYi_IAPTests */ = {
+			isa = PBXGroup;
+			children = (
+				07AC68F51CC0A2820030B298 /* DotaYi_IAPTests.m */,
+				07AC68F71CC0A2820030B298 /* Info.plist */,
+			);
+			path = DotaYi_IAPTests;
+			sourceTree = "<group>";
+		};
+		07AC68FF1CC0A2820030B298 /* DotaYi_IAPUITests */ = {
+			isa = PBXGroup;
+			children = (
+				07AC69001CC0A2820030B298 /* DotaYi_IAPUITests.m */,
+				07AC69021CC0A2820030B298 /* Info.plist */,
+			);
+			path = DotaYi_IAPUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		07AC68D71CC0A2810030B298 /* DotaYi_IAP */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 07AC69051CC0A2820030B298 /* Build configuration list for PBXNativeTarget "DotaYi_IAP" */;
+			buildPhases = (
+				07AC68D41CC0A2810030B298 /* Sources */,
+				07AC68D51CC0A2810030B298 /* Frameworks */,
+				07AC68D61CC0A2810030B298 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DotaYi_IAP;
+			productName = DotaYi_IAP;
+			productReference = 07AC68D81CC0A2810030B298 /* DotaYi_IAP.app */;
+			productType = "com.apple.product-type.application";
+		};
+		07AC68F01CC0A2820030B298 /* DotaYi_IAPTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 07AC69081CC0A2820030B298 /* Build configuration list for PBXNativeTarget "DotaYi_IAPTests" */;
+			buildPhases = (
+				07AC68ED1CC0A2820030B298 /* Sources */,
+				07AC68EE1CC0A2820030B298 /* Frameworks */,
+				07AC68EF1CC0A2820030B298 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				07AC68F31CC0A2820030B298 /* PBXTargetDependency */,
+			);
+			name = DotaYi_IAPTests;
+			productName = DotaYi_IAPTests;
+			productReference = 07AC68F11CC0A2820030B298 /* DotaYi_IAPTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		07AC68FB1CC0A2820030B298 /* DotaYi_IAPUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 07AC690B1CC0A2820030B298 /* Build configuration list for PBXNativeTarget "DotaYi_IAPUITests" */;
+			buildPhases = (
+				07AC68F81CC0A2820030B298 /* Sources */,
+				07AC68F91CC0A2820030B298 /* Frameworks */,
+				07AC68FA1CC0A2820030B298 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				07AC68FE1CC0A2820030B298 /* PBXTargetDependency */,
+			);
+			name = DotaYi_IAPUITests;
+			productName = DotaYi_IAPUITests;
+			productReference = 07AC68FC1CC0A2820030B298 /* DotaYi_IAPUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		07AC68D01CC0A2810030B298 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = "牛松松";
+				TargetAttributes = {
+					07AC68D71CC0A2810030B298 = {
+						CreatedOnToolsVersion = 7.3;
+					};
+					07AC68F01CC0A2820030B298 = {
+						CreatedOnToolsVersion = 7.3;
+						TestTargetID = 07AC68D71CC0A2810030B298;
+					};
+					07AC68FB1CC0A2820030B298 = {
+						CreatedOnToolsVersion = 7.3;
+						TestTargetID = 07AC68D71CC0A2810030B298;
+					};
+				};
+			};
+			buildConfigurationList = 07AC68D31CC0A2810030B298 /* Build configuration list for PBXProject "DotaYi_IAP" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 07AC68CF1CC0A2810030B298;
+			productRefGroup = 07AC68D91CC0A2810030B298 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				07AC68D71CC0A2810030B298 /* DotaYi_IAP */,
+				07AC68F01CC0A2820030B298 /* DotaYi_IAPTests */,
+				07AC68FB1CC0A2820030B298 /* DotaYi_IAPUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		07AC68D61CC0A2810030B298 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				07AC68EB1CC0A2820030B298 /* LaunchScreen.storyboard in Resources */,
+				07AC68E81CC0A2820030B298 /* Assets.xcassets in Resources */,
+				07AC68E61CC0A2820030B298 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		07AC68EF1CC0A2820030B298 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		07AC68FA1CC0A2820030B298 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		07AC68D41CC0A2810030B298 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				07AC68E31CC0A2820030B298 /* ViewController.m in Sources */,
+				07AC68E01CC0A2820030B298 /* AppDelegate.m in Sources */,
+				07AC68DD1CC0A2820030B298 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		07AC68ED1CC0A2820030B298 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				07AC68F61CC0A2820030B298 /* DotaYi_IAPTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		07AC68F81CC0A2820030B298 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				07AC69011CC0A2820030B298 /* DotaYi_IAPUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		07AC68F31CC0A2820030B298 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 07AC68D71CC0A2810030B298 /* DotaYi_IAP */;
+			targetProxy = 07AC68F21CC0A2820030B298 /* PBXContainerItemProxy */;
+		};
+		07AC68FE1CC0A2820030B298 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 07AC68D71CC0A2810030B298 /* DotaYi_IAP */;
+			targetProxy = 07AC68FD1CC0A2820030B298 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		07AC68E41CC0A2820030B298 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				07AC68E51CC0A2820030B298 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		07AC68E91CC0A2820030B298 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				07AC68EA1CC0A2820030B298 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		07AC69031CC0A2820030B298 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		07AC69041CC0A2820030B298 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		07AC69061CC0A2820030B298 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = DotaYi_IAP/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.huaer.dty.DotaYi-IAP";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		07AC69071CC0A2820030B298 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = DotaYi_IAP/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.huaer.dty.DotaYi-IAP";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		07AC69091CC0A2820030B298 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = DotaYi_IAPTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.huaer.dty.DotaYi-IAPTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DotaYi_IAP.app/DotaYi_IAP";
+			};
+			name = Debug;
+		};
+		07AC690A1CC0A2820030B298 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = DotaYi_IAPTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.huaer.dty.DotaYi-IAPTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DotaYi_IAP.app/DotaYi_IAP";
+			};
+			name = Release;
+		};
+		07AC690C1CC0A2820030B298 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = DotaYi_IAPUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.huaer.dty.DotaYi-IAPUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = DotaYi_IAP;
+			};
+			name = Debug;
+		};
+		07AC690D1CC0A2820030B298 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = DotaYi_IAPUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.huaer.dty.DotaYi-IAPUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = DotaYi_IAP;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		07AC68D31CC0A2810030B298 /* Build configuration list for PBXProject "DotaYi_IAP" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				07AC69031CC0A2820030B298 /* Debug */,
+				07AC69041CC0A2820030B298 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		07AC69051CC0A2820030B298 /* Build configuration list for PBXNativeTarget "DotaYi_IAP" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				07AC69061CC0A2820030B298 /* Debug */,
+				07AC69071CC0A2820030B298 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		07AC69081CC0A2820030B298 /* Build configuration list for PBXNativeTarget "DotaYi_IAPTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				07AC69091CC0A2820030B298 /* Debug */,
+				07AC690A1CC0A2820030B298 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		07AC690B1CC0A2820030B298 /* Build configuration list for PBXNativeTarget "DotaYi_IAPUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				07AC690C1CC0A2820030B298 /* Debug */,
+				07AC690D1CC0A2820030B298 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 07AC68D01CC0A2810030B298 /* Project object */;
+}
