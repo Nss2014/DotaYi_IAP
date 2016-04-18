@@ -1,0 +1,225 @@
+//
+//  XQNewFeatureVC.m
+//  XQNewFeatureVC
+//
+//  Created by 徐强 on 15/10/13.
+//  Copyright © 2015年 xuqiang. All rights reserved.
+//
+
+#import "XQNewFeatureVC.h"
+
+
+#define screenW  self.view.bounds.size.width
+#define screenH  self.view.bounds.size.height
+
+@interface XQNewFeatureVC () <UIScrollViewDelegate>
+
+@property (nonatomic, weak) UIPageControl *pageControl;
+@property (nonatomic, assign) NSInteger fromePage;
+
+@end
+
+@implementation XQNewFeatureVC
+
+- (instancetype)initWithFeatureImagesNameArray:(NSArray *)imagesNameArray{
+    
+    if (self = [super init]) {
+        self.imagesNameArray = imagesNameArray;
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithFeatureControllerArray:(NSArray *)controllersArray{
+    
+    if (self = [super init]) {
+        self.controllersArray = controllersArray;
+    }
+    
+    return self;
+}
+
+- (void)viewDidLoad {
+    
+    [super viewDidLoad];
+    
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    UIScrollView *scrollView                  = [[UIScrollView alloc] init];
+    scrollView.backgroundColor                = [UIColor whiteColor];
+    scrollView.frame                          = self.view.bounds;
+    scrollView.delegate                       = self;
+    scrollView.showsHorizontalScrollIndicator = NO;
+    scrollView.pagingEnabled                  = YES;
+    scrollView.bounces                        = NO;
+    
+    [self.view addSubview:scrollView];
+    
+    if (self.imagesNameArray.count == 0 && self.controllersArray.count == 0) {
+        UILabel *label      = [[UILabel alloc] init];
+        label.frame         = CGRectMake(0, self.view.frame.size.height/2 - 30, self.view.frame.size.width, 60);
+        label.text          = @"没有添加展示资源";
+        [scrollView addSubview:label];
+        label.textAlignment = NSTextAlignmentCenter;
+        return;
+    }
+
+    UIPageControl *pageControl           = [[UIPageControl alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 30, self.view.bounds.size.width, 30)];
+    pageControl.pageIndicatorTintColor   = WHITE_COLOR;
+    pageControl.numberOfPages            = self.imagesNameArray.count  ? self.imagesNameArray.count  : self.controllersArray.count;
+    pageControl.hidesForSinglePage       = YES;
+    pageControl.hidden                   = self.pageControlHidden;
+    pageControl.defersCurrentPageDisplay = YES;
+    pageControl.currentPageIndicatorTintColor = XLS_COLOR_MAIN_RED;
+
+    [self.view addSubview:pageControl];
+    self.pageControl                     = pageControl;
+
+    NSUInteger count                     = self.imagesNameArray.count ? self.imagesNameArray.count : self.controllersArray.count;
+    scrollView.contentSize               = CGSizeMake(screenW * count, screenH);
+
+    if (self.imagesNameArray.count) {
+        
+        for (int i = 0; i<self.imagesNameArray.count; i++) {
+            
+            NSString *imageName    = self.imagesNameArray[i];
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
+            imageView.frame        = CGRectMake(screenW * i, 0, screenW, screenH);
+            [scrollView addSubview:imageView];
+            
+            if (i == self.imagesNameArray.count - 1) {
+                if (!self.completeBtn) {
+                    UIButton *completeBtn           = [UIButton buttonWithType:UIButtonTypeCustom];
+                    completeBtn.backgroundColor     = [UIColor whiteColor];
+                    completeBtn.layer.cornerRadius  = CORNERRADIUS_BUTTON;
+                    completeBtn.layer.masksToBounds = YES;
+                    [completeBtn addTarget:self action:@selector(completeBtnClick) forControlEvents:UIControlEventTouchUpInside];
+                    [completeBtn setTitle:@"GO" forState:UIControlStateNormal];
+                    [completeBtn setTitleColor:XLS_COLOR_MAIN_RED forState:UIControlStateNormal];
+                    
+                    [completeBtn.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:18]];
+                    [completeBtn setBackgroundImage:self.completeBtnBackgroundImage?self.completeBtnBackgroundImage:nil forState:UIControlStateNormal];
+                    [completeBtn setImage:self.completeBtnImage?self.completeBtnImage:nil forState:UIControlStateNormal];
+                    
+                    self.completeBtn = completeBtn;
+                    [imageView addSubview:self.completeBtn];
+                }else{
+                    [imageView addSubview:self.completeBtn];// 这里重复添加是因为如果不这么做,在iOS9的情况下,很奇怪,并没有添加到imageView上,打断点才会出现
+                }
+                
+                
+                imageView.userInteractionEnabled = YES;
+                
+                CGSize size = self.completeBtn.bounds.size;
+                
+                if (CGSizeEqualToSize(size, CGSizeZero)) {
+                    size = CGSizeMake(self.view.frame.size.width * 0.6, 40);
+                }
+                 self.completeBtn.frame = CGRectMake(self.view.frame.size.width / 2 - size.width / 2, self.pageControl.frame.origin.y - size.height, size.width, size.height);
+                
+            }
+            else
+            {
+                imageView.userInteractionEnabled = YES;
+                
+                self.skipButton = [UIButton buttonWithType:UIButtonTypeCustom];
+                
+                self.skipButton.frame = CGRectMake(SCREEN_WIDTH - 70, 20, 50, 50);
+                
+                self.skipButton.backgroundColor = CLEAR_COLOR;
+                
+                [self.skipButton setTitle:@"跳过" forState:UIControlStateNormal];
+                
+                [self.skipButton addTarget:self action:@selector(skipBtnPressed) forControlEvents:UIControlEventTouchUpInside];
+                
+                [imageView addSubview:self.skipButton];
+            }
+            
+        }
+        
+    }else if(self.controllersArray.count){
+        
+        for (int i = 0; i<self.controllersArray.count; i++) {
+            
+            UIViewController *vc = self.controllersArray[i];
+            vc.view.frame        = CGRectMake(screenW * i, 0, screenW, screenH);
+            [scrollView addSubview:vc.view];
+        }
+    }
+    
+}
+
+-(void) skipBtnPressed
+{
+    [self completeBtnClick];
+}
+
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    
+    self.fromePage = self.pageControl.currentPage;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    
+    self.pageControl.currentPage = (scrollView.contentOffset.x + screenW/2) / screenW;
+    
+    CGFloat ratio = ((int)scrollView.contentOffset.x % (int)screenW)/screenW;
+    
+    XQNewFeatureBaseVc *currentVc = self.controllersArray[self.pageControl.currentPage];
+    
+    if (scrollView.contentOffset.x < self.pageControl.currentPage * screenW) {// 往前滑动
+        if (self.pageControl.currentPage==0) return;
+        XQNewFeatureBaseVc *toVc = self.controllersArray[self.pageControl.currentPage-1];
+        
+        [currentVc thisVcGettingIntoForegroundWithRatio:ratio];
+        [toVc thisVcGettingIntoForegroundWithRatio:1-ratio];
+    }else{
+        if (self.pageControl.currentPage+1 == self.controllersArray.count) return;
+        XQNewFeatureBaseVc *toVc = self.controllersArray[self.pageControl.currentPage+1];
+        [currentVc thisVcGettingIntoForegroundWithRatio:1-ratio];
+        [toVc thisVcGettingIntoForegroundWithRatio:ratio];
+    }
+    
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    
+        if (self.imagesNameArray.count) {
+    
+        }else if (self.controllersArray.count){
+            XQNewFeatureBaseVc *currentVc = self.controllersArray[self.pageControl.currentPage];
+            [currentVc thisVcDidEnterForeground];
+            
+            XQNewFeatureBaseVc *fromeVc = self.controllersArray[self.fromePage];
+            [fromeVc thisVcDidEnterBackground];
+            
+        }
+}
+- (void)completeBtnClick{
+    
+//    if (self.completeBlock) {
+//        self.completeBlock();
+//    }
+
+    if (self.delegate && [self.delegate respondsToSelector:@selector(fadeOutView)])
+    {
+        [self.delegate fadeOutView];
+    }
+    
+}
+- (BOOL)prefersStatusBarHidden{
+    return YES;
+}
+
+
+
+@end
+
+@implementation XQNewFeatureBaseVc
+
+- (void)thisVcDidEnterForeground{}
+- (void)thisVcDidEnterBackground{}
+- (void)thisVcGettingIntoForegroundWithRatio:(CGFloat)ratio{}
+
+@end
