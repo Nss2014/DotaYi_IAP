@@ -10,6 +10,7 @@
 #import "JJCViewController.h"
 #import "MJViewController.h"
 #import "TTViewController.h"
+#import "LoginViewController.h"
 
 @interface MeViewController ()
 
@@ -35,11 +36,15 @@
 {
     self.navigationItem.title = @"我";
     
-    [self _setUp];
+    [self addEmptyTipsViewWithTitle:@"请使用11平台账号登录" IsShowButton:YES ButtonTitle:@"请登录"];
     
-    [self setChildVC];
+    [self showEmptyTipView];
     
-    [self _baseConfigs];
+//    [self _setUp];
+//    
+//    [self setChildVC];
+//    
+//    [self _baseConfigs];
 }
 
 -(void)setViewControllers:(NSArray *)viewControllers
@@ -199,6 +204,15 @@
 -(void)dealloc
 {
     [self removeObseverForPageController:self.currentDisplayController];
+}
+
+-(void) reCallBtnPressed
+{
+    LoginViewController *loginVC = [[LoginViewController alloc] init];
+    
+    UINavigationController *loginNavController = [[UINavigationController alloc] initWithRootViewController:loginVC];
+    
+    [self presentViewController:loginNavController animated:YES completion:nil];
 }
 
 @end

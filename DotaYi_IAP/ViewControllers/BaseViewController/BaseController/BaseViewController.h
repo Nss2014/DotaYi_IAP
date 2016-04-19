@@ -85,7 +85,6 @@
 - (AppDelegate *)appDelegate;
 
 //左侧按钮点击事件
-- (void)setLeftNavTitleButton:(NSString *)Title;
 - (void) setLeftSystemButton:(NSString *) leftTitle;
 - (void) setLeftOnlyTextItem:(NSString *) leftTitle;
 - (void)leftNavBtnCallBack;

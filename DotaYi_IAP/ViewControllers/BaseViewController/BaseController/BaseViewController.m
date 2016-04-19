@@ -405,50 +405,6 @@
 
 }
 
-//左侧文字返回按钮
-- (void)setLeftNavTitleButton:(NSString *)Title
-{
-    UIButton *leftbutton=[UIButton buttonWithType:UIButtonTypeCustom];
-    leftbutton.tag = 10011;
-    NSString *deviceStr = [Tools deviceString];
-    if([deviceStr rangeOfString:@"iPad"].location != NSNotFound)
-    {
-        leftbutton.frame=CGRectMake(10,  0, 90,40);
-        
-        leftbutton.titleLabel.font = TEXT14_FONT;
-    }
-    else if (IS_IPHONE4S || IS_IPHONE5)
-    {
-        leftbutton.frame=CGRectMake(10,  20 + (height -20 - (height-20))/2 , 90, 40);
-        
-        leftbutton.titleLabel.font = TEXT14_FONT;
-    }
-    else
-    {
-        leftbutton.frame=CGRectMake(10,  20 + (height -20 - (height-20))/2 , 90, 40);
-        
-        leftbutton.titleLabel.font = TEXT16_FONT;
-    }
-    
-    //uibutton 图片大小修改为任意大小  添加UIImage类别
-    
-    [leftbutton setContentMode:UIViewContentModeScaleAspectFit];
-
-    [leftbutton setTitle:Title forState:UIControlStateNormal];
-    
-    leftbutton.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    leftbutton.backgroundColor = CLEAR_COLOR;
-    //设置内容垂直或水平显示位置
-    
-    [leftbutton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
-    
-    [leftbutton setContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
-    
-    [leftbutton addTarget:self action:@selector(leftNavTitleCallBack) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:leftbutton];
-    
-}
-
 - (void) setLeftSystemButton:(NSString *) leftTitle
 {
     UIBarButtonItem* leftItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"return_dafaut1_pressed_up@2x"] style:UIBarButtonItemStylePlain target:self action:@selector(leftNavBtnCallBack)];
@@ -464,11 +420,6 @@
 }
 //返回回调
 - (void)leftNavBtnCallBack
-{
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
--(void) leftNavTitleCallBack
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -640,8 +591,8 @@
         [tipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(backTipView.mas_left);
             make.right.equalTo(backTipView.mas_right);
-            make.centerY.equalTo(backTipView.mas_centerY).offset(-SCREEN_HEIGHT/12);
-            make.height.equalTo(backTipView.mas_height).multipliedBy(0.3);
+            make.centerY.equalTo(backTipView.mas_centerY).offset(-SCREEN_HEIGHT/8);
+            make.height.equalTo(backTipView.mas_height).multipliedBy(0.12);
         }];
         
         if (showBtn)
@@ -650,7 +601,7 @@
                 make.centerX.equalTo(backTipView.mas_centerX);
                 make.top.equalTo(tipLabel.mas_bottom).offset(10);
                 make.width.equalTo(backTipView.mas_width).multipliedBy(0.5);
-                make.height.mas_equalTo(50);
+                make.height.mas_equalTo(40);
             }];
             
             [reCallBtn setTitle:theBtnTitle forState:UIControlStateNormal];
@@ -660,6 +611,10 @@
             reCallBtn.layer.cornerRadius = CORNERRADIUS_BUTTON;
             
             reCallBtn.clipsToBounds = YES;
+            
+            reCallBtn.titleLabel.font = TEXT16_FONT;
+            
+            [reCallBtn addTarget:self action:@selector(reCallBtnPressed) forControlEvents:UIControlEventTouchUpInside];
         }
         
         tipLabel.text=aTitle;
@@ -668,13 +623,18 @@
         
         tipLabel.textColor = COLOR_TITLE_LIGHTGRAY;
         
-        tipLabel.font = TEXT18_FONT;
+        tipLabel.font = TEXT14_FONT;
         
         tipLabel.textAlignment = NSTextAlignmentCenter;
         
     }
     
     backTipView.hidden = YES;
+}
+
+-(void) reCallBtnPressed
+{
+    
 }
 
 -(void) showEmptyTipView

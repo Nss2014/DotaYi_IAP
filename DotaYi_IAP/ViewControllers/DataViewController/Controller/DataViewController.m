@@ -84,7 +84,7 @@
     NSLog(@"selectIndex %ld",selectIndex);
     if (selectIndex == 2)
     {
-        //精彩视频
+        //排行榜
         RankListViewController *rankListVC = [[RankListViewController alloc] init];
         
         [self setHidesBottomBarWhenPushed:YES];

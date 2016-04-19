@@ -54,6 +54,8 @@
     [self initUI];
     
     [self addTapGestureRecognizer];
+    
+    [self setLeftOnlyTextItem:@"取消"];
 }
 
 -(void) initUI
@@ -167,7 +169,7 @@
     
     self.login_logoImageView.image = [UIImage imageNamed:@"login_logoImage"];
     
-    self.login_accountInputView.LI_leftLabel.text = @"账户：";
+    self.login_accountInputView.LI_leftLabel.text = @"账号：";
     
     self.login_accountInputView.LI_rightTextField.placeholder = @"请输入11平台账号";
     
