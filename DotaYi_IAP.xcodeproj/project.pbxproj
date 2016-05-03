@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		07A7D5491CD89C13007B5D5E /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A7D5441CD89C13007B5D5E /* TFHpple.m */; };
+		07A7D54A1CD89C13007B5D5E /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A7D5461CD89C13007B5D5E /* TFHppleElement.m */; };
+		07A7D54B1CD89C13007B5D5E /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A7D5481CD89C13007B5D5E /* XPathQuery.m */; };
 		07AC68DD1CC0A2820030B298 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 07AC68DC1CC0A2810030B298 /* main.m */; };
 		07AC68E01CC0A2820030B298 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 07AC68DF1CC0A2820030B298 /* AppDelegate.m */; };
 		07AC68E81CC0A2820030B298 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07AC68E71CC0A2820030B298 /* Assets.xcassets */; };
@@ -219,6 +222,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		07A7D5431CD89C13007B5D5E /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHpple.h; sourceTree = "<group>"; };
+		07A7D5441CD89C13007B5D5E /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHpple.m; sourceTree = "<group>"; };
+		07A7D5451CD89C13007B5D5E /* TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHppleElement.h; sourceTree = "<group>"; };
+		07A7D5461CD89C13007B5D5E /* TFHppleElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHppleElement.m; sourceTree = "<group>"; };
+		07A7D5471CD89C13007B5D5E /* XPathQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPathQuery.h; sourceTree = "<group>"; };
+		07A7D5481CD89C13007B5D5E /* XPathQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPathQuery.m; sourceTree = "<group>"; };
 		07AC68D81CC0A2810030B298 /* DotaYi_IAP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DotaYi_IAP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07AC68DC1CC0A2810030B298 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		07AC68DE1CC0A2820030B298 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -624,6 +633,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		07A7D5421CD89C13007B5D5E /* TFHpple */ = {
+			isa = PBXGroup;
+			children = (
+				07A7D5431CD89C13007B5D5E /* TFHpple.h */,
+				07A7D5441CD89C13007B5D5E /* TFHpple.m */,
+				07A7D5451CD89C13007B5D5E /* TFHppleElement.h */,
+				07A7D5461CD89C13007B5D5E /* TFHppleElement.m */,
+				07A7D5471CD89C13007B5D5E /* XPathQuery.h */,
+				07A7D5481CD89C13007B5D5E /* XPathQuery.m */,
+			);
+			path = TFHpple;
+			sourceTree = "<group>";
+		};
 		07AC68CF1CC0A2810030B298 = {
 			isa = PBXGroup;
 			children = (
@@ -855,6 +877,7 @@
 		07AC69291CC0A65D0030B298 /* Model_Common */ = {
 			isa = PBXGroup;
 			children = (
+				07A7D5421CD89C13007B5D5E /* TFHpple */,
 				07AC69591CC0A65D0030B298 /* CommonHeader.h */,
 				07AC695A1CC0A65D0030B298 /* Core_series */,
 				07AC6A031CC0A65D0030B298 /* HP_Application.h */,
@@ -1849,6 +1872,7 @@
 				07AC6C731CC0D22D0030B298 /* SettingsViewController.m in Sources */,
 				07AC6C6A1CC0D0CA0030B298 /* LoginInputTFView.m in Sources */,
 				07AC6AF51CC0A65D0030B298 /* CoreSVP.m in Sources */,
+				07A7D54A1CD89C13007B5D5E /* TFHppleElement.m in Sources */,
 				07AC6B141CC0A65D0030B298 /* ViewController+MASAdditions.m in Sources */,
 				07AC6AC01CC0A65D0030B298 /* UIView+CoreBtnExtend.m in Sources */,
 				07AC6AE61CC0A65D0030B298 /* DGActivityIndicatorLineScalePulseOutAnimation.m in Sources */,
@@ -1878,6 +1902,7 @@
 				07AC6ABA1CC0A65D0030B298 /* AnimForCoreBtn.m in Sources */,
 				841064B91CC3C1C8008AAD95 /* RankListViewController.m in Sources */,
 				07AC6C671CC0D06E0030B298 /* LoginViewController.m in Sources */,
+				07A7D54B1CD89C13007B5D5E /* XPathQuery.m in Sources */,
 				07AC6AC81CC0A65D0030B298 /* NSString+CoreHttp.m in Sources */,
 				07AC6C321CC0A66D0030B298 /* UIButton+CenterImageAndTitle.m in Sources */,
 				07AC6AD81CC0A65D0030B298 /* DGActivityIndicatorBallRotateAnimation.m in Sources */,
@@ -1898,6 +1923,7 @@
 				07AC69271CC0A6250030B298 /* BaseRoundradiusBackCell.m in Sources */,
 				07AC6AD41CC0A65D0030B298 /* DGActivityIndicatorBallGridBeatAnimation.m in Sources */,
 				07AC6B251CC0A65D0030B298 /* UIDevice+TL.m in Sources */,
+				07A7D5491CD89C13007B5D5E /* TFHpple.m in Sources */,
 				07AC6ADB1CC0A65D0030B298 /* DGActivityIndicatorBallScaleRippleAnimation.m in Sources */,
 				07AC6AEB1CC0A65D0030B298 /* DGActivityIndicatorRotatingTrigonAnimation.m in Sources */,
 				07AC6B071CC0A65D0030B298 /* SBJSON.m in Sources */,
@@ -2109,6 +2135,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/DotaYi_IAP/DotaYi-Prefix.pch";
+				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = DotaYi_IAP/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2132,6 +2159,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/DotaYi_IAP/DotaYi-Prefix.pch";
+				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = DotaYi_IAP/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

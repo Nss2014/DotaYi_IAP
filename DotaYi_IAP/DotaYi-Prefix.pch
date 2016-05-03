@@ -42,6 +42,8 @@
 #import "BaseRespObject.h"
 #import "UIButton+touch.h"
 #import "UIButton+CenterImageAndTitle.h"
+#import "TFHpple.h"
+#import "XPathQuery.h"
 
 #endif
 
