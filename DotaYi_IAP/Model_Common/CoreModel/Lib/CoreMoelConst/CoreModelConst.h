@@ -10,7 +10,7 @@
 #define _BaseMoelConst_H_
 
 /** Debug */
-#define CoreModelDeBug 1
+#define CoreModelDeBug 0
 
 
 

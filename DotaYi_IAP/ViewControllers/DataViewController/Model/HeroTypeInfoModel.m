@@ -14,15 +14,12 @@
 {
     self = [super init];
     if (self) {
-        self.hero_nameArray = [NSMutableArray array];
-        
-        self.hero_infoLinkArray = [NSMutableArray array];
-        
-        self.hero_headImageURLArray = [NSMutableArray array];
-        
-        self.hero_nameForShortArray = [NSMutableArray array];
     }
     return self;
+}
+
++(NSDictionary *)statementForNSArrayProperties{
+    return @{@"heroNameArray":NSStringFromClass([NSString class]),@"heroInfoLinkArray":NSStringFromClass([NSString class]),@"heroHeadImageURLArray":NSStringFromClass([NSString class]),@"heroNameForShortArray":NSStringFromClass([NSString class])};
 }
 
 

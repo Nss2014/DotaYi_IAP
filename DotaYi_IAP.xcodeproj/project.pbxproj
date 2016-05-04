@@ -189,7 +189,6 @@
 		07AC6C8C1CC0D4E00030B298 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 07AC6C8B1CC0D4E00030B298 /* libstdc++.tbd */; };
 		07DC158C1CD9D7D50054EA20 /* JKDBHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 07DC157D1CD9D7D50054EA20 /* JKDBHelper.m */; };
 		07DC158D1CD9D7D50054EA20 /* JKDBModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 07DC157F1CD9D7D50054EA20 /* JKDBModel.m */; };
-		07DC15951CD9E1FB0054EA20 /* HeroTypeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 07DC15941CD9E1FB0054EA20 /* HeroTypeModel.m */; };
 		07DC15DB1CDA04780054EA20 /* CoreModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 07DC15981CDA04780054EA20 /* CoreModel.m */; };
 		07DC15DC1CDA04780054EA20 /* CoreFMDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 07DC159C1CDA04780054EA20 /* CoreFMDB.m */; };
 		07DC15DD1CDA04780054EA20 /* NSString+CoreFMDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 07DC15A01CDA04780054EA20 /* NSString+CoreFMDB.m */; };
@@ -213,7 +212,6 @@
 		07DC15EF1CDA04780054EA20 /* CoreModelConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 07DC15D01CDA04780054EA20 /* CoreModelConst.m */; };
 		07DC15F01CDA04780054EA20 /* CoreProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 07DC15D61CDA04780054EA20 /* CoreProperty.m */; };
 		07DC15F11CDA04780054EA20 /* NSObject+Runtime.m in Sources */ = {isa = PBXBuildFile; fileRef = 07DC15D81CDA04780054EA20 /* NSObject+Runtime.m */; };
-		07DC15F41CDA0DDB0054EA20 /* HeroTypeInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 07DC15F31CDA0DDB0054EA20 /* HeroTypeInfoModel.m */; };
 		841064A71CC3B62B008AAD95 /* JJCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841064A61CC3B62B008AAD95 /* JJCViewController.m */; };
 		841064AA1CC3B636008AAD95 /* MJViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841064A91CC3B636008AAD95 /* MJViewController.m */; };
 		841064AD1CC3B63F008AAD95 /* TTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841064AC1CC3B63F008AAD95 /* TTViewController.m */; };
@@ -228,6 +226,7 @@
 		8417D1FC1CC214710075D2D7 /* login_logoImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8417D1F61CC214710075D2D7 /* login_logoImage.png */; };
 		8417D1FD1CC214710075D2D7 /* main_leftNav_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 8417D1F81CC214710075D2D7 /* main_leftNav_image.png */; };
 		8417D1FE1CC214710075D2D7 /* tab_select_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 8417D1FA1CC214710075D2D7 /* tab_select_1.png */; };
+		84ADD33B1CDA47C60088CA02 /* HeroTypeInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ADD33A1CDA47C60088CA02 /* HeroTypeInfoModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -599,8 +598,6 @@
 		07DC157D1CD9D7D50054EA20 /* JKDBHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKDBHelper.m; sourceTree = "<group>"; };
 		07DC157E1CD9D7D50054EA20 /* JKDBModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKDBModel.h; sourceTree = "<group>"; };
 		07DC157F1CD9D7D50054EA20 /* JKDBModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKDBModel.m; sourceTree = "<group>"; };
-		07DC15931CD9E1FB0054EA20 /* HeroTypeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HeroTypeModel.h; path = DotaYi_IAP/Model_Common/JKDBModel/HeroTypeModel.h; sourceTree = SOURCE_ROOT; };
-		07DC15941CD9E1FB0054EA20 /* HeroTypeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HeroTypeModel.m; path = DotaYi_IAP/Model_Common/JKDBModel/HeroTypeModel.m; sourceTree = SOURCE_ROOT; };
 		07DC15971CDA04780054EA20 /* CoreModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreModel.h; sourceTree = "<group>"; };
 		07DC15981CDA04780054EA20 /* CoreModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreModel.m; sourceTree = "<group>"; };
 		07DC159B1CDA04780054EA20 /* CoreFMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreFMDB.h; sourceTree = "<group>"; };
@@ -652,8 +649,6 @@
 		07DC15D71CDA04780054EA20 /* NSObject+Runtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Runtime.h"; sourceTree = "<group>"; };
 		07DC15D81CDA04780054EA20 /* NSObject+Runtime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Runtime.m"; sourceTree = "<group>"; };
 		07DC15DA1CDA04780054EA20 /* CoreModelType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreModelType.h; sourceTree = "<group>"; };
-		07DC15F21CDA0DDB0054EA20 /* HeroTypeInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HeroTypeInfoModel.h; path = DotaYi_IAP/Model_Common/CoreModel/HeroTypeInfoModel.h; sourceTree = SOURCE_ROOT; };
-		07DC15F31CDA0DDB0054EA20 /* HeroTypeInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HeroTypeInfoModel.m; path = DotaYi_IAP/Model_Common/CoreModel/HeroTypeInfoModel.m; sourceTree = SOURCE_ROOT; };
 		841064A51CC3B62B008AAD95 /* JJCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJCViewController.h; sourceTree = "<group>"; };
 		841064A61CC3B62B008AAD95 /* JJCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JJCViewController.m; sourceTree = "<group>"; };
 		841064A81CC3B636008AAD95 /* MJViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJViewController.h; sourceTree = "<group>"; };
@@ -676,6 +671,8 @@
 		8417D1F61CC214710075D2D7 /* login_logoImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_logoImage.png; sourceTree = "<group>"; };
 		8417D1F81CC214710075D2D7 /* main_leftNav_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = main_leftNav_image.png; sourceTree = "<group>"; };
 		8417D1FA1CC214710075D2D7 /* tab_select_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_select_1.png; sourceTree = "<group>"; };
+		84ADD3391CDA47C60088CA02 /* HeroTypeInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeroTypeInfoModel.h; sourceTree = "<group>"; };
+		84ADD33A1CDA47C60088CA02 /* HeroTypeInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeroTypeInfoModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -871,10 +868,8 @@
 		07AC691B1CC0A6250030B298 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				07DC15931CD9E1FB0054EA20 /* HeroTypeModel.h */,
-				07DC15941CD9E1FB0054EA20 /* HeroTypeModel.m */,
-				07DC15F21CDA0DDB0054EA20 /* HeroTypeInfoModel.h */,
-				07DC15F31CDA0DDB0054EA20 /* HeroTypeInfoModel.m */,
+				84ADD3391CDA47C60088CA02 /* HeroTypeInfoModel.h */,
+				84ADD33A1CDA47C60088CA02 /* HeroTypeInfoModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2240,7 +2235,6 @@
 				07AC6B071CC0A65D0030B298 /* SBJSON.m in Sources */,
 				07AC6B351CC0A65D0030B298 /* UIImageView+HighlightedWebCache.m in Sources */,
 				07AC6B2D1CC0A65D0030B298 /* SDWebImageDownloader.m in Sources */,
-				07DC15F41CDA0DDB0054EA20 /* HeroTypeInfoModel.m in Sources */,
 				07AC6B0D1CC0A65D0030B298 /* MASConstraintMaker.m in Sources */,
 				07DC15DD1CDA04780054EA20 /* NSString+CoreFMDB.m in Sources */,
 				07AC6AF71CC0A65D0030B298 /* SVIndefiniteAnimatedView.m in Sources */,
@@ -2268,6 +2262,7 @@
 				07AC6B2C1CC0A65D0030B298 /* SDWebImageDecoder.m in Sources */,
 				841064B01CC3C14C008AAD95 /* MainGridTableViewCell.m in Sources */,
 				07AC6AF31CC0A65D0030B298 /* Reachability.m in Sources */,
+				84ADD33B1CDA47C60088CA02 /* HeroTypeInfoModel.m in Sources */,
 				07AC6B0A1CC0A65D0030B298 /* SBJsonWriter.m in Sources */,
 				07AC6C4A1CC0A66D0030B298 /* UMChatToolBar.m in Sources */,
 				07AC6B391CC0A65D0030B298 /* UIDevice-Hardware.m in Sources */,
@@ -2320,7 +2315,6 @@
 				07AC6B2E1CC0A65D0030B298 /* SDWebImageDownloaderOperation.m in Sources */,
 				07AC6C311CC0A66D0030B298 /* TLRootViewController.m in Sources */,
 				07AC6AD31CC0A65D0030B298 /* DGActivityIndicatorBallClipRotatePulseAnimation.m in Sources */,
-				07DC15951CD9E1FB0054EA20 /* HeroTypeModel.m in Sources */,
 				07AC6AD91CC0A65D0030B298 /* DGActivityIndicatorBallScaleAnimation.m in Sources */,
 				07AC6AD61CC0A65D0030B298 /* DGActivityIndicatorBallPulseAnimation.m in Sources */,
 				07AC6AE51CC0A65D0030B298 /* DGActivityIndicatorLineScalePartyAnimation.m in Sources */,

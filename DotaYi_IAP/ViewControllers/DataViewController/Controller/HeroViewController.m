@@ -11,6 +11,12 @@
 
 @interface HeroViewController ()
 
+@property (nonatomic,strong) HeroTypeInfoModel *saveMJHeroModel;
+
+@property (nonatomic,strong) HeroTypeInfoModel *saveZLHeroModel;
+
+@property (nonatomic,strong) HeroTypeInfoModel *saveLLHeroModel;
+
 @end
 
 @implementation HeroViewController
@@ -19,173 +25,231 @@
 {
     [super viewDidLoad];
     
-//    [self creatData];
+    [self creatData];
     
-    [self performSelector:@selector(initUI) withObject:nil afterDelay:1.5];
-    
-//    [self initUI];
+    [self initUI];
 }
 
 -(void) creatData
 {
-
     //获取敏捷英雄数据
     [self getHeroDataWithTypeId:1];
-//
-//    //获取智力英雄数据
-//    [self getHeroDataWithTypeId:2];
-//    
-//    //获取力量英雄数据
-//    [self getHeroDataWithTypeId:3];
+
+    //获取智力英雄数据
+    [self getHeroDataWithTypeId:2];
+    
+    //获取力量英雄数据
+    [self getHeroDataWithTypeId:3];
 }
 
 -(void) getHeroDataWithTypeId:(NSInteger) aTypeID
 {
-    __block BOOL isNeedSaveData = YES;
-    
-    HeroTypeInfoModel *saveHeroModel = [[HeroTypeInfoModel alloc] init];
+    WS(ws);
     
     [HeroTypeInfoModel find:aTypeID selectResultBlock:^(id selectResult) {
         
         HeroTypeInfoModel *getLocalModel = selectResult;
         
-        if (getLocalModel.hero_nameArray.count > 0)
-        {
-            isNeedSaveData = NO;
-        }
-        else
-        {
-            isNeedSaveData = YES;
-        }
-    }];
-    
-    if (isNeedSaveData)
-    {
-        NSData *data = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:DT_HEROLISTDATA_URL]];
-        
-        TFHpple *xpathParser = [[TFHpple alloc] initWithHTMLData:data];
-        
-        //英雄信息
-        NSArray *heroElements = [xpathParser searchWithXPathQuery:@"//div[@class='tbB']"];
-        
-        saveHeroModel.hostID = aTypeID;
-        
-        for (TFHppleElement *tfElement in heroElements)
+        if (getLocalModel.heroNameArray.count)
         {
             if (aTypeID == 1)
             {
-                //"敏捷英雄"四个字
-                NSArray *titleElements = [xpathParser searchWithXPathQuery:@"//div[@class='thB']"];
-                
-                for (TFHppleElement *titleElement in titleElements)
-                {
-                    NSArray *TitleElementArr = [titleElement searchWithXPathQuery:@"//span[@class='mark sbg1']"];
-                    for (TFHppleElement *tempAElement in TitleElementArr)
-                    {
-                        //获得title
-                        NSLog(@"text %@",tempAElement.text);
-                        
-                        NSLog(@"content %@",tempAElement.content);
-                        
-                        saveHeroModel.hero_typeName = tempAElement.text;
-                    }
-                }
+                ws.saveMJHeroModel = getLocalModel;
             }
             else if (aTypeID == 2)
             {
-                //"智力英雄"四个字
-                NSArray *titleElements = [xpathParser searchWithXPathQuery:@"//div[@class='thB']"];
-                
-                for (TFHppleElement *titleElement in titleElements)
-                {
-                    NSArray *TitleElementArr = [titleElement searchWithXPathQuery:@"//span[@class='mark sbg2 ']"];
-                    for (TFHppleElement *tempAElement in TitleElementArr)
-                    {
-                        //获得title
-                        NSLog(@"text %@",tempAElement.text);
-                        
-                        NSLog(@"content %@",tempAElement.content);
-                        
-                        saveHeroModel.hero_typeName = tempAElement.text;
-                    }
-                }
+                ws.saveZLHeroModel = getLocalModel;
             }
             else if (aTypeID == 3)
             {
-                //"力量英雄"四个字
-                NSArray *titleElements = [xpathParser searchWithXPathQuery:@"//div[@class='thB']"];
-                
-                for (TFHppleElement *titleElement in titleElements)
+                ws.saveLLHeroModel = getLocalModel;
+            }
+        }
+        else
+        {
+            NSData *data = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:DT_HEROLISTDATA_URL]];
+            
+            TFHpple *xpathParser = [[TFHpple alloc] initWithHTMLData:data];
+            
+            NSString *headXPathQuary = @"";
+            
+            if (aTypeID == 1)
+            {
+                headXPathQuary = @"//div[@class='modB mt3 mb10']";
+            }
+            else if (aTypeID == 2)
+            {
+                headXPathQuary = @"//div[@class='modB mb10']";
+            }
+            else if (aTypeID == 3)
+            {
+                headXPathQuary = @"//div[@class='modB']";
+            }
+            
+            //英雄信息
+            NSArray *heroElements = [xpathParser searchWithXPathQuery:headXPathQuary];
+            
+            HeroTypeInfoModel *saveHeroModel = [[HeroTypeInfoModel alloc] init];
+            
+            saveHeroModel.hostID = aTypeID;
+            
+            for (TFHppleElement *tfElement in heroElements)
+            {
+                if (aTypeID == 1)
                 {
-                    NSArray *TitleElementArr = [titleElement searchWithXPathQuery:@"//span[@class='mark sbg3']"];
-                    for (TFHppleElement *tempAElement in TitleElementArr)
+                    //"敏捷英雄"四个字
+                    NSArray *titleElements = [xpathParser searchWithXPathQuery:@"//div[@class='thB']"];
+                    
+                    for (TFHppleElement *titleElement in titleElements)
                     {
-                        //获得title
-                        NSLog(@"text %@",tempAElement.text);
+                        NSArray *TitleElementArr = [titleElement searchWithXPathQuery:@"//span[@class='mark sbg1']"];
                         
-                        NSLog(@"content %@",tempAElement.content);
-                        
-                        saveHeroModel.hero_typeName = tempAElement.text;
+                        for (TFHppleElement *tempAElement in TitleElementArr)
+                        {
+                            //获得title
+                            NSLog(@"text %@",tempAElement.text);
+                            
+                            NSLog(@"content %@",tempAElement.content);
+                            
+                            saveHeroModel.heroTypeName = tempAElement.text;
+                        }
                     }
                 }
-            }
-            
+                else if (aTypeID == 2)
+                {
+                    //"智力英雄"四个字
+                    NSArray *titleElements = [xpathParser searchWithXPathQuery:@"//div[@class='thB']"];
+                    
+                    for (TFHppleElement *titleElement in titleElements)
+                    {
+                        NSArray *TitleElementArr = [titleElement searchWithXPathQuery:@"//span[@class='mark sbg2 ']"];
+                        for (TFHppleElement *tempAElement in TitleElementArr)
+                        {
+                            //获得title
+                            NSLog(@"text %@",tempAElement.text);
+                            
+                            NSLog(@"content %@",tempAElement.content);
+                            
+                            saveHeroModel.heroTypeName = tempAElement.text;
+                        }
+                    }
+                }
+                else if (aTypeID == 3)
+                {
+                    //"力量英雄"四个字
+                    NSArray *titleElements = [xpathParser searchWithXPathQuery:@"//div[@class='thB']"];
+                    
+                    for (TFHppleElement *titleElement in titleElements)
+                    {
+                        NSArray *TitleElementArr = [titleElement searchWithXPathQuery:@"//span[@class='mark sbg3']"];
+                        for (TFHppleElement *tempAElement in TitleElementArr)
+                        {
+                            //获得title
+                            NSLog(@"text %@",tempAElement.text);
+                            
+                            NSLog(@"content %@",tempAElement.content);
+                            
+                            saveHeroModel.heroTypeName = tempAElement.text;
+                        }
+                    }
+                }
+                
 #pragma mark 子节点头像
-            
-            NSArray *IMGElementsArr = [tfElement searchWithXPathQuery:@"//img"];
-            
-            for (TFHppleElement *tempAElement in IMGElementsArr)
-            {
                 
-                NSString *imgStr = [tempAElement objectForKey:@"src"];
+                NSArray *IMGElementsArr = [tfElement searchWithXPathQuery:@"//img"];
                 
-                NSLog(@"imgStr %@",imgStr);
+                NSMutableArray *tempImgArray = [NSMutableArray array];
                 
-                [saveHeroModel.hero_headImageURLArray addObject:tempAElement];
-            }
-            
+                for (TFHppleElement *tempAElement in IMGElementsArr)
+                {
+                    
+                    NSString *imgStr = [tempAElement objectForKey:@"src"];
+                    
+                    NSLog(@"imgStr %@",imgStr);
+                    
+                    [tempImgArray addObject:imgStr];
+                }
+                
+                saveHeroModel.heroHeadImageURLArray = [NSArray arrayWithArray:tempImgArray];
+                
 #pragma mark 子节点标题
-            
-            NSArray *TitleElementArr = [tfElement searchWithXPathQuery:@"//span"];
-            
-            NSInteger isShortIndex = 0;
-            
-            for (TFHppleElement *tempAElement in TitleElementArr) {
-                //获得标题
-                NSString *titleStr =  [tempAElement content];
                 
-                NSLog(@"titleStr %@",titleStr);
+                NSArray *TitleElementArr = [tfElement searchWithXPathQuery:@"//span"];
                 
-                if (isShortIndex == 0)
-                {
-                    [saveHeroModel.hero_nameArray addObject:titleStr];
+                NSInteger isShortIndex = 0;
+                
+                NSMutableArray *tempTitleArray = [NSMutableArray array];
+                
+                NSMutableArray *tempShortTitleArray = [NSMutableArray array];
+                
+                for (TFHppleElement *tempAElement in TitleElementArr) {
+                    //获得标题
+                    NSString *titleStr =  [tempAElement content];
+                    
+                    NSLog(@"titleStr %@",titleStr);
+                    
+                    if (isShortIndex == 0)
+                    {
+                        [tempTitleArray addObject:titleStr];
+                        
+                        isShortIndex ++;
+                    }
+                    else if (isShortIndex == 1)
+                    {
+                        [tempShortTitleArray addObject:titleStr];
+                        
+                        isShortIndex = 0;
+                    }
                 }
-                else if (isShortIndex == 1)
-                {
-                    [saveHeroModel.hero_nameForShortArray addObject:titleStr];
-                }
                 
-                isShortIndex ++;
-            }
-            
+                
+                saveHeroModel.heroNameArray = [NSArray arrayWithArray:tempTitleArray];
+                
+                saveHeroModel.heroNameForShortArray = [NSArray arrayWithArray:tempShortTitleArray];
+                
 #pragma mark 子节点链接
-            
-            NSArray *LinkElementArr = [tfElement searchWithXPathQuery:@"//a"];
-            
-            for (TFHppleElement *tempAElement in LinkElementArr) {
-                //获得链接
-                //1.获得子节点（正文连接节点） 2.获得节点属性值 3.加入到字典中
-                NSString * titleHrefStr = [tempAElement objectForKey:@"href"];
                 
-                NSLog(@"linkStr %@",titleHrefStr);
+                NSArray *LinkElementArr = [tfElement searchWithXPathQuery:@"//a"];
                 
-                [saveHeroModel.hero_infoLinkArray addObject:titleHrefStr];
+                NSMutableArray *tempLinkArray = [NSMutableArray array];
+                
+                for (TFHppleElement *tempAElement in LinkElementArr) {
+                    //获得链接
+                    //1.获得子节点（正文连接节点） 2.获得节点属性值 3.加入到字典中
+                    NSString * titleHrefStr = [tempAElement objectForKey:@"href"];
+                    
+                    NSLog(@"linkStr %@",titleHrefStr);
+                    
+                    [tempLinkArray addObject:titleHrefStr];
+                }
+                
+                saveHeroModel.heroInfoLinkArray = [NSArray arrayWithArray:tempLinkArray];
+                
             }
             
+            if (aTypeID == 1)
+            {
+                self.saveMJHeroModel = saveHeroModel;
+            }
+            else if (aTypeID == 2)
+            {
+                self.saveZLHeroModel = saveHeroModel;
+            }
+            else if (aTypeID == 3)
+            {
+                self.saveLLHeroModel = saveHeroModel;
+            }
+            
+            NSLog(@"saveMJHeroModel %@",self.saveMJHeroModel.heroNameArray[0]);
+            
+            NSLog(@"saveZLHeroModel %@",self.saveZLHeroModel.heroNameArray[0]);
+            
+            NSLog(@"saveLLHeroModel %@",self.saveLLHeroModel.heroNameArray[0]);
+            
+            [HeroTypeInfoModel insert:saveHeroModel resBlock:nil];
         }
-        
-        [HeroTypeInfoModel save:saveHeroModel resBlock:nil];
-    }
+    }];
+
 }
 
 
@@ -196,7 +260,21 @@
         
         HeroTypeInfoModel *getLocalModel = selectResult;
         
-        NSLog(@"hero_nameArray %@",getLocalModel.hero_nameArray);
+        NSLog(@"hero_nameArray11 %@",getLocalModel.heroNameArray[0]);
+    }];
+    
+    [HeroTypeInfoModel find:2 selectResultBlock:^(id selectResult) {
+        
+        HeroTypeInfoModel *getLocalModel = selectResult;
+        
+        NSLog(@"hero_nameArray22 %@",getLocalModel.heroNameArray[0]);
+    }];
+    
+    [HeroTypeInfoModel find:3 selectResultBlock:^(id selectResult) {
+        
+        HeroTypeInfoModel *getLocalModel = selectResult;
+        
+        NSLog(@"hero_nameArray33 %@",getLocalModel.heroNameArray[0]);
     }];
 }
 
