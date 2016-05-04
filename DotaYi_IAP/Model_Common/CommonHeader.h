@@ -401,72 +401,13 @@
 #define APP_HKBG_DEV @"ios"
 
 
-//测试base地址
-#define BASE_WEB_URL @"http://120.24.163.85:14080"
+#pragma mark - 太平洋游戏网英雄&物品数据
 
-////正式base地址
-//#define BASE_WEB_URL @"http://app.admin.weijuju.com"
+/**
+ *  英雄数据
+ */
+#define DT_HEROLISTDATA_URL @"http://fight.pcgames.com.cn/warcraft/dota/heros/"
 
-//******************登录*************************
-
-#define HKBG_LOGIN_URL                     [NSString stringWithFormat:@"%@/app/login?version=%@&dev=ios",BASE_WEB_URL,APPLICATION_VERSIN]
-
-//******************素材中心*************************
-//获取文章列表
-#define HKBG_GETARTICLELIST_URL            [NSString stringWithFormat:@"%@/mobile/article/getArticleList?version=%@&dev=ios",BASE_WEB_URL,APPLICATION_VERSIN]
-
-//通过url保存文章
-#define HKBG_SAVEARTICLESVIALINK_URL        [NSString stringWithFormat:@"%@/mobile/article/saveArticle?version=%@&dev=ios",BASE_WEB_URL,APPLICATION_VERSIN]
-
-//获取侧栏频道列表
-#define HKBG_GETLEFTLISTCHANNEL_URL         [NSString stringWithFormat:@"%@/mobile/article/getChannelList?version=%@&dev=ios",BASE_WEB_URL,APPLICATION_VERSIN]
-
-//******************推荐文章*************************
-
-
-//获取推荐文章列表
-#define HKBG_GETRECOMMENDLIST_URL           [NSString stringWithFormat:@"%@/mobile/article/getRecommendArticleList?version=%@&dev=ios",BASE_WEB_URL,APPLICATION_VERSIN]
-
-//推荐或者取消推荐文章
-#define HKBG_RECOMMENDORCANCEL_URL          [NSString stringWithFormat:@"%@/mobile/article/recommendOrNotRecommendArticle?version=%@&dev=ios",BASE_WEB_URL,APPLICATION_VERSIN]
-
-//推荐粘贴链接的文章
-#define HKBG_RECOMMENDPASTELINK_URL         [NSString stringWithFormat:@"%@/mobile/article/saveArticle?version=%@&dev=ios",BASE_WEB_URL,APPLICATION_VERSIN]
-
-//搜索文章(和文章列表接口共用一个，只改变参数)
-#define HKBG_SEARCHARTICLES_URL             [NSString stringWithFormat:@"%@/mobile/article/getArticleList?version=%@&dev=ios",BASE_WEB_URL,APPLICATION_VERSIN]
-
-//上传推荐文章图片
-#define HKBG_UPLOADRECOMMENDPIC_URL         [NSString stringWithFormat:@"%@/mobile/article/uploadRecommendArticleImg?version=%@&dev=ios",BASE_WEB_URL,APPLICATION_VERSIN]
-
-//******************推荐公众号*************************
-
-//获取编辑推荐的公众号列表
-#define HKBG_GETEDITORRECOMMEND_URL         [NSString stringWithFormat:@"%@/mobile/officialAccount/getRecommendOfficialAccountList?version=%@&dev=ios",BASE_WEB_URL,APPLICATION_VERSIN]
-
-//获取所有公众号列表
-#define HKBG_GETALLOFFICIALLIST_URL         [NSString stringWithFormat:@"%@/mobile/officialAccount/getOfficialAccountList?version=%@&dev=ios",BASE_WEB_URL,APPLICATION_VERSIN]
-
-//推荐或者取消推荐
-#define HKBG_RECOMMENDOFFICIALORCANCEL_URL  [NSString stringWithFormat:@"%@/mobile/officialAccount/recommendOrNotRecommendOfficialAccount?version=%@&dev=ios",BASE_WEB_URL,APPLICATION_VERSIN]
-
-//编辑推荐公众号列表排序
-#define HKBG_SORTRECOMMENDEDOFFICIAL_URL    [NSString stringWithFormat:@"%@/mobile/officialAccount/sortRecommendOfficialAccount?version=%@&dev=ios",BASE_WEB_URL,APPLICATION_VERSIN]
-
-//搜索公众号(共用获取公众号列表接口)
-#define HKBG_SEARCHOFFICIAL_URL             [NSString stringWithFormat:@"%@/mobile/officialAccount/getOfficialAccountList?version=%@&dev=ios",BASE_WEB_URL,APPLICATION_VERSIN]
-
-//已通过的推荐达人列表
-#define HKBG_HASACCESSEDEXPERT_URL          [NSString stringWithFormat:@"%@/mobile/user/getApplyedRecommendTalent?version=%@&dev=ios",BASE_WEB_URL,APPLICATION_VERSIN]
-
-//待审核的推荐达人列表
-#define HKBG_WAITEXPERTING_URL              [NSString stringWithFormat:@"%@/mobile/user/getApplyingRecommendTalent?version=%@&dev=ios",BASE_WEB_URL,APPLICATION_VERSIN]
-
-//删除推荐达人
-#define HKBG_DELETEEXPERTER_URL             [NSString stringWithFormat:@"%@/mobile/user/delApplyedRecommendTalent?version=%@&dev=ios",BASE_WEB_URL,APPLICATION_VERSIN]
-
-//通过推荐达人申请
-#define HKBG_ACCESSEXPERTER_URL             [NSString stringWithFormat:@"%@/mobile/user/allowOrNotAllowApplyingRecommendTalent?version=%@&dev=ios",BASE_WEB_URL,APPLICATION_VERSIN]
 
 
 //----------------------AES128加密--------------------
