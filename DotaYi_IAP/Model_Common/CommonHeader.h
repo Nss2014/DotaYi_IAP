@@ -132,6 +132,9 @@
 //cell heightForRowAtIndexPath
 #define CELL_INDEXTROWHEIGHT 54.5f
 
+//间隔
+#define PADDING_WIDTH 10
+
 
 //捕获代码异常提交后台
 #define HUR_CATCH_EXCEPTION [NSString stringWithFormat:@"%@/log/write",[HP_Application sharedApplication].hostIP]

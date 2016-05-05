@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0746A1001CDB4811007EC2AD /* HeroDetailInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0746A0FF1CDB4811007EC2AD /* HeroDetailInfoViewController.m */; };
 		07A7D5491CD89C13007B5D5E /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A7D5441CD89C13007B5D5E /* TFHpple.m */; };
 		07A7D54A1CD89C13007B5D5E /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A7D5461CD89C13007B5D5E /* TFHppleElement.m */; };
 		07A7D54B1CD89C13007B5D5E /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A7D5481CD89C13007B5D5E /* XPathQuery.m */; };
@@ -187,6 +188,8 @@
 		07AC6C881CC0D4D20030B298 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 07AC6C871CC0D4D20030B298 /* libz.tbd */; };
 		07AC6C8A1CC0D4D90030B298 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 07AC6C891CC0D4D90030B298 /* libxml2.tbd */; };
 		07AC6C8C1CC0D4E00030B298 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 07AC6C8B1CC0D4E00030B298 /* libstdc++.tbd */; };
+		07D7B7961CDAED63005E8FB0 /* CollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07D7B7931CDAED63005E8FB0 /* CollectionReusableView.m */; };
+		07D7B7971CDAED63005E8FB0 /* CollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 07D7B7951CDAED63005E8FB0 /* CollectionViewCell.m */; };
 		07DC158C1CD9D7D50054EA20 /* JKDBHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 07DC157D1CD9D7D50054EA20 /* JKDBHelper.m */; };
 		07DC158D1CD9D7D50054EA20 /* JKDBModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 07DC157F1CD9D7D50054EA20 /* JKDBModel.m */; };
 		07DC15DB1CDA04780054EA20 /* CoreModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 07DC15981CDA04780054EA20 /* CoreModel.m */; };
@@ -247,6 +250,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0746A0FE1CDB4811007EC2AD /* HeroDetailInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeroDetailInfoViewController.h; sourceTree = "<group>"; };
+		0746A0FF1CDB4811007EC2AD /* HeroDetailInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeroDetailInfoViewController.m; sourceTree = "<group>"; };
 		07A7D5431CD89C13007B5D5E /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHpple.h; sourceTree = "<group>"; };
 		07A7D5441CD89C13007B5D5E /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHpple.m; sourceTree = "<group>"; };
 		07A7D5451CD89C13007B5D5E /* TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHppleElement.h; sourceTree = "<group>"; };
@@ -594,6 +599,10 @@
 		07AC6C871CC0D4D20030B298 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		07AC6C891CC0D4D90030B298 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		07AC6C8B1CC0D4E00030B298 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
+		07D7B7921CDAED63005E8FB0 /* CollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionReusableView.h; sourceTree = "<group>"; };
+		07D7B7931CDAED63005E8FB0 /* CollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionReusableView.m; sourceTree = "<group>"; };
+		07D7B7941CDAED63005E8FB0 /* CollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewCell.h; sourceTree = "<group>"; };
+		07D7B7951CDAED63005E8FB0 /* CollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewCell.m; sourceTree = "<group>"; };
 		07DC157C1CD9D7D50054EA20 /* JKDBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKDBHelper.h; sourceTree = "<group>"; };
 		07DC157D1CD9D7D50054EA20 /* JKDBHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKDBHelper.m; sourceTree = "<group>"; };
 		07DC157E1CD9D7D50054EA20 /* JKDBModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKDBModel.h; sourceTree = "<group>"; };
@@ -861,6 +870,8 @@
 				841064B51CC3C1A9008AAD95 /* OddsViewController.m */,
 				841064B71CC3C1C8008AAD95 /* RankListViewController.h */,
 				841064B81CC3C1C8008AAD95 /* RankListViewController.m */,
+				0746A0FE1CDB4811007EC2AD /* HeroDetailInfoViewController.h */,
+				0746A0FF1CDB4811007EC2AD /* HeroDetailInfoViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -879,6 +890,10 @@
 			children = (
 				841064AE1CC3C14C008AAD95 /* MainGridTableViewCell.h */,
 				841064AF1CC3C14C008AAD95 /* MainGridTableViewCell.m */,
+				07D7B7921CDAED63005E8FB0 /* CollectionReusableView.h */,
+				07D7B7931CDAED63005E8FB0 /* CollectionReusableView.m */,
+				07D7B7941CDAED63005E8FB0 /* CollectionViewCell.h */,
+				07D7B7951CDAED63005E8FB0 /* CollectionViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2151,6 +2166,7 @@
 				07AC6AEE1CC0A65D0030B298 /* DGActivityIndicatorTriplePulseAnimation.m in Sources */,
 				07AC6C1A1CC0A66D0030B298 /* UINavigationController+FDFullscreenPopGesture.m in Sources */,
 				07AC6C291CC0A66D0030B298 /* NSString+Extension.m in Sources */,
+				07D7B7961CDAED63005E8FB0 /* CollectionReusableView.m in Sources */,
 				07AC6AD11CC0A65D0030B298 /* DGActivityIndicatorBallClipRotateAnimation.m in Sources */,
 				07AC6B131CC0A65D0030B298 /* View+MASAdditions.m in Sources */,
 				07AC6ACA1CC0A65D0030B298 /* NSData+Param.m in Sources */,
@@ -2230,6 +2246,7 @@
 				07DC15ED1CDA04780054EA20 /* NSOperationQueue+Queue.m in Sources */,
 				07AC6B251CC0A65D0030B298 /* UIDevice+TL.m in Sources */,
 				07A7D5491CD89C13007B5D5E /* TFHpple.m in Sources */,
+				07D7B7971CDAED63005E8FB0 /* CollectionViewCell.m in Sources */,
 				07AC6ADB1CC0A65D0030B298 /* DGActivityIndicatorBallScaleRippleAnimation.m in Sources */,
 				07AC6AEB1CC0A65D0030B298 /* DGActivityIndicatorRotatingTrigonAnimation.m in Sources */,
 				07AC6B071CC0A65D0030B298 /* SBJSON.m in Sources */,
@@ -2315,6 +2332,7 @@
 				07AC6B2E1CC0A65D0030B298 /* SDWebImageDownloaderOperation.m in Sources */,
 				07AC6C311CC0A66D0030B298 /* TLRootViewController.m in Sources */,
 				07AC6AD31CC0A65D0030B298 /* DGActivityIndicatorBallClipRotatePulseAnimation.m in Sources */,
+				0746A1001CDB4811007EC2AD /* HeroDetailInfoViewController.m in Sources */,
 				07AC6AD91CC0A65D0030B298 /* DGActivityIndicatorBallScaleAnimation.m in Sources */,
 				07AC6AD61CC0A65D0030B298 /* DGActivityIndicatorBallPulseAnimation.m in Sources */,
 				07AC6AE51CC0A65D0030B298 /* DGActivityIndicatorLineScalePartyAnimation.m in Sources */,

@@ -46,6 +46,7 @@
 #import "XPathQuery.h"
 #import "JKDBModel.h"
 #import "CoreModel.h"
+#import <Accelerate/Accelerate.h>
 
 #endif
 

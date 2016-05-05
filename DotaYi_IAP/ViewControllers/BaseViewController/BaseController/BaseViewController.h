@@ -121,4 +121,6 @@
 
 -(void) addKSHeaderAndFooterRefresh;
 
+- (UIImage *)blurryImage:(UIImage *)image withBlurLevel:(CGFloat)blur;
+
 @end

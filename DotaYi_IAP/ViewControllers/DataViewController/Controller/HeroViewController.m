@@ -8,8 +8,14 @@
 
 #import "HeroViewController.h"
 #import "HeroTypeInfoModel.h"
+#import "CollectionViewCell.h"
+#import "CollectionReusableView.h"
+#import "HeroDetailInfoViewController.h"
 
 @interface HeroViewController ()
+<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
+
+@property(strong,nonatomic) UICollectionView *collectionView;
 
 @property (nonatomic,strong) HeroTypeInfoModel *saveMJHeroModel;
 
@@ -25,12 +31,39 @@
 {
     [super viewDidLoad];
     
-    [self creatData];
+    [self getHeroData];
     
-    [self initUI];
+    [self creatCollectionViewData];
+    
+    [self setViewUI];
 }
 
--(void) creatData
+-(void) setViewUI
+{
+    self.navigationItem.title = @"英雄";
+}
+
+-(void) creatCollectionViewData
+{
+    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    
+    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
+    
+    self.collectionView = [[UICollectionView alloc] initWithFrame:[[UIScreen mainScreen] bounds] collectionViewLayout:flowLayout];
+    [self.collectionView registerClass:[CollectionViewCell class] forCellWithReuseIdentifier:@"MyCollectionCell"];
+    
+    self.collectionView.backgroundColor = [UIColor whiteColor];
+    
+    [self.view addSubview:self.collectionView];
+    
+    self.collectionView.dataSource = self;
+    
+    self.collectionView.delegate = self;
+    
+    [self.collectionView registerClass:[CollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"Header"];
+}
+
+-(void) getHeroData
 {
     //获取敏捷英雄数据
     [self getHeroDataWithTypeId:1];
@@ -50,7 +83,9 @@
         
         HeroTypeInfoModel *getLocalModel = selectResult;
         
-        if (getLocalModel.heroNameArray.count)
+        NSLog(@"getLocalModel %@",getLocalModel);
+        
+        if (getLocalModel)
         {
             if (aTypeID == 1)
             {
@@ -240,42 +275,141 @@
                 self.saveLLHeroModel = saveHeroModel;
             }
             
-            NSLog(@"saveMJHeroModel %@",self.saveMJHeroModel.heroNameArray[0]);
-            
-            NSLog(@"saveZLHeroModel %@",self.saveZLHeroModel.heroNameArray[0]);
-            
-            NSLog(@"saveLLHeroModel %@",self.saveLLHeroModel.heroNameArray[0]);
-            
             [HeroTypeInfoModel insert:saveHeroModel resBlock:nil];
         }
+        
+        //主线程显示
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [ws.collectionView reloadData];
+            
+        });
     }];
 
 }
 
-
-
--(void) initUI
+#pragma mark - UICollectionViewDataSource
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    [HeroTypeInfoModel find:1 selectResultBlock:^(id selectResult) {
-        
-        HeroTypeInfoModel *getLocalModel = selectResult;
-        
-        NSLog(@"hero_nameArray11 %@",getLocalModel.heroNameArray[0]);
-    }];
+    return self.saveMJHeroModel.heroHeadImageURLArray.count;
+}
+
+// The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
     
-    [HeroTypeInfoModel find:2 selectResultBlock:^(id selectResult) {
-        
-        HeroTypeInfoModel *getLocalModel = selectResult;
-        
-        NSLog(@"hero_nameArray22 %@",getLocalModel.heroNameArray[0]);
-    }];
+    CollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MyCollectionCell" forIndexPath:indexPath];
     
-    [HeroTypeInfoModel find:3 selectResultBlock:^(id selectResult) {
+    NSString *heroHeadImgUrl;
+    
+    NSString *heroNameString;
+    
+    NSString *heroNameForShortString;
+    
+    if (indexPath.section == 0)
+    {
+        heroHeadImgUrl = self.saveMJHeroModel.heroHeadImageURLArray[indexPath.row];
         
-        HeroTypeInfoModel *getLocalModel = selectResult;
+        heroNameString = self.saveMJHeroModel.heroNameArray[indexPath.row + 1];
         
-        NSLog(@"hero_nameArray33 %@",getLocalModel.heroNameArray[0]);
-    }];
+        heroNameForShortString = self.saveMJHeroModel.heroNameForShortArray[indexPath.row + 1];
+    }
+    else if (indexPath.section == 1)
+    {
+        heroHeadImgUrl = self.saveZLHeroModel.heroHeadImageURLArray[indexPath.row];
+        
+        heroNameString = self.saveZLHeroModel.heroNameArray[indexPath.row + 1];
+        
+        heroNameForShortString = self.saveZLHeroModel.heroNameForShortArray[indexPath.row + 1];
+    }
+    else if (indexPath.section == 2)
+    {
+        heroHeadImgUrl = self.saveLLHeroModel.heroHeadImageURLArray[indexPath.row];
+        
+        heroNameString = self.saveLLHeroModel.heroNameArray[indexPath.row + 1];
+        
+        heroNameForShortString = self.saveLLHeroModel.heroNameForShortArray[indexPath.row + 1];
+    }
+    
+    NSString *heroNameShortStr;
+    
+    NSArray *sepShortNameArr = [heroNameForShortString componentsSeparatedByString:@"简称："];
+    
+    if (sepShortNameArr.count > 1)
+    {
+        heroNameShortStr = [NSString stringWithFormat:@"(%@)",sepShortNameArr[1]];
+    }
+    
+    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:heroHeadImgUrl] placeholderImage:nil];
+    
+    cell.descLabel.text = [NSString stringWithFormat:@"%@%@",heroNameString,heroNameShortStr];
+    
+    return cell;
+}
+
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 3;
+}
+
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    
+    UICollectionReusableView *reusable = nil;
+    
+    if (kind == UICollectionElementKindSectionHeader)
+    {
+        CollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"Header" forIndexPath:indexPath];
+        
+        if (indexPath.section == 0)
+        {
+            view.title.text = self.saveMJHeroModel.heroTypeName;
+        }
+        else if (indexPath.section == 1)
+        {
+            view.title.text = self.saveZLHeroModel.heroTypeName;
+        }
+        else if (indexPath.section == 2)
+        {
+            view.title.text = self.saveLLHeroModel.heroTypeName;
+        }
+        
+        reusable = view;
+    }
+    
+    return reusable;
+}
+
+#pragma mark - UICollectionViewDelegate
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+//    NSString *message = [[NSString alloc] initWithFormat:@"你点击了第%ld个section，第%ld个cell",(long)indexPath.section,(long)indexPath.row];
+    
+
+    HeroDetailInfoViewController *heroDetailVC = [[HeroDetailInfoViewController alloc] init];
+    
+    [self setHidesBottomBarWhenPushed:YES];
+    
+    [self.navigationController pushViewController:heroDetailVC animated:YES];
+}
+
+#pragma mark - UICollectionViewDelegateFlowLayout
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return CGSizeMake((SCREEN_WIDTH - (PADDING_WIDTH * 4)) / 3, (SCREEN_WIDTH - (PADDING_WIDTH * 4)) / 3 + 20);
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+{
+    return UIEdgeInsetsMake(PADDING_WIDTH * 2, PADDING_WIDTH, PADDING_WIDTH, PADDING_WIDTH);
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
+{
+    return CGSizeMake(300, 20);
 }
 
 @end
