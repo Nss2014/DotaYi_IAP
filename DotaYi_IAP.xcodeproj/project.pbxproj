@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0746A1001CDB4811007EC2AD /* HeroDetailInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0746A0FF1CDB4811007EC2AD /* HeroDetailInfoViewController.m */; };
+		0747401A1CDC4C43001CC6C4 /* HeroDetailDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 074740191CDC4C43001CC6C4 /* HeroDetailDataModel.m */; };
 		07A7D5491CD89C13007B5D5E /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A7D5441CD89C13007B5D5E /* TFHpple.m */; };
 		07A7D54A1CD89C13007B5D5E /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A7D5461CD89C13007B5D5E /* TFHppleElement.m */; };
 		07A7D54B1CD89C13007B5D5E /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A7D5481CD89C13007B5D5E /* XPathQuery.m */; };
@@ -252,6 +253,8 @@
 /* Begin PBXFileReference section */
 		0746A0FE1CDB4811007EC2AD /* HeroDetailInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeroDetailInfoViewController.h; sourceTree = "<group>"; };
 		0746A0FF1CDB4811007EC2AD /* HeroDetailInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeroDetailInfoViewController.m; sourceTree = "<group>"; };
+		074740181CDC4C43001CC6C4 /* HeroDetailDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeroDetailDataModel.h; sourceTree = "<group>"; };
+		074740191CDC4C43001CC6C4 /* HeroDetailDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeroDetailDataModel.m; sourceTree = "<group>"; };
 		07A7D5431CD89C13007B5D5E /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHpple.h; sourceTree = "<group>"; };
 		07A7D5441CD89C13007B5D5E /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHpple.m; sourceTree = "<group>"; };
 		07A7D5451CD89C13007B5D5E /* TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHppleElement.h; sourceTree = "<group>"; };
@@ -881,6 +884,8 @@
 			children = (
 				84ADD3391CDA47C60088CA02 /* HeroTypeInfoModel.h */,
 				84ADD33A1CDA47C60088CA02 /* HeroTypeInfoModel.m */,
+				074740181CDC4C43001CC6C4 /* HeroDetailDataModel.h */,
+				074740191CDC4C43001CC6C4 /* HeroDetailDataModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2196,6 +2201,7 @@
 				07AC6AC41CC0A65D0030B298 /* UIImage+ColorForBtn.m in Sources */,
 				841064B31CC3C171008AAD95 /* HeroViewController.m in Sources */,
 				07DC15EB1CDA04780054EA20 /* NSObject+Select.m in Sources */,
+				0747401A1CDC4C43001CC6C4 /* HeroDetailDataModel.m in Sources */,
 				07AC6AE91CC0A65D0030B298 /* DGActivityIndicatorRotatingSandglassAnimation.m in Sources */,
 				07DC15DF1CDA04780054EA20 /* FMDatabaseAdditions.m in Sources */,
 				07AC6ADA1CC0A65D0030B298 /* DGActivityIndicatorBallScaleMultipleAnimation.m in Sources */,

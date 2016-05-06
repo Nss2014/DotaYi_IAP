@@ -7,7 +7,10 @@
 //
 
 #import "BaseViewController.h"
+#import "HeroDetailDataModel.h"
 
 @interface HeroDetailInfoViewController : BaseViewController
+
+@property (nonatomic,strong) HeroDetailDataModel *sendHeroDetailModel;
 
 @end

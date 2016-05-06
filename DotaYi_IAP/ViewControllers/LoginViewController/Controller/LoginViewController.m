@@ -192,7 +192,6 @@
 
 -(void) loginButtonPressed
 {
-    
     NSLog(@"login_loginButton");
 }
 

@@ -11,6 +11,7 @@
 #import "CollectionViewCell.h"
 #import "CollectionReusableView.h"
 #import "HeroDetailInfoViewController.h"
+#import "HeroDetailDataModel.h"
 
 @interface HeroViewController ()
 <UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
@@ -388,8 +389,28 @@
     
 //    NSString *message = [[NSString alloc] initWithFormat:@"你点击了第%ld个section，第%ld个cell",(long)indexPath.section,(long)indexPath.row];
     
+    NSString *heroLinkString = @"";
+    
+    if (indexPath.section == 0)
+    {
+        heroLinkString = self.saveMJHeroModel.heroInfoLinkArray[indexPath.row];
+    }
+    else if (indexPath.section == 1)
+    {
+        heroLinkString = self.saveZLHeroModel.heroInfoLinkArray[indexPath.row];
+    }
+    else if (indexPath.section == 2)
+    {
+        heroLinkString = self.saveLLHeroModel.heroInfoLinkArray[indexPath.row];
+    }
 
     HeroDetailInfoViewController *heroDetailVC = [[HeroDetailInfoViewController alloc] init];
+    
+    heroDetailVC.sendHeroDetailModel = [[HeroDetailDataModel alloc] init];
+    
+    heroDetailVC.sendHeroDetailModel.detailHeroLinkString = heroLinkString;
+    
+    heroDetailVC.sendHeroDetailModel.detailHeroId = [self getHeroIdFromLink:heroLinkString];
     
     [self setHidesBottomBarWhenPushed:YES];
     
@@ -410,6 +431,31 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
 {
     return CGSizeMake(300, 20);
+}
+
+//从英雄链接中提取英雄id
+-(NSString *) getHeroIdFromLink:(NSString *) theLink
+{
+    //http://fight.pcgames.com.cn/warcraft/dota/heros/1103/2158993.html
+    
+    NSString *getHeroId = @"";
+    
+    NSArray *sepLinkArray = [theLink componentsSeparatedByString:@".html"];
+    
+    if (sepLinkArray.count)
+    {
+        NSString *getSepFirstString = sepLinkArray[0];
+        
+        NSArray *sepSecArray = [getSepFirstString componentsSeparatedByString:@"/"];
+        
+        if (sepSecArray.count)
+        {
+            //得到英雄id
+            getHeroId = [sepSecArray lastObject];
+        }
+    }
+    
+    return getHeroId;
 }
 
 @end
