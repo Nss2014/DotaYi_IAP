@@ -403,14 +403,14 @@
     {
         heroLinkString = self.saveLLHeroModel.heroInfoLinkArray[indexPath.row];
     }
+    
+    NSLog(@"heroLinkString %@",heroLinkString);
 
     HeroDetailInfoViewController *heroDetailVC = [[HeroDetailInfoViewController alloc] init];
     
-    heroDetailVC.sendHeroDetailModel = [[HeroDetailDataModel alloc] init];
+    heroDetailVC.sendHeroLink = heroLinkString;
     
-    heroDetailVC.sendHeroDetailModel.detailHeroLinkString = heroLinkString;
-    
-    heroDetailVC.sendHeroDetailModel.detailHeroId = [self getHeroIdFromLink:heroLinkString];
+    heroDetailVC.sendHeroId = [self getHeroIdFromLink:heroLinkString];
     
     [self setHidesBottomBarWhenPushed:YES];
     

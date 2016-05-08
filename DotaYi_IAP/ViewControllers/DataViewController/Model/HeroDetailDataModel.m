@@ -21,11 +21,37 @@
         
         self.detaiHeroRecommendAddPointArray = [NSMutableArray array];
         
-        self.detailHeroRecommendEquipmentsArray = [NSMutableArray array];
+        self.detailHeroFirstRecommendEquipmentsArray = [NSMutableArray array];
+        
+        self.detailHeroSecondRecommendEquipmentsArray = [NSMutableArray array];
+        
+        self.detailHeroThirdRecommendEquipmentsArray = [NSMutableArray array];
         
         self.detailHeroSkillsArray = [NSMutableArray array];
     }
     return self;
 }
+
++(NSDictionary *)statementForNSArrayProperties{
+    return @{@"detailHeroMatchArray":NSStringFromClass([MatchOrDefenceHeroModel class]),
+             @"detailHeroRestrainArray":NSStringFromClass([MatchOrDefenceHeroModel class]),
+             @"detaiHeroRecommendAddPointArray":NSStringFromClass([NSString class]),
+             @"detailHeroFirstRecommendEquipmentsArray":NSStringFromClass([RecommendEqumentsModel class]),
+             @"detailHeroSecondRecommendEquipmentsArray":NSStringFromClass([RecommendEqumentsModel class]),
+             @"detailHeroThirdRecommendEquipmentsArray":NSStringFromClass([RecommendEqumentsModel class]),
+             @"detailHeroSkillsArray":NSStringFromClass([SkillsIntroduceModel class])};
+}
+
+@end
+
+@implementation MatchOrDefenceHeroModel
+
+@end
+
+@implementation RecommendEqumentsModel
+
+@end
+
+@implementation SkillsIntroduceModel
 
 @end

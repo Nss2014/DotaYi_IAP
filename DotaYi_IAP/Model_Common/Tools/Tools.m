@@ -503,5 +503,114 @@ NSString *const NewFeatureVersionKey = @"NewFeatureVersionKey";
     return timeInterval;
 }
 
+//根据主xpath（TFHpple ＊）获取字符串数据
++(NSString *) getHtmlValueWithXPathParser:(id)xpathParser XPathQuery:(NSString *)xPathQuery DetailXPathQuery:(NSString *)detailXPathQuery  DetailKey:(NSString *) detailKey
+{
+    NSString *getValueString = @"";
+    
+    if (xPathQuery)
+    {
+        NSArray *firstElementsArr = [xpathParser searchWithXPathQuery:xPathQuery];
+        
+        for (TFHppleElement *firstElement in firstElementsArr)
+        {
+            //如果有第二层则取出 若没有直接取第一层的数据
+            if (detailXPathQuery)
+            {
+                NSArray *IMGElementsArr = [firstElement searchWithXPathQuery:detailXPathQuery];
+                
+                for (TFHppleElement *tempAElement in IMGElementsArr)
+                {
+                    //如果传入key值则取key对应的值  若没有则取text值
+                    if (detailKey)
+                    {
+                        NSString *valueStr = [tempAElement objectForKey:detailKey];
+                        
+                        getValueString = valueStr;
+
+                    }
+                    else
+                    {
+                        getValueString = tempAElement.text;
+                    }
+                }
+
+            }
+            else
+            {
+                if (detailKey)
+                {
+                    NSString *valueStr = [firstElement objectForKey:detailKey];
+                    
+                    getValueString = valueStr;
+
+                }
+                else
+                {
+                    getValueString = firstElement.text;
+                }
+            }
+            
+        }
+    }
+    
+    return getValueString;
+}
+
+//根据次级xpath（TFHppleElement ＊）获取字符串数据
++(NSMutableArray *) getHtmlValueArrayWithXPathParser:(id)xpathParser XPathQuery:(NSString *)xPathQuery DetailXPathQuery:(NSString *)detailXPathQuery  DetailKey:(NSString *) detailKey
+{
+    NSMutableArray *getValueArray = [NSMutableArray array];
+    
+    if (xPathQuery)
+    {
+        NSArray *firstElementsArr = [xpathParser searchWithXPathQuery:xPathQuery];
+        
+        for (TFHppleElement *firstElement in firstElementsArr)
+        {
+            //如果有第二层则取出 若没有直接取第一层的数据
+            if (detailXPathQuery)
+            {
+                NSArray *IMGElementsArr = [firstElement searchWithXPathQuery:detailXPathQuery];
+                
+                for (TFHppleElement *tempAElement in IMGElementsArr)
+                {
+                    //如果传入key值则取key对应的值  若没有则取text值
+                    if (detailKey)
+                    {
+                        NSString *valueStr = [tempAElement objectForKey:detailKey];
+                        
+                        [getValueArray addObject:valueStr];
+                        
+                    }
+                    else
+                    {
+                        [getValueArray addObject:tempAElement.content];
+                    }
+                }
+                
+            }
+            else
+            {
+                if (detailKey)
+                {
+                    NSString *valueStr = [firstElement objectForKey:detailKey];
+                    
+                    [getValueArray addObject:valueStr];
+                    
+                }
+                else
+                {
+                    [getValueArray addObject:firstElement.content];
+
+                }
+            }
+            
+        }
+    }
+    
+    return getValueArray;
+}
+
 
 @end

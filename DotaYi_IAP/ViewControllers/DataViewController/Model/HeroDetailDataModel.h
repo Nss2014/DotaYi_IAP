@@ -8,6 +8,52 @@
 
 #import "CoreModel.h"
 
+//配合&克制英雄推荐 模型
+@interface MatchOrDefenceHeroModel : CoreModel
+
+@property (nonatomic,copy) NSString *mdHeroImgString;
+
+@property (nonatomic,copy) NSString *mdHeroLinkString;
+
+@end
+
+//推荐出装 模型
+@interface RecommendEqumentsModel : CoreModel
+
+@property (nonatomic,copy) NSString *reImgString;
+
+@property (nonatomic,copy) NSString *reLinkString;
+
+@end
+
+@interface SkillsIntroduceModel : CoreModel
+
+@property (nonatomic,copy) NSString *skillNameString;//技能名称
+
+@property (nonatomic,copy) NSString *skillImgString;//图标
+
+@property (nonatomic,copy) NSString *skillQuickNameString;//快捷键
+
+@property (nonatomic,copy) NSString *skillIntroduceString;//介绍
+
+@property (nonatomic,copy) NSString *skillDistanceString;//施法距离
+
+@property (nonatomic,copy) NSString *skillIntervalString;//施法间隔
+
+@property (nonatomic,copy) NSString *skillMPExpendString;//魔法消耗
+
+@property (nonatomic,copy) NSString *skillLevel1String;//等级1
+
+@property (nonatomic,copy) NSString *skillLevel2String;
+
+@property (nonatomic,copy) NSString *skillLevel3String;
+
+@property (nonatomic,copy) NSString *skillLevel4String;
+
+
+@end
+
+
 @interface HeroDetailDataModel : CoreModel
 
 @property (nonatomic,copy) NSString *detailHeroId;//英雄id
@@ -18,11 +64,15 @@
 
 @property (nonatomic,copy) NSString *detailHeroPictureUrlString;//英雄背景图
 
+@property (nonatomic,copy) NSString *detailHeroImgString;//头像
+
 @property (nonatomic,copy) NSString *detailHeroNameString;//名称
 
 @property (nonatomic,copy) NSString *detailHeroHPString;//血量
 
 @property (nonatomic,copy) NSString *detailHeroMPString;//蓝量
+
+@property (nonatomic,copy) NSString *detailHeroRangeString;//射程&移速
 
 @property (nonatomic,copy) NSString *detailHeroAttackString;//攻击&攻速&护甲
 
@@ -35,7 +85,11 @@
 
 @property (nonatomic,strong) NSMutableArray *detaiHeroRecommendAddPointArray;//推荐加点方案
 
-@property (nonatomic,strong) NSMutableArray *detailHeroRecommendEquipmentsArray;//推荐出装
+@property (nonatomic,strong) NSMutableArray *detailHeroFirstRecommendEquipmentsArray;//推荐出装 初期
+
+@property (nonatomic,strong) NSMutableArray *detailHeroSecondRecommendEquipmentsArray;//推荐出装 中期
+
+@property (nonatomic,strong) NSMutableArray *detailHeroThirdRecommendEquipmentsArray;//推荐出装 后期
 
 @property (nonatomic,strong) NSMutableArray *detailHeroSkillsArray;//技能介绍
 

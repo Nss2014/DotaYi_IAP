@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #include <CommonCrypto/CommonDigest.h>
+#import "TFHpple.h"
 
 @interface Tools : NSObject
 
@@ -60,6 +61,10 @@
 +(long long) getCurrentTimeStamp;
 
 +(NSString *) exchangeNullToEmptyString:(NSString *)sendString;
+
++(NSString *) getHtmlValueWithXPathParser:(id)xpathParser XPathQuery:(NSString *)xPathQuery DetailXPathQuery:(NSString *)detailXPathQuery  DetailKey:(NSString *) detailKey;
+
++(NSMutableArray *) getHtmlValueArrayWithXPathParser:(id)xpathParser XPathQuery:(NSString *)xPathQuery DetailXPathQuery:(NSString *)detailXPathQuery  DetailKey:(NSString *) detailKey;
 
 @end
 

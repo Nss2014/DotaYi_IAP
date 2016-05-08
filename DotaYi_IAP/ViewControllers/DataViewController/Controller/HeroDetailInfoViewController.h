@@ -11,6 +11,8 @@
 
 @interface HeroDetailInfoViewController : BaseViewController
 
-@property (nonatomic,strong) HeroDetailDataModel *sendHeroDetailModel;
+@property (nonatomic,copy) NSString *sendHeroId;//传入英雄id 作为数据库hostID
+
+@property (nonatomic,copy) NSString *sendHeroLink;//传入英雄链接 解析数据用
 
 @end
