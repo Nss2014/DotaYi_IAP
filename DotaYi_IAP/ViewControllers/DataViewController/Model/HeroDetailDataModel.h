@@ -42,14 +42,7 @@
 
 @property (nonatomic,copy) NSString *skillMPExpendString;//魔法消耗
 
-@property (nonatomic,copy) NSString *skillLevel1String;//等级1
-
-@property (nonatomic,copy) NSString *skillLevel2String;
-
-@property (nonatomic,copy) NSString *skillLevel3String;
-
-@property (nonatomic,copy) NSString *skillLevel4String;
-
+@property (nonatomic,copy) NSString *skillLevelString;//等级提升介绍
 
 @end
 
@@ -79,18 +72,18 @@
 @property (nonatomic,copy) NSString *detailHeroStrengthString;//力量&智力&敏捷
 
 
-@property (nonatomic,strong) NSMutableArray *detailHeroMatchArray;//配合英雄推荐
+@property (nonatomic,strong) NSArray *detailHeroMatchArray;//配合英雄推荐
 
-@property (nonatomic,strong) NSMutableArray *detailHeroRestrainArray;//克制英雄推荐
+@property (nonatomic,strong) NSArray *detailHeroRestrainArray;//克制英雄推荐
 
-@property (nonatomic,strong) NSMutableArray *detaiHeroRecommendAddPointArray;//推荐加点方案
+@property (nonatomic,strong) NSArray *detaiHeroRecommendAddPointArray;//推荐加点方案
 
-@property (nonatomic,strong) NSMutableArray *detailHeroFirstRecommendEquipmentsArray;//推荐出装 初期
+@property (nonatomic,strong) NSArray *detailHeroFirstRecommendEquipmentsArray;//推荐出装 初期
 
-@property (nonatomic,strong) NSMutableArray *detailHeroSecondRecommendEquipmentsArray;//推荐出装 中期
+@property (nonatomic,strong) NSArray *detailHeroSecondRecommendEquipmentsArray;//推荐出装 中期
 
-@property (nonatomic,strong) NSMutableArray *detailHeroThirdRecommendEquipmentsArray;//推荐出装 后期
+@property (nonatomic,strong) NSArray *detailHeroThirdRecommendEquipmentsArray;//推荐出装 后期
 
-@property (nonatomic,strong) NSMutableArray *detailHeroSkillsArray;//技能介绍
+@property (nonatomic,strong) NSArray *detailHeroSkillsArray;//技能介绍
 
 @end

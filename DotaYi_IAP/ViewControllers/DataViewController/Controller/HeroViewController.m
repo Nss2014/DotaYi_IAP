@@ -14,9 +14,6 @@
 #import "HeroDetailDataModel.h"
 
 @interface HeroViewController ()
-<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
-
-@property(strong,nonatomic) UICollectionView *collectionView;
 
 @property (nonatomic,strong) HeroTypeInfoModel *saveMJHeroModel;
 
@@ -46,20 +43,9 @@
 
 -(void) creatCollectionViewData
 {
-    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    [self addCollectionView];
     
-    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
-    
-    self.collectionView = [[UICollectionView alloc] initWithFrame:[[UIScreen mainScreen] bounds] collectionViewLayout:flowLayout];
     [self.collectionView registerClass:[CollectionViewCell class] forCellWithReuseIdentifier:@"MyCollectionCell"];
-    
-    self.collectionView.backgroundColor = [UIColor whiteColor];
-    
-    [self.view addSubview:self.collectionView];
-    
-    self.collectionView.dataSource = self;
-    
-    self.collectionView.delegate = self;
     
     [self.collectionView registerClass:[CollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"Header"];
 }
@@ -332,18 +318,18 @@
         heroNameForShortString = self.saveLLHeroModel.heroNameForShortArray[indexPath.row + 1];
     }
     
-    NSString *heroNameShortStr;
-    
-    NSArray *sepShortNameArr = [heroNameForShortString componentsSeparatedByString:@"简称："];
-    
-    if (sepShortNameArr.count > 1)
-    {
-        heroNameShortStr = [NSString stringWithFormat:@"(%@)",sepShortNameArr[1]];
-    }
-    
+//    NSString *heroNameShortStr;
+//    
+//    NSArray *sepShortNameArr = [heroNameForShortString componentsSeparatedByString:@"简称："];
+//    
+//    if (sepShortNameArr.count > 1)
+//    {
+//        heroNameShortStr = [NSString stringWithFormat:@"(%@)",sepShortNameArr[1]];
+//    }
+   
     [cell.imageView sd_setImageWithURL:[NSURL URLWithString:heroHeadImgUrl] placeholderImage:nil];
     
-    cell.descLabel.text = [NSString stringWithFormat:@"%@%@",heroNameString,heroNameShortStr];
+    cell.descLabel.text = heroNameString;
     
     return cell;
 }
@@ -420,7 +406,7 @@
 #pragma mark - UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake((SCREEN_WIDTH - (PADDING_WIDTH * 4)) / 3, (SCREEN_WIDTH - (PADDING_WIDTH * 4)) / 3 + 20);
+    return CGSizeMake((SCREEN_WIDTH - (PADDING_WIDTH * 5)) / 4, (SCREEN_WIDTH - (PADDING_WIDTH * 5)) / 4 + 20);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section

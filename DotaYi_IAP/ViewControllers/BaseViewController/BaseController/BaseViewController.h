@@ -41,7 +41,7 @@
 #import "ARSegmentPageControllerHeaderProtocol.h"
 #import "ARSegmentControllerDelegate.h"
 
-@interface BaseViewController : UIViewController <UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UIWebViewDelegate,DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
+@interface BaseViewController : UIViewController <UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UIWebViewDelegate,DZNEmptyDataSetSource, DZNEmptyDataSetDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 {
         //是否正在加载数据
     BOOL isloading;
@@ -63,6 +63,8 @@
 @property (nonatomic, strong) UIScrollView *viwScrollView;
 @property (nonatomic, strong) UITableView  *viwTable;
 
+@property(strong,nonatomic) UICollectionView *collectionView;
+
 @property (nonatomic,assign) NSInteger currentMainPage;
 
 @property (nonatomic,assign) BOOL isFooterRefresh;
@@ -71,6 +73,8 @@
 -(void)addTableView:(UITableViewStyle)style separatorStyle:(UITableViewCellSeparatorStyle)sepStyle;
 
 -(void) addScrollView;
+
+-(void) addCollectionView;
 
 //添加Tap手势
 -(void) addTapGestureRecognizer;

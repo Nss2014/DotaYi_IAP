@@ -9,8 +9,6 @@
 
 #import "CollectionViewCell.h"
 
-#define SCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
-
 @implementation CollectionViewCell
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -28,7 +26,7 @@
         
         self.descLabel.textAlignment = NSTextAlignmentCenter;
         
-        self.descLabel.font = TEXT14_FONT;
+        self.descLabel.font = TEXT12_FONT;
         
         self.descLabel.textColor = COLOR_TITLE_BLACK;
         

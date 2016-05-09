@@ -14,20 +14,7 @@
 {
     self = [super init];
     if (self) {
-        
-        self.detailHeroMatchArray = [NSMutableArray array];
-        
-        self.detailHeroRestrainArray = [NSMutableArray array];
-        
-        self.detaiHeroRecommendAddPointArray = [NSMutableArray array];
-        
-        self.detailHeroFirstRecommendEquipmentsArray = [NSMutableArray array];
-        
-        self.detailHeroSecondRecommendEquipmentsArray = [NSMutableArray array];
-        
-        self.detailHeroThirdRecommendEquipmentsArray = [NSMutableArray array];
-        
-        self.detailHeroSkillsArray = [NSMutableArray array];
+    
     }
     return self;
 }

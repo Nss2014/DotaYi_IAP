@@ -31,13 +31,19 @@
     {
         WS(ws);
         
+        NSLog(@"sendHeroId %@   %@",self.sendHeroId,self.sendHeroLink);
+        
+        __block NSInteger tempChanged = 0;
+        
         [HeroDetailDataModel find:[self.sendHeroId integerValue] selectResultBlock:^(id selectResult) {
             
-            HeroDetailDataModel *getHeroDetailModel = (HeroDetailDataModel *)selectResult;
+            HeroDetailDataModel *getHeroDetailModel = selectResult;
             
-            if (getHeroDetailModel)
+            if (getHeroDetailModel != nil && ![getHeroDetailModel isKindOfClass:[NSNull class]])
             {
                 ws.heroDetailModel = getHeroDetailModel;
+                
+                tempChanged ++;
             }
             else
             {
@@ -47,25 +53,31 @@
                     
                     TFHpple *xpathParser = [[TFHpple alloc] initWithHTMLData:data];
                     
-                    ws.heroDetailModel = [[HeroDetailDataModel alloc] init];
+                    HeroDetailDataModel *saveModel = [[HeroDetailDataModel alloc] init];
+                    
+                    saveModel.hostID = [ws.sendHeroId integerValue];
                     
                     //TableHeader数据（头像、背景图片、名称、初始属性）
-                    [ws getTableHeaderData:xpathParser];
+                    [ws getTableHeaderData:xpathParser SaveModel:saveModel];
                     
                     //section数据
                     //推荐加点方案
-                    [ws getRecommendAddpointData:xpathParser];
+                    [ws getRecommendAddpointData:xpathParser SaveModel:saveModel];
                     
                     //配合英雄推荐&克制英雄推荐
-                    [ws getMatchHeroData:xpathParser];
+                    [ws getMatchHeroData:xpathParser SaveModel:saveModel];
                     
                     //推荐出装
-                    [ws getRecommendEquipmentsData:xpathParser];
+                    [ws getRecommendEquipmentsData:xpathParser SaveModel:saveModel];
                     
                     //技能介绍
-//                    [ws getSkillIntroduceData:xpathParser];
+                    [ws getSkillIntroduceData:xpathParser SaveModel:saveModel];
                     
-                    //主线程更新页面
+                    [HeroDetailDataModel save:saveModel resBlock:nil];
+                    
+                    ws.heroDetailModel = saveModel;
+                    
+                    tempChanged ++;
                 }
                 else
                 {
@@ -73,6 +85,20 @@
                     
                     CoreSVPError(@"数据出错，请重试", nil);
                 }
+            }
+            
+            if (tempChanged == 1)
+            {
+                //主线程更新页面
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    NSLog(@"heroDetailModel %@",ws.heroDetailModel);
+                    
+                    NSLog(@"detailHeroSkillsArray %@",ws.heroDetailModel.detailHeroHPString);
+                    
+                    [ws.viwTable reloadData];
+                    
+                });
             }
             
         }];
@@ -83,18 +109,17 @@
         
         CoreSVPError(@"数据出错，请重试", nil);
     }
- 
 }
 
 
--(void) getTableHeaderData:(TFHpple *) xpathParser
+-(void) getTableHeaderData:(TFHpple *) xpathParser  SaveModel:(HeroDetailDataModel *) saveModel
 {
     //英雄背景图
     NSString *heroBgImgString = [Tools getHtmlValueWithXPathParser:xpathParser XPathQuery:@"//div[@class='dPic fl']" DetailXPathQuery:@"//img" DetailKey:@"src"];
     
     NSLog(@"heroBgImgString %@",heroBgImgString);
     
-    self.heroDetailModel.detailHeroPictureUrlString = heroBgImgString;
+    saveModel.detailHeroPictureUrlString = heroBgImgString;
     
     //头像、名称
     NSString *heroHeadImgString = [Tools getHtmlValueWithXPathParser:xpathParser XPathQuery:@"//div[@class='dLeft clearfix fl']" DetailXPathQuery:@"//img" DetailKey:@"src"];
@@ -105,9 +130,9 @@
     
     NSLog(@"heroNameString %@",heroNameString);
     
-    self.heroDetailModel.detailHeroImgString = heroHeadImgString;
+    saveModel.detailHeroImgString = heroHeadImgString;
     
-    self.heroDetailModel.detailHeroNameString = heroNameString;
+    saveModel.detailHeroNameString = heroNameString;
 
     
     //初始属性
@@ -128,18 +153,18 @@
     
     NSLog(@"heroHPString %@  %@  %@  %@  %@",heroHPString,heroMPString,heroRangeString,heroAttackString,heroStrengthString);
     
-    self.heroDetailModel.detailHeroHPString = heroHPString;
+    saveModel.detailHeroHPString = heroHPString;
     
-    self.heroDetailModel.detailHeroMPString = heroMPString;
+    saveModel.detailHeroMPString = heroMPString;
     
-    self.heroDetailModel.detailHeroRangeString = heroRangeString;
+    saveModel.detailHeroRangeString = heroRangeString;
     
-    self.heroDetailModel.detailHeroAttackString = heroAttackString;
+    saveModel.detailHeroAttackString = heroAttackString;
     
-    self.heroDetailModel.detailHeroStrengthString = heroStrengthString;
+    saveModel.detailHeroStrengthString = heroStrengthString;
 }
 
--(void) getMatchHeroData:(TFHpple *) xpathParser
+-(void) getMatchHeroData:(TFHpple *) xpathParser  SaveModel:(HeroDetailDataModel *) saveModel
 {
     NSArray *matchElementArr = [xpathParser searchWithXPathQuery:@"//div[@class='tbC']"];
     
@@ -159,19 +184,6 @@
             NSString *childImgString = [childTempAElement objectForKey:@"src"];
             
             [tempChildImgArray addObject:childImgString];
-            
-            if (getValueSign == 0)
-            {
-                //配合英雄头像
-                NSLog(@"childImgString000 %@",childImgString);
-
-            }
-            else if (getValueSign == 1)
-            {
-                //克制英雄头像
-                NSLog(@"childImgString111 %@",childImgString);
-
-            }
         }
         
         
@@ -180,11 +192,16 @@
         
         for (TFHppleElement *childTempAElement in childNameElementsArr)
         {
-            
             NSString *childLinkString = [childTempAElement objectForKey:@"href"];
             
             [tempChildLinkArray addObject:childLinkString];
         }
+        
+        NSLog(@"tempChildImgArray %@ \n tempChildLinkArray %@",tempChildImgArray,tempChildLinkArray);
+        
+        NSMutableArray *tempMatchArray = [NSMutableArray array];
+        
+        NSMutableArray *tempRestainArray = [NSMutableArray array];
 
         for (int i=0; i<tempChildImgArray.count; i++)
         {
@@ -193,6 +210,8 @@
             NSString *tempLinkString = tempChildLinkArray[i];
             
             MatchOrDefenceHeroModel *matchOrDefence = [[MatchOrDefenceHeroModel alloc] init];
+            
+            matchOrDefence.hostID = 100 + i;
 
             matchOrDefence.mdHeroImgString = tempImgString;
             
@@ -201,35 +220,49 @@
             if (getValueSign == 0)
             {
                 //配合英雄
-                [self.heroDetailModel.detailHeroMatchArray addObject:matchOrDefence];
-                
+                [tempMatchArray addObject:matchOrDefence];
             }
             else if (getValueSign == 1)
             {
                 //克制英雄
-                [self.heroDetailModel.detailHeroRestrainArray addObject:matchOrDefence];
-                
+                [tempRestainArray addObject:matchOrDefence];
             }
         }
+        
+        if (tempMatchArray.count)
+        {
+            saveModel.detailHeroMatchArray = [NSArray arrayWithArray:tempMatchArray];
+        }
+        
+        if (tempRestainArray.count)
+        {
+            saveModel.detailHeroRestrainArray = [NSArray arrayWithArray:tempRestainArray];
+        }
+        
+        NSLog(@"detailHeroMatchArray %@ \n detailHeroRestrainArray %@",saveModel.detailHeroMatchArray,saveModel.detailHeroRestrainArray);
         
         getValueSign ++;
 
     }
 }
 
--(void) getRecommendAddpointData:(TFHpple *) xpathParser
+-(void) getRecommendAddpointData:(TFHpple *) xpathParser  SaveModel:(HeroDetailDataModel *) saveModel
 {
     NSArray *recommendAddPointArray = [Tools getHtmlValueArrayWithXPathParser:xpathParser XPathQuery:@"//div[@class='modD mb10 p1-l728-md-a']" DetailXPathQuery:@"//img" DetailKey:@"src"];
     
     NSLog(@"recommendAddPointArray %@",recommendAddPointArray);
     
+    NSMutableArray *tempAddPointArray = [NSMutableArray array];
+    
     for (NSString *addPointString in recommendAddPointArray)
     {
-        [self.heroDetailModel.detaiHeroRecommendAddPointArray addObject:addPointString];
+        [tempAddPointArray addObject:addPointString];
     }
+    
+    saveModel.detaiHeroRecommendAddPointArray = [NSArray arrayWithArray:tempAddPointArray];
 }
 
--(void) getRecommendEquipmentsData:(TFHpple *) xpathParser
+-(void) getRecommendEquipmentsData:(TFHpple *) xpathParser  SaveModel:(HeroDetailDataModel *) saveModel
 {
     NSArray *beginElementArr = [xpathParser searchWithXPathQuery:@"//div[@class='modD mb10 p1-l728-md-b']"];
     
@@ -256,6 +289,8 @@
                 
                 RecommendEqumentsModel *recommendEqumentsModel = [[RecommendEqumentsModel alloc] init];
                 
+                recommendEqumentsModel.hostID = 100 + i;
+                
                 recommendEqumentsModel.reImgString = getImgString;
                 
                 recommendEqumentsModel.reLinkString = getLinkString;
@@ -263,10 +298,7 @@
                 [tempModelArray addObject:recommendEqumentsModel];
             }
             
-            for (RecommendEqumentsModel *getFirstModel in tempModelArray)
-            {
-                [self.heroDetailModel.detailHeroFirstRecommendEquipmentsArray addObject:getFirstModel];
-            }
+            saveModel.detailHeroFirstRecommendEquipmentsArray = [NSArray arrayWithArray:tempModelArray];
             
             //中期(图片&链接)
             NSArray *getRecommendSecondImgArray = [Tools getHtmlValueArrayWithXPathParser:tempAElement XPathQuery:@"//li[@class='li_146']" DetailXPathQuery:@"//img" DetailKey:@"src"];
@@ -283,6 +315,8 @@
                 
                 RecommendEqumentsModel *recommendEqumentsModel = [[RecommendEqumentsModel alloc] init];
                 
+                recommendEqumentsModel.hostID = 100 + i;
+                
                 recommendEqumentsModel.reImgString = getImgString;
                 
                 recommendEqumentsModel.reLinkString = getLinkString;
@@ -290,10 +324,7 @@
                 [tempModelArray addObject:recommendEqumentsModel];
             }
             
-            for (RecommendEqumentsModel *getSecondModel in tempModelArray)
-            {
-                [self.heroDetailModel.detailHeroSecondRecommendEquipmentsArray addObject:getSecondModel];
-            }
+            saveModel.detailHeroSecondRecommendEquipmentsArray = [NSArray arrayWithArray:tempModelArray];
             
             //后期(图片&链接)
             NSArray *getRecommendThirdImgArray = [Tools getHtmlValueArrayWithXPathParser:tempAElement XPathQuery:@"//li[@class='li_138']" DetailXPathQuery:@"//img" DetailKey:@"src"];
@@ -310,6 +341,8 @@
                 
                 RecommendEqumentsModel *recommendEqumentsModel = [[RecommendEqumentsModel alloc] init];
                 
+                recommendEqumentsModel.hostID = 200 + i;
+                
                 recommendEqumentsModel.reImgString = getImgString;
                 
                 recommendEqumentsModel.reLinkString = getLinkString;
@@ -317,17 +350,14 @@
                 [tempModelArray addObject:recommendEqumentsModel];
             }
             
-            for (RecommendEqumentsModel *getThirdModel in tempModelArray)
-            {
-                [self.heroDetailModel.detailHeroThirdRecommendEquipmentsArray addObject:getThirdModel];
-            }
+            saveModel.detailHeroThirdRecommendEquipmentsArray = [NSArray arrayWithArray:tempModelArray];
 
             
-            NSLog(@"getRecommendFirstImgArray %@  %@",getRecommendFirstImgArray,getRecommendFirstLinkArray);
+            NSLog(@"detailHeroFirstRecommendEquipmentsArray %@",saveModel.detailHeroFirstRecommendEquipmentsArray);
             
-            NSLog(@"getRecommendSecondImgArray %@  %@",getRecommendSecondImgArray,getRecommendSecondLinkArray);
+            NSLog(@"detailHeroSecondRecommendEquipmentsArray %@",saveModel.detailHeroSecondRecommendEquipmentsArray);
             
-            NSLog(@"getRecommendThirdImgArray %@  %@",getRecommendThirdImgArray,getRecommendThirdLinkArray);
+            NSLog(@"detailHeroThirdRecommendEquipmentsArray %@",saveModel.detailHeroThirdRecommendEquipmentsArray);
             
         }
 
@@ -336,9 +366,11 @@
 }
 
 
--(void) getSkillIntroduceData:(TFHpple *) xpathParser
+-(void) getSkillIntroduceData:(TFHpple *) xpathParser  SaveModel:(HeroDetailDataModel *) saveModel
 {
     NSArray *beginElementArr = [xpathParser searchWithXPathQuery:@"//div[@class='modD p1-l728-md-c']"];
+    
+    NSLog(@"beginElementArr %ld",beginElementArr.count);
     
     for (TFHppleElement *beginAElement in beginElementArr)
     {
@@ -389,7 +421,7 @@
         }
         
         //技能介绍&施法距离等等。。
-        NSArray *introduceArray3 = [Tools getHtmlValueArrayWithXPathParser:beginAElement XPathQuery:@"//table[@class='table1']" DetailXPathQuery:@"//td" DetailKey:nil];
+        NSArray *introduceArray3 = [Tools getHtmlValueArrayWithXPathParser:beginAElement XPathQuery:@"//table[@class='table1']" DetailXPathQuery:@"//tbody" DetailKey:nil];
         
         NSLog(@"introduceArray3 %@ \n %@ \n %@",introduceArray3[0],introduceArray3[1],introduceArray3[2]);
         
@@ -411,6 +443,8 @@
             [tempSkillLevelUpArray addObject:valueSring];
         }
         
+        NSMutableArray *tempSkillFinalArray = [NSMutableArray array];
+        
         for (int i=0; i<tempSkillImgArray.count; i++)
         {
             NSString *imgString = tempSkillImgArray[i];
@@ -425,12 +459,24 @@
             
             SkillsIntroduceModel *skillIntroduceModel = [[SkillsIntroduceModel alloc] init];
             
+            skillIntroduceModel.hostID = 100 + i;
+            
             skillIntroduceModel.skillNameString = nameString;
             
             skillIntroduceModel.skillImgString = imgString;
-            //未完
             
+            skillIntroduceModel.skillQuickNameString = quickShotString;
+            
+            skillIntroduceModel.skillDistanceString = spellDistanceString;
+            
+            skillIntroduceModel.skillLevelString = levelUpString;
+
+            [tempSkillFinalArray addObject:skillIntroduceModel];
         }
+        
+        saveModel.detailHeroSkillsArray = [NSArray arrayWithArray:tempSkillFinalArray];
+        
+        NSLog(@"detailHeroSkillsArray %@",saveModel.detailHeroSkillsArray);
     }
 }
 

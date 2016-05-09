@@ -114,12 +114,12 @@
     
     self.view.backgroundColor = WHITE_COLOR;
     
-    [self initData];
+    [self createMyData];
     
     [self addBackItemWithAction];
 }
 
--(void) initData
+-(void) createMyData
 {
     self.currentMainPage = 0;
     
@@ -337,6 +337,23 @@
     viwScrollView.delegate = self;
     [self.view addSubview:viwScrollView];
    
+}
+
+-(void) addCollectionView
+{
+    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    
+    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
+    
+    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT) collectionViewLayout:flowLayout];
+    
+    self.collectionView.backgroundColor = [UIColor whiteColor];
+    
+    [self.view addSubview:self.collectionView];
+    
+    self.collectionView.dataSource = self;
+    
+    self.collectionView.delegate = self;
 }
 
 //分割线左对齐

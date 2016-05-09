@@ -29,7 +29,7 @@
 
 -(void) initData
 {
-    
+    NSLog(@"me initData");
 }
 
 -(void) initUI
