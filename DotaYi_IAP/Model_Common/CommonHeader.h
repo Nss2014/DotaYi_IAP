@@ -411,6 +411,10 @@
  */
 #define DT_HEROLISTDATA_URL @"http://fight.pcgames.com.cn/warcraft/dota/heros/"
 
+/**
+ *  物品数据
+ */
+#define DT_ODDSLISTDATA_URL @"http://fight.pcgames.com.cn/warcraft/dota/items/"
 
 
 //----------------------AES128加密--------------------

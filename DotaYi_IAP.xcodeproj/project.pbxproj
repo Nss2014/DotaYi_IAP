@@ -22,6 +22,7 @@
 		074C19BB1CE088B300711A2E /* odds_image7.png in Resources */ = {isa = PBXBuildFile; fileRef = 074C19AE1CE088B300711A2E /* odds_image7.png */; };
 		074C19BC1CE088B300711A2E /* odds_image8.png in Resources */ = {isa = PBXBuildFile; fileRef = 074C19AF1CE088B300711A2E /* odds_image8.png */; };
 		074C19BD1CE088B300711A2E /* odds_image9.png in Resources */ = {isa = PBXBuildFile; fileRef = 074C19B01CE088B300711A2E /* odds_image9.png */; };
+		077118D11CE18AE800BD13CE /* OddsTypeInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 077118D01CE18AE800BD13CE /* OddsTypeInfoModel.m */; };
 		07A7D5491CD89C13007B5D5E /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A7D5441CD89C13007B5D5E /* TFHpple.m */; };
 		07A7D54A1CD89C13007B5D5E /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A7D5461CD89C13007B5D5E /* TFHppleElement.m */; };
 		07A7D54B1CD89C13007B5D5E /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A7D5481CD89C13007B5D5E /* XPathQuery.m */; };
@@ -281,6 +282,8 @@
 		074C19AE1CE088B300711A2E /* odds_image7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = odds_image7.png; sourceTree = "<group>"; };
 		074C19AF1CE088B300711A2E /* odds_image8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = odds_image8.png; sourceTree = "<group>"; };
 		074C19B01CE088B300711A2E /* odds_image9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = odds_image9.png; sourceTree = "<group>"; };
+		077118CF1CE18AE800BD13CE /* OddsTypeInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OddsTypeInfoModel.h; sourceTree = "<group>"; };
+		077118D01CE18AE800BD13CE /* OddsTypeInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OddsTypeInfoModel.m; sourceTree = "<group>"; };
 		07A7D5431CD89C13007B5D5E /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHpple.h; sourceTree = "<group>"; };
 		07A7D5441CD89C13007B5D5E /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHpple.m; sourceTree = "<group>"; };
 		07A7D5451CD89C13007B5D5E /* TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHppleElement.h; sourceTree = "<group>"; };
@@ -932,6 +935,8 @@
 				84ADD33A1CDA47C60088CA02 /* HeroTypeInfoModel.m */,
 				074740181CDC4C43001CC6C4 /* HeroDetailDataModel.h */,
 				074740191CDC4C43001CC6C4 /* HeroDetailDataModel.m */,
+				077118CF1CE18AE800BD13CE /* OddsTypeInfoModel.h */,
+				077118D01CE18AE800BD13CE /* OddsTypeInfoModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2345,6 +2350,7 @@
 				07AC6B2C1CC0A65D0030B298 /* SDWebImageDecoder.m in Sources */,
 				841064B01CC3C14C008AAD95 /* MainGridTableViewCell.m in Sources */,
 				07AC6AF31CC0A65D0030B298 /* Reachability.m in Sources */,
+				077118D11CE18AE800BD13CE /* OddsTypeInfoModel.m in Sources */,
 				84ADD33B1CDA47C60088CA02 /* HeroTypeInfoModel.m in Sources */,
 				07AC6B0A1CC0A65D0030B298 /* SBJsonWriter.m in Sources */,
 				07AC6C4A1CC0A66D0030B298 /* UMChatToolBar.m in Sources */,
