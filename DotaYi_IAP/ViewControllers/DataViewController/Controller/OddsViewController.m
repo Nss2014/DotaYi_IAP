@@ -60,7 +60,11 @@
             }
             else
             {
+                CoreSVPLoading(@"更新数据中", nil);
+                
                 [ws getOddsData];
+                
+                CoreSVPDismissDelay(3.0);
             }
             
             //主线程更新界面

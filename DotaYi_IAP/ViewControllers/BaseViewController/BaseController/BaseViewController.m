@@ -100,7 +100,7 @@
 {
     [super viewDidDisappear:animated];
     
-    CoreSVPDismiss;
+//    CoreSVPDismiss;
 }
 
 -(void)viewDidAppear:(BOOL)animated

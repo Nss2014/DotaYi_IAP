@@ -8,16 +8,13 @@
 
 #import "LoginViewController.h"
 #import "LoginInputTFView.h"
+#import "Register1_3View.h"
 
-@interface LoginViewController ()
+@interface LoginViewController ()<UITextFieldDelegate>
 
-@property (nonatomic,strong) UIImageView *login_logoImageView;
+@property (nonatomic,strong) UILabel *login_loginPlatformLabel;
 
-@property (nonatomic,strong) LoginInputTFView *login_accountInputView;
-
-@property (nonatomic,strong) LoginInputTFView *login_passwordInputView;
-
-@property (nonatomic,strong) UIButton *login_loginButton;
+@property (nonatomic,strong) RegisteFrontView *R13_frontView;
 
 @end
 
@@ -46,71 +43,145 @@
     [CoreTFManagerVC uninstallManagerForVC:self];
 }
 
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    [self initUI];
+    
+    [self initMyUI];
+    
+    [self envalueSubViews];
     
     [self addTapGestureRecognizer];
     
     [self setLeftOnlyTextItem:@"取消"];
 }
 
--(void) initUI
+-(void) initMyUI
 {
-    self.navigationItem.title = @"11平台登录";
+    self.navigationItem.title = @"登录";
     
-    self.login_logoImageView = [[UIImageView alloc] init];
+    self.login_loginPlatformLabel = [[UILabel alloc] init];
     
-    [self.view addSubview:self.login_logoImageView];
+    self.R13_frontView = [[RegisteFrontView alloc] init];
     
-    self.login_accountInputView = [[LoginInputTFView alloc] init];
+    [self.view addSubview:self.login_loginPlatformLabel];
     
-    [self.view addSubview:self.login_accountInputView];
-    
-    self.login_passwordInputView = [[LoginInputTFView alloc] init];
-    
-    [self.view addSubview:self.login_passwordInputView];
-    
-    self.login_loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    [self.login_loginButton setTitle:@"登录" forState:UIControlStateNormal];
-    
-    [self.view addSubview:self.login_loginButton];
+    [self.view addSubview:self.R13_frontView];
     
     WS(ws);
     
-    CGFloat padding = 10;
-    
-    [self.login_logoImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.login_loginPlatformLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(ws.view.mas_top).offset(PADDING_WIDTH);
         make.centerX.equalTo(ws.view.mas_centerX);
-        make.top.equalTo(ws.view.mas_top).offset(4 * padding);
-        make.width.mas_equalTo(100);
-        make.height.equalTo(ws.login_logoImageView.mas_width);
+        make.width.mas_equalTo(SCREEN_WIDTH/4);
+        make.height.mas_equalTo(SCREEN_WIDTH/4);
     }];
     
-    [self.login_accountInputView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(ws.view.mas_left).offset(INPUTVIEW_DISTANCE);
-        make.right.equalTo(ws.view.mas_right).offset(-INPUTVIEW_DISTANCE);
-        make.top.equalTo(ws.login_logoImageView.mas_bottom).offset(80);
-        make.height.mas_equalTo(50);
+    [self.R13_frontView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(ws.login_loginPlatformLabel.mas_bottom).offset(PADDING_WIDTH);
+        make.centerX.equalTo(ws.view.mas_centerX);
+        make.width.equalTo(ws.view.mas_width).multipliedBy(0.85);
+        make.bottom.equalTo(ws.view.mas_bottom).offset(-PADDING_WIDTH);
     }];
     
-    [self.login_passwordInputView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(ws.login_accountInputView.mas_left);
-        make.right.equalTo(ws.login_accountInputView.mas_right);
-        make.top.equalTo(ws.login_accountInputView.mas_bottom).offset(padding);
-        make.height.equalTo(ws.login_accountInputView.mas_height);
-    }];
     
-    [self.login_loginButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(ws.view.mas_left).offset(40);
-        make.right.equalTo(ws.view.mas_right).offset(-40);
-        make.top.equalTo(ws.login_passwordInputView.mas_bottom).offset(padding *3);
-        make.height.mas_equalTo(44);
+}
+
+-(void) keyboardControl
+{
+    CGFloat tf1_W = 0;
+    
+    CGFloat tf2_W = 0;
+    
+    CGFloat tf3_W = 0;
+    
+    if (IS_IPHONE4S)
+    {
+        tf1_W = -40;
+        
+        tf2_W = -70;
+        
+        tf3_W = -120;
+    }
+    else if (IS_IPHONE5)
+    {
+        tf1_W = -30;
+        
+        tf2_W = -60;
+        
+        tf3_W = -100;
+    }
+    else
+    {
+        tf2_W = -20;
+        
+        tf3_W = -50;
+    }
+    
+    //键盘控制  记得在viewdiddisappear中移除self
+    
+    WS(ws);
+    
+    [CoreTFManagerVC installManagerForVC:self scrollView:nil tfModels:^NSArray *{
+
+        
+        TFModel *tfm1 = [TFModel modelWithTextFiled:ws.R13_frontView.RF_textField1 inputView:nil insetBottom:tf1_W];;
+        
+        TFModel *tfm2=[TFModel modelWithTextFiled:ws.R13_frontView.RF_textField2 inputView:nil insetBottom:tf2_W];
+        
+        TFModel *tfm3=[TFModel modelWithTextFiled:ws.R13_frontView.RF_textField3 inputView:nil insetBottom:tf3_W];
+        
+        return @[tfm1,tfm2,tfm3];
+        
     }];
+}
+
+-(void) envalueSubViews
+{
+    UIImage *tempImage = [UIImage imageNamed:@"long_button_background_image"];
+    
+    self.R13_frontView.RF_doneButton.backgroundColor = CLEAR_COLOR;
+    
+    [self.R13_frontView.RF_doneButton setTitle:@"登录" forState:UIControlStateNormal];
+    
+    [self.R13_frontView.RF_doneButton setBackgroundImage:tempImage forState:UIControlStateNormal];
+    
+    [self.R13_frontView.RF_doneButton setBackgroundImage:tempImage forState:UIControlStateHighlighted];
+    
+    [self.R13_frontView.RF_doneButton addTarget:self action:@selector(loginButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.R13_frontView.RF_textField1.delegate = self;
+    
+    self.R13_frontView.RF_textField2.delegate = self;
+    
+    self.R13_frontView.RF_textField3.delegate = self;
+    
+    self.R13_frontView.RF_textField1.placeholder = @"手机号／邮箱／用户名";
+    
+    self.R13_frontView.RF_textField2.placeholder = @"密码";
+    
+    self.R13_frontView.RF_textField3.placeholder = @"验证码";
+    
+    self.R13_frontView.RF_textField2.secureTextEntry = YES;
+    
+    [self.R13_frontView.RF_verifyCodeImageView sd_setImageWithURL:[NSURL URLWithString:[self getVerifyCode]]];
+    
+    self.login_loginPlatformLabel.text = @"11平台登录";
+    
+    self.login_loginPlatformLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:18];
+    
+    self.login_loginPlatformLabel.textColor = COLOR_TITLE_BLACK;
+    
+    self.login_loginPlatformLabel.textAlignment = NSTextAlignmentCenter;
+}
+
+#pragma mark - UITextFieldDelegate
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [self.view endEditing:YES];
+    
+    return YES;
 }
 
 -(void) viewTapedDismissKeyboard:(UITapGestureRecognizer *)sender
@@ -123,78 +194,50 @@
     
 }
 
--(void) keyboardControl
-{
-    CGFloat tf1_W = 0;
-    
-    CGFloat tf2_W = 0;
-    
-    if (IS_IPHONE4S)
-    {
-        tf1_W = -40;
-        
-        tf2_W = -70;
-    }
-    else if (IS_IPHONE5)
-    {
-        tf1_W = -30;
-        
-        tf2_W = -60;
-    }
-    else
-    {
-        tf1_W = -60;
-        
-        tf2_W = -90;
-    }
-    
-    //键盘控制  记得在viewdiddisappear中移除self
-    
-    WS(ws);
-    
-    [CoreTFManagerVC installManagerForVC:self scrollView:nil tfModels:^NSArray *{
-        
-        TFModel *tfm1=[TFModel modelWithTextFiled:ws.login_accountInputView.LI_rightTextField inputView:nil insetBottom:tf1_W];
-        
-        TFModel *tfm2=[TFModel modelWithTextFiled:ws.login_passwordInputView.LI_rightTextField inputView:nil insetBottom:tf2_W];
-        
-        return @[tfm1,tfm2];
-        
-    }];
-}
-
--(void)viewDidLayoutSubviews
-{
-    [super viewDidLayoutSubviews];
-    
-    self.login_logoImageView.image = [UIImage imageNamed:@"login_logoImage"];
-    
-    self.login_accountInputView.LI_leftLabel.text = @"账号：";
-    
-    self.login_accountInputView.LI_rightTextField.placeholder = @"请输入11平台账号";
-    
-    self.login_passwordInputView.LI_leftLabel.text = @"密码：";
-    
-    self.login_passwordInputView.LI_rightTextField.placeholder = @"请输入密码";
-    
-    self.login_loginButton.backgroundColor = XLS_COLOR_MAIN_RED;
-    
-    self.login_loginButton.layer.cornerRadius = CORNERRADIUS_BUTTON;
-    
-    self.login_loginButton.clipsToBounds = YES;
-    
-    [self.login_loginButton setTitleColor:WHITE_COLOR forState:UIControlStateNormal];
-    
-    self.login_loginButton.titleLabel.font = TEXT16_FONT;
-    
-    [self.login_loginButton addTarget:self action:@selector(loginButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-}
-
 -(void) loginButtonPressed
 {
-    NSLog(@"login_loginButton");
+    //登录
+    //获取验证码
+//    NSString *verifyString = [self getVerifyCode];
+//    
+//    NSString *body = [NSString stringWithFormat:@"user=%@&password=%@&code=%@",
+//                      self.login_accountInputView.LI_rightTextField.text,
+//                      self.login_passwordInputView.LI_rightTextField.text,
+//                      verifyString
+//                      ];
+//    
+//    CoreSVPLoading(nil, nil);
+//    
+//    [Tools platform11LoginRequest:DT_LOGIN_URL ParamsBody:body];
 }
 
+-(NSString *) getVerifyCode
+{
+    NSData *data = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:@"http://register.5211game.com/11/login?returnurl="]];
+    
+    TFHpple *xpathParser = [[TFHpple alloc] initWithHTMLData:data];
+    
+    NSArray *mainElements = [xpathParser searchWithXPathQuery:@"//div[@class='login-form']"];
+    
+    NSString *verifyString = @"";
+    
+    for (TFHppleElement *tfElement in mainElements)
+    {
+        //物品图片
+        NSString *getverifyPicString = [Tools getHtmlValueWithXPathParser:tfElement XPathQuery:@"//p[@class='row jym clearfix']" DetailXPathQuery:@"//img" DetailKey:@"src"];
+        
+        NSLog(@"getverifyPicString %@",getverifyPicString);
+        
+        verifyString = [NSString stringWithFormat:@"http://register.5211game.com%@",getverifyPicString];
+    }
+    
+    return verifyString;
+}
+
+-(void) getAndSaveCookie:(NSString *) response
+{
+    NSLog(@"response %@",response);
+}
 
 
 @end

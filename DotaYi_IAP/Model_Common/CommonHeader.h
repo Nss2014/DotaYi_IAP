@@ -135,6 +135,9 @@
 //间隔
 #define PADDING_WIDTH 10
 
+//微信群发边缘间距edge
+#define GRAPHIC_EDGE (SCREEN_HEIGHT/66)
+
 
 //捕获代码异常提交后台
 #define HUR_CATCH_EXCEPTION [NSString stringWithFormat:@"%@/log/write",[HP_Application sharedApplication].hostIP]
@@ -182,10 +185,7 @@
 #define CELL_LINE_HEIGHT 0.5
 
 //登录页button高度
-#define sGapLength ((SCREEN_HEIGHT * 0.7 - SCREEN_WIDTH / 8)/10)
-
-//登录页logo距离顶部长度
-#define topGapLength (SCREEN_HEIGHT * 0.15 + SCREEN_WIDTH / 8)
+#define sGapLength 40
 
 //---------------------字体背景颜色-----------------------
 
@@ -280,6 +280,26 @@
 //28号字体
 #define TEXT28_FONT [UIFont fontWithName:@"Helvetica-light" size:28]
 
+//－－－－－－－－－－－－－－－加粗字体－－－－－－－－－－－－－－－－－－－
+//12号字体
+#define TEXT12_BOLD_FONT [UIFont fontWithName:@"Helvetica-Bold" size:12]
+//13号字体
+#define TEXT13_BOLD_FONT [UIFont fontWithName:@"Helvetica-Bold" size:13]
+//14号字体
+#define TEXT14_BOLD_FONT [UIFont fontWithName:@"Helvetica-Bold" size:14]
+//15号字体
+#define TEXT15_BOLD_FONT [UIFont fontWithName:@"Helvetica-Bold" size:15]
+//16号字体
+#define TEXT16_BOLD_FONT [UIFont fontWithName:@"Helvetica-Bold" size:16]
+//17号字体
+#define TEXT17_BOLD_FONT [UIFont fontWithName:@"Helvetica-Bold" size:17]
+//18号字体
+#define TEXT18_BOLD_FONT [UIFont fontWithName:@"Helvetica-Bold" size:18]
+//20号字体
+#define TEXT20_BOLD_FONT [UIFont fontWithName:@"Helvetica-Bold" size:20]
+//22号字体
+#define TEXT22_BOLD_FONT [UIFont fontWithName:@"Helvetica-Bold" size:22]
+
 #pragma mark - 花儿好看本地数据DEFAULT
 
 //网络提示
@@ -345,55 +365,6 @@
 //系统背景颜色
 #define COLOR_VIEW_BG [Tools colorFromHexCode:@"#F5F5F5"]
 
-#pragma mark - 花儿好看返回状态码---------------------------------
-//正常
-#define HK_STATUS_SUCCESS 0
-
-//服务器异常
-#define HK_STATUS_SERVEREXCEPTION 5000
-
-//用户不存在
-#define HK_STATUS_USERNOTEXIST 5001
-
-//密码错误
-#define HK_STATUS_WRONGPASSWORD 5002
-
-//用户帐户被冻结
-#define HK_STATUS_USERLOCKED 5003
-
-//数据不存在
-#define HK_STATUS_DATANOTEXIST 5004
-
-//用户名已经存在
-#define HK_STATUS_USERALREADYEXIST 5005
-
-//用户名不合法
-#define HK_STATUS_ILLEGALUSERNAME 5006
-
-//验证码错误
-#define HK_STATUS_WRONGVERIFYCODE 5007
-
-//验证码发送过于频繁
-#define HK_STATUS_RANDCODEBUSY 5008
-
-//用户已经收藏过该文章
-#define HK_STATUS_ARTICLEHASCOLLECTED 5009
-
-//用户尚未收藏该文章
-#define HK_STATUS_ARTICLEHASNOTCOLLECTE 5010
-
-//非法参数
-#define HK_STATUS_ILLEGALARGUMENT 4000
-
-//上传失败
-#define HK_STATUS_UPLOADFAIL 6001
-
-//跳转花儿微管家下载地址
-#define TURNTO_WGJ_APPSTORE_URL @"https://itunes.apple.com/cn/app/hua-er-wei-guan-jia/id1018732887?l=zh&ls=1&mt=8"
-
-//花儿好看跳转Appstore接口
-#define TURNTO_APPSTORE_URL @"https://itunes.apple.com/cn/app/hua-er-hao-kan/id1087677202?l=zh&ls=1&mt=8"
-
 #pragma mark - 花儿好看后台接口-------------------------------------------
 
 //版本号
@@ -404,7 +375,7 @@
 #define APP_HKBG_DEV @"ios"
 
 
-#pragma mark - 太平洋游戏网英雄&物品数据
+#pragma mark - 太平洋游戏网英雄&物品数据接口
 
 /**
  *  英雄数据
@@ -417,25 +388,33 @@
 #define DT_ODDSLISTDATA_URL @"http://fight.pcgames.com.cn/warcraft/dota/items/"
 
 
-//----------------------AES128加密--------------------
-#pragma mark - AES128
-#define AES_KEY @"5d41402abc4b2a76"
+/**
+ *  登录
+ */
+#define DT_LOGIN_URL @"http://register.5211game.com/11/login/login"
+
+/**
+ *  获取登录验证码
+ */
+#define DT_LOGINVERYFYCODE_URL @"http://www.5211game.com/?logout=1"
 
 
-#pragma mark - Plist
-#define PL_LQR_PLIST @"lqr_data_plist"
+#pragma mark - UserDefaults数据
+/**
+ *  登录用户账号
+ */
+#define LOGIN_ACCOUNT @"loginAccount"
 
-//----------------------数据库---------------------
-#pragma mark - FMDB
+/**
+ *  登录用户密码
+ */
+#define LOGIN_PASSWORD @"loginPassword"
 
-//用户当前登录账号数据
-#define DB_USERACCOUNTSDATA @"user_accounts_db"
+/**
+ *  登录用户Cookie
+ */
+#define LOGIN_COOKIE @"loginCookie"
 
-//程序异常数据
-#define DB_ERROREXCEPTION_DATA @"error_exception_db"
-
-//本地频道数据
-#define DB_CHANNELLIST_DATA @"channel_list_db"
 
 
 #endif

@@ -66,5 +66,7 @@
 
 +(NSMutableArray *) getHtmlValueArrayWithXPathParser:(id)xpathParser XPathQuery:(NSString *)xPathQuery DetailXPathQuery:(NSString *)detailXPathQuery  DetailKey:(NSString *) detailKey;
 
++(void) platform11LoginRequest:(NSString *) theLoginURL ParamsBody:(NSString *) theBody;
+
 @end
 

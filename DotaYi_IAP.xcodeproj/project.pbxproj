@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		072EF0651CE432AE00C7B6E0 /* Register1_3View.m in Sources */ = {isa = PBXBuildFile; fileRef = 072EF0641CE432AE00C7B6E0 /* Register1_3View.m */; };
 		0746A1001CDB4811007EC2AD /* HeroDetailInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0746A0FF1CDB4811007EC2AD /* HeroDetailInfoViewController.m */; };
 		0747401A1CDC4C43001CC6C4 /* HeroDetailDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 074740191CDC4C43001CC6C4 /* HeroDetailDataModel.m */; };
 		074C19B11CE088B300711A2E /* odds_image0.png in Resources */ = {isa = PBXBuildFile; fileRef = 074C19A41CE088B300711A2E /* odds_image0.png */; };
@@ -203,6 +204,7 @@
 		07AC6C881CC0D4D20030B298 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 07AC6C871CC0D4D20030B298 /* libz.tbd */; };
 		07AC6C8A1CC0D4D90030B298 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 07AC6C891CC0D4D90030B298 /* libxml2.tbd */; };
 		07AC6C8C1CC0D4E00030B298 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 07AC6C8B1CC0D4E00030B298 /* libstdc++.tbd */; };
+		07AD6AE21CE31F4700D0D537 /* OddsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07AD6AE11CE31F4700D0D537 /* OddsDetailViewController.m */; };
 		07D7B7961CDAED63005E8FB0 /* CollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07D7B7931CDAED63005E8FB0 /* CollectionReusableView.m */; };
 		07D7B7971CDAED63005E8FB0 /* CollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 07D7B7951CDAED63005E8FB0 /* CollectionViewCell.m */; };
 		07DC158C1CD9D7D50054EA20 /* JKDBHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 07DC157D1CD9D7D50054EA20 /* JKDBHelper.m */; };
@@ -265,6 +267,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		072EF0631CE432AE00C7B6E0 /* Register1_3View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Register1_3View.h; sourceTree = "<group>"; };
+		072EF0641CE432AE00C7B6E0 /* Register1_3View.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Register1_3View.m; sourceTree = "<group>"; };
 		0746A0FE1CDB4811007EC2AD /* HeroDetailInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeroDetailInfoViewController.h; sourceTree = "<group>"; };
 		0746A0FF1CDB4811007EC2AD /* HeroDetailInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeroDetailInfoViewController.m; sourceTree = "<group>"; };
 		074740181CDC4C43001CC6C4 /* HeroDetailDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeroDetailDataModel.h; sourceTree = "<group>"; };
@@ -631,6 +635,8 @@
 		07AC6C871CC0D4D20030B298 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		07AC6C891CC0D4D90030B298 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		07AC6C8B1CC0D4E00030B298 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
+		07AD6AE01CE31F4700D0D537 /* OddsDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OddsDetailViewController.h; sourceTree = "<group>"; };
+		07AD6AE11CE31F4700D0D537 /* OddsDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OddsDetailViewController.m; sourceTree = "<group>"; };
 		07D7B7921CDAED63005E8FB0 /* CollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionReusableView.h; sourceTree = "<group>"; };
 		07D7B7931CDAED63005E8FB0 /* CollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionReusableView.m; sourceTree = "<group>"; };
 		07D7B7941CDAED63005E8FB0 /* CollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewCell.h; sourceTree = "<group>"; };
@@ -920,6 +926,8 @@
 				841064B21CC3C171008AAD95 /* HeroViewController.m */,
 				841064B41CC3C1A9008AAD95 /* OddsViewController.h */,
 				841064B51CC3C1A9008AAD95 /* OddsViewController.m */,
+				07AD6AE01CE31F4700D0D537 /* OddsDetailViewController.h */,
+				07AD6AE11CE31F4700D0D537 /* OddsDetailViewController.m */,
 				841064B71CC3C1C8008AAD95 /* RankListViewController.h */,
 				841064B81CC3C1C8008AAD95 /* RankListViewController.m */,
 				0746A0FE1CDB4811007EC2AD /* HeroDetailInfoViewController.h */,
@@ -1751,6 +1759,8 @@
 			children = (
 				07AC6C681CC0D0CA0030B298 /* LoginInputTFView.h */,
 				07AC6C691CC0D0CA0030B298 /* LoginInputTFView.m */,
+				072EF0631CE432AE00C7B6E0 /* Register1_3View.h */,
+				072EF0641CE432AE00C7B6E0 /* Register1_3View.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2235,6 +2245,7 @@
 				07AC6ABD1CC0A65D0030B298 /* CoreStatusBtn.m in Sources */,
 				07AC6AEE1CC0A65D0030B298 /* DGActivityIndicatorTriplePulseAnimation.m in Sources */,
 				07AC6C1A1CC0A66D0030B298 /* UINavigationController+FDFullscreenPopGesture.m in Sources */,
+				07AD6AE21CE31F4700D0D537 /* OddsDetailViewController.m in Sources */,
 				07AC6C291CC0A66D0030B298 /* NSString+Extension.m in Sources */,
 				07D7B7961CDAED63005E8FB0 /* CollectionReusableView.m in Sources */,
 				07AC6AD11CC0A65D0030B298 /* DGActivityIndicatorBallClipRotateAnimation.m in Sources */,
@@ -2406,6 +2417,7 @@
 				07AC6AD31CC0A65D0030B298 /* DGActivityIndicatorBallClipRotatePulseAnimation.m in Sources */,
 				0746A1001CDB4811007EC2AD /* HeroDetailInfoViewController.m in Sources */,
 				07AC6AD91CC0A65D0030B298 /* DGActivityIndicatorBallScaleAnimation.m in Sources */,
+				072EF0651CE432AE00C7B6E0 /* Register1_3View.m in Sources */,
 				07AC6AD61CC0A65D0030B298 /* DGActivityIndicatorBallPulseAnimation.m in Sources */,
 				07AC6AE51CC0A65D0030B298 /* DGActivityIndicatorLineScalePartyAnimation.m in Sources */,
 				07AC6C011CC0A66C0030B298 /* ARSegmentPageHeader.m in Sources */,
