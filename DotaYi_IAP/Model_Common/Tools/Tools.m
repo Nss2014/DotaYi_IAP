@@ -273,97 +273,6 @@ NSString *const NewFeatureVersionKey = @"NewFeatureVersionKey";
 }
 
 
-//统计微信&花儿服务器错误日志  返回服务器  用户MobileUserID:%@\n用户MediaToken:%@\n错误信息:手机号登录失败\n类名:%@\n方法名:asyncPhoneNumberPostWithUrlString\n请求链接:%@\n请求参数:%@\n返回错误信息:%@"
-
-+(void) sendStatisticsErrorLogToServerWithErrorMsg:(NSString *) theErrorMsg andClassName:(Class) theClassName andMethodName:(NSString *) theMethodName andRequestLink:(NSString *) theRequestLink andRequestParam:(NSString *) theRequestParam andErrorResponse:(NSString *) theErrorResponse
-{
-//    NSString *splitDetailMsgStr = [NSString stringWithFormat:@"用户UserToken:%@\n错误信息:%@\n类名:%@\n方法名:%@\n请求链接:%@\n请求参数:%@\n返回错误信息:%@",[HP_Application sharedApplication].loginDataObj.login_userToken,theErrorMsg,theClassName,theMethodName,theRequestLink,theRequestParam,theErrorResponse];
-//
-//    ReturnErrorLogObj *sendReturnObj = [[ReturnErrorLogObj alloc] init];
-//    
-//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-//    
-//    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-//    
-//    NSString *currentDateStr = [dateFormatter stringFromDate:[NSDate date]];
-//    
-//    sendReturnObj.createTime = currentDateStr;
-//    
-//    sendReturnObj.phoneNumber = [HP_Application sharedApplication].loginDataObj.login_userPhoneNumber;
-//    
-//    sendReturnObj.desc = splitDetailMsgStr;
-//    
-//    sendReturnObj.dev = @"ios";
-//    
-//    sendReturnObj.version = APPLICATION_VERSIN;
-//    
-//    sendReturnObj.platform = @"haokan";
-//    
-//    sendReturnObj.mediaToken = [HP_Application sharedApplication].huaerLoginModel.HL_mediaToken;
-//    
-//    NSString *bodyStr = [NSString stringWithFormat:@"createTime=%@&phoneNumber=%@&desc=%@&dev=%@&version=%@&platform=%@&mediaToken=%@",
-//                         sendReturnObj.createTime,
-//                         sendReturnObj.phoneNumber,
-//                         sendReturnObj.desc,
-//                         sendReturnObj.dev,
-//                         sendReturnObj.version,
-//                         sendReturnObj.platform,
-//                         sendReturnObj.mediaToken
-//                         ];
-//    
-//    NSLog(@"bodyStr %@",bodyStr);
-//    
-//    NSMutableURLRequest * backRequest = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:HUR_CATCH_EXCEPTION]];
-//    
-//    [backRequest setTimeoutInterval:5.f];
-//    
-//    //将字符串转换成二进制数据
-//    NSData * postData = [bodyStr dataUsingEncoding:NSUTF8StringEncoding];
-//    
-//    //设置http请求模式
-//    [backRequest setHTTPMethod:@"POST"];
-//    //设置POST正文的内容
-//    [backRequest setHTTPBody:postData];
-//    
-//    //参数不加密Content-Type
-//    [backRequest setValue:@"application/x-www-form-urlencoded; charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
-//    
-//    [backRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-//    
-//    [backRequest setValue:@"USER_AGENT" forHTTPHeaderField:@"User-Agent"];
-//    
-//    [backRequest setValue:HTTPHEADER   forHTTPHeaderField:@"AppKey"];
-//    
-//    //发送请求
-//    
-//    [NSURLConnection sendAsynchronousRequest:backRequest queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
-//     {
-//         NSString *result = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//         
-//         NSLog(@"result  %@", result);
-//         
-//         NSDictionary *responseDic = [result JSONValue];
-//         
-//         if (responseDic != nil && ![responseDic isKindOfClass:[NSNull class]])
-//         {
-//             NSNumber *responseRet = responseDic[@"ret"];
-//             
-//             if ([responseRet isEqualToNumber:[NSNumber numberWithInteger:0]] )
-//             {
-//                 
-//             }
-//             else
-//             {
-//                 
-//             }
-//         }
-//         else
-//         {
-//             
-//         }
-//     }];
-}
-
 //（null） 转空字符串
 +(NSString *) exchangeNullToEmptyString:(NSString *)sendString
 {
@@ -612,8 +521,73 @@ NSString *const NewFeatureVersionKey = @"NewFeatureVersionKey";
     return getValueArray;
 }
 
-//11平台登录
-+(void) platform11LoginRequest:(NSString *) theLoginURL ParamsBody:(NSString *) theBody
+//11平台Post
++(void) platform11PostRequest:(NSString *) theLoginURL ParamsBody:(NSString *) theBody target:(id)target action:(SEL)action
+{
+    NSMutableURLRequest * backRequest = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:theLoginURL]];
+    
+    [backRequest setTimeoutInterval:5.f];
+    
+    //将字符串转换成二进制数据
+    NSData * postData = [theBody dataUsingEncoding:NSUTF8StringEncoding];
+    
+    //设置http请求模式
+    [backRequest setHTTPMethod:@"POST"];
+    //设置POST正文的内容
+    [backRequest setHTTPBody:postData];
+    
+    [backRequest setValue:@"application/x-www-form-urlencoded; charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
+    
+    [backRequest setValue:@"Mozilla/5.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit/600.1.3 (KHTML, like Gecko) Version/8.0 Mobile/12A4345d Safari/600.1.4" forHTTPHeaderField:@"User-Agent"];
+    
+    [backRequest setValue:@"register.5211game.com" forHTTPHeaderField:@"Host"];
+    
+    [backRequest setValue:@"http://register.5211game.com/11/login?returnurl=" forHTTPHeaderField:@"Referer"];
+    
+    NSLog(@"LOGIN_COOKIE %@",[self strForKey:LOGIN_COOKIE]);
+    
+    [backRequest setValue:[self strForKey:LOGIN_COOKIE] forHTTPHeaderField:@"Cookie"];
+    
+    [NSURLConnection sendAsynchronousRequest:backRequest queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        
+        NSString *result = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        
+        NSLog(@"resultresultresult%@", result);
+        
+        if (result && ![result isEqualToString:@""])
+        {
+            APJSONParser *jsonParser = [[APJSONParser alloc] init];
+            
+            NSDictionary *responseDic = [jsonParser jsonStringToDictionary:result];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                if ([target respondsToSelector:action])
+                {
+                    [target performSelector:action withObject:responseDic afterDelay:0.0];
+                }
+                
+            });
+        }
+        else
+        {
+            NSDictionary *responseDic = nil;
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                if ([target respondsToSelector:action])
+                {
+                    [target performSelector:action withObject:responseDic afterDelay:0.0];
+                }
+                
+            });
+        }
+        
+    }];
+}
+
+//11平台登录Post
++(void) platform11LoginRequest:(NSString *) theLoginURL ParamsBody:(NSString *) theBody target:(id)target action:(SEL)action
 {
     NSMutableURLRequest * backRequest = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:theLoginURL]];
     
@@ -642,16 +616,94 @@ NSString *const NewFeatureVersionKey = @"NewFeatureVersionKey";
         
         NSDictionary *fields = [HTTPResponse allHeaderFields];
         
-        NSString *cookie = [fields valueForKey:@"Cookie"];
+        NSLog(@"fields %@",fields);
+        
+        NSString *cookie = [fields valueForKey:@"Set-Cookie"];
         
         NSLog(@"cookie %@",cookie);
         
+        NSString *cookie1 = [cookie stringByReplacingOccurrencesOfString:@"path=/" withString:@""];
+        
+        NSString *cookie2 = [cookie1 stringByReplacingOccurrencesOfString:@"path=/" withString:@""];
+        
+        NSLog(@"cookie2 %@",cookie2);
+        
+        if (cookie2 && ![cookie2 isEqualToString:@""])
+        {
+            [Tools setStr:cookie2 key:LOGIN_COOKIE];
+        }
+    
         NSString *result = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         
         NSLog(@"resultresultresult%@", result);
         
+        if (result && ![result isEqualToString:@""])
+        {
+            APJSONParser *jsonParser = [[APJSONParser alloc] init];
+            
+            NSDictionary *responseDic = [jsonParser jsonStringToDictionary:result];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                if ([target respondsToSelector:action])
+                {
+                    [target performSelector:action withObject:responseDic afterDelay:0.0];
+                }
+                
+            });
+        }
+        else
+        {
+            NSDictionary *responseDic = nil;
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                if ([target respondsToSelector:action])
+                {
+                    [target performSelector:action withObject:responseDic afterDelay:0.0];
+                }
+                
+            });
+        }
+        
     }];
 }
 
+//11平台GET 登录第二步
++(void) platform11SecondGetRequest:(NSString *)urlString target:(id)target action:(SEL)action
+{
+    NSMutableURLRequest * backRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
+    
+    [backRequest setTimeoutInterval:10.f];
+    
+    //设置http请求模式
+    [backRequest setHTTPMethod:@"GET"];
+    
+    [NSURLConnection sendAsynchronousRequest:backRequest queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        
+        NSString *result = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        
+        NSLog(@"result %@",result);
+        
+        //获取并存储cookie
+        NSHTTPURLResponse *HTTPResponse = (NSHTTPURLResponse *)response;
+        
+        NSDictionary *fields = [HTTPResponse allHeaderFields];
+        
+        NSLog(@"fields %@",fields);
+        
+        NSString *getNextValueStr = [fields valueForKey:@"Location"];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            if ([target respondsToSelector:action])
+            {
+                [target performSelector:action withObject:getNextValueStr afterDelay:0.0];
+            }
+            
+        });
+        
+    }];
+}
 
 @end

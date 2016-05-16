@@ -133,4 +133,14 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
 }
 
+-(APJSONParser *)APJSONParser
+{
+    if (!_APJSONParser)
+    {
+        _APJSONParser = [[APJSONParser alloc] init];
+    }
+    
+    return _APJSONParser;
+}
+
 @end

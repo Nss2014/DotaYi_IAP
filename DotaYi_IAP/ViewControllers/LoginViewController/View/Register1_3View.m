@@ -131,8 +131,6 @@
     
     self.RF_textField1.keyboardType = UIKeyboardTypeNumberPad;
     
-    self.RF_textField3.keyboardType = UIKeyboardTypeNumberPad;
-    
     [self.RF_doneButton setTitleColor:WHITE_COLOR forState:UIControlStateNormal];
     
     self.RF_doneButton.titleLabel.font = TEXT18_FONT;

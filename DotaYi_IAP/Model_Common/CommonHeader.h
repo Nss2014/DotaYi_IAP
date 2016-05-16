@@ -399,6 +399,15 @@
 #define DT_LOGINVERYFYCODE_URL @"http://www.5211game.com/?logout=1"
 
 
+/**
+ *  获取登录Cookie
+ */
+#define DT_GETLOGINCOOKIE_URL @"http://register.5211game.com/11/login/LoginResult"
+
+
+
+
+
 #pragma mark - UserDefaults数据
 /**
  *  登录用户账号
@@ -415,6 +424,19 @@
  */
 #define LOGIN_COOKIE @"loginCookie"
 
+/**
+ *  登录返回Token
+ */
+#define LOGIN_RESPONSE_TOKEN @"loginResponseToken"
 
+/**
+ *  登录返回用户ID
+ */
+#define LOGIN_RESPONSE_USERID @"loginResponseUserId"
+
+/**
+ *  登录返回用户名字
+ */
+#define LOGIN_RESPONSE_USERNAME @"loginResponseUserName"
 
 #endif

@@ -39,10 +39,6 @@
 //单个文件的大小
 + (long long) fileSizeAtPath:(NSString*) filePath;
 
-
-+(void) sendStatisticsErrorLogToServerWithErrorMsg:(NSString *) theErrorMsg andClassName:(Class) theClassName andMethodName:(NSString *) theMethodName andRequestLink:(NSString *) theRequestLink andRequestParam:(NSString *) theRequestParam andErrorResponse:(NSString *) theErrorResponse;
-
-
 +(BOOL) isJudgeHttpLinkOrNotWithLink:(NSString *)aLink;
 
 // 保存普通对象
@@ -66,7 +62,11 @@
 
 +(NSMutableArray *) getHtmlValueArrayWithXPathParser:(id)xpathParser XPathQuery:(NSString *)xPathQuery DetailXPathQuery:(NSString *)detailXPathQuery  DetailKey:(NSString *) detailKey;
 
-+(void) platform11LoginRequest:(NSString *) theLoginURL ParamsBody:(NSString *) theBody;
++(void) platform11PostRequest:(NSString *) theLoginURL ParamsBody:(NSString *) theBody target:(id)target action:(SEL)action;
+
++(void) platform11LoginRequest:(NSString *) theLoginURL ParamsBody:(NSString *) theBody target:(id)target action:(SEL)action;
+
++(void) platform11SecondGetRequest:(NSString *)urlString target:(id)target action:(SEL)action;
 
 @end
 

@@ -164,7 +164,15 @@
     
     self.R13_frontView.RF_textField2.secureTextEntry = YES;
     
-    [self.R13_frontView.RF_verifyCodeImageView sd_setImageWithURL:[NSURL URLWithString:[self getVerifyCode]]];
+    UIImage *verifyImage = [Tools imageFromURLString:[self getVerifyCode]];
+    
+    self.R13_frontView.RF_verifyCodeImageView.image = verifyImage;
+    
+    self.R13_frontView.RF_verifyCodeImageView.userInteractionEnabled = YES;
+    
+    UITapGestureRecognizer *verifyTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(verifyCOdeImageViewTaped)];
+    
+    [self.R13_frontView.RF_verifyCodeImageView addGestureRecognizer:verifyTap];
     
     self.login_loginPlatformLabel.text = @"11平台登录";
     
@@ -173,6 +181,18 @@
     self.login_loginPlatformLabel.textColor = COLOR_TITLE_BLACK;
     
     self.login_loginPlatformLabel.textAlignment = NSTextAlignmentCenter;
+    
+    
+    //测试代码
+    self.R13_frontView.RF_textField1.text = @"15814036226";
+    self.R13_frontView.RF_textField2.text = @"19900618";
+}
+
+-(void) verifyCOdeImageViewTaped
+{
+    UIImage *verifyImage = [Tools imageFromURLString:[self getVerifyCode]];
+    
+    self.R13_frontView.RF_verifyCodeImageView.image = verifyImage;
 }
 
 #pragma mark - UITextFieldDelegate
@@ -196,35 +216,90 @@
 
 -(void) loginButtonPressed
 {
-    //登录
-    //获取验证码
-//    NSString *verifyString = [self getVerifyCode];
-//    
-//    NSString *body = [NSString stringWithFormat:@"user=%@&password=%@&code=%@",
-//                      self.login_accountInputView.LI_rightTextField.text,
-//                      self.login_passwordInputView.LI_rightTextField.text,
-//                      verifyString
-//                      ];
-//    
-//    CoreSVPLoading(nil, nil);
-//    
-//    [Tools platform11LoginRequest:DT_LOGIN_URL ParamsBody:body];
+    //登录共四个串行接口 最后一个登录成功获取utoken  用于其他接口验证
+    NSString *body = [NSString stringWithFormat:@"user=%@&password=%@&code=%@",
+                      self.R13_frontView.RF_textField1.text,
+                      self.R13_frontView.RF_textField2.text,
+                      self.R13_frontView.RF_textField3.text
+                      ];
+    
+    NSLog(@"body %@",body);
+    
+    NSLog(@"getVerifyCode %@",[self getVerifyCode]);
+    
+    CoreSVPLoading(nil, nil);
+    
+    
+    //登录第一步
+    [Tools platform11LoginRequest:DT_LOGIN_URL ParamsBody:body target:self action:@selector(LoginPlatform11CallBack:)];
+}
+
+-(void) LoginPlatform11CallBack:(NSDictionary *) responseDic
+{
+    CoreSVPDismiss;
+    
+    //登录回调
+    if (responseDic && ![responseDic isKindOfClass:[NSNull class]])
+    {
+        NSNumber *responseRet = responseDic[@"Code"];
+        
+        if ([responseRet isEqualToNumber:[NSNumber numberWithInteger:1]])
+        {
+            //登录成功  获取数据
+            
+            //Data 暂不清楚 可能是返回token
+            NSString *loginResponseDataStr = responseDic[@"Data"];
+            
+            //Info 用户ID
+            NSString *loginResponseInfoStr = responseDic[@"Info"];
+            
+            //User 用户名字
+            NSString *loginResponseUserStr = responseDic[@"User"];
+            
+            [Tools setStr:loginResponseDataStr key:LOGIN_RESPONSE_TOKEN];
+            
+            [Tools setStr:loginResponseInfoStr key:LOGIN_RESPONSE_USERID];
+            
+            [Tools setStr:loginResponseUserStr key:LOGIN_RESPONSE_USERNAME];
+            
+            //登录第二步  GET请求
+            NSString *loginSecondUrlString = [NSString stringWithFormat:@"http://app.5211game.com/sso/login?returnurl=http://www.5211game.com/?logout=1&st=%@",loginResponseDataStr];
+
+//            CoreSVPLoading(nil, nil);
+            
+            [Tools platform11SecondGetRequest:loginSecondUrlString target:self action:@selector(loginSecondCallBack:)];
+            
+        }
+        else
+        {
+            NSString *errorString = responseDic[@"Msg"];
+            
+            CoreSVPError(errorString, nil);
+        }
+    }
+}
+
+-(void) loginSecondCallBack:(NSString *) responseValueString
+{
+    CoreSVPDismiss;
+    
+    NSLog(@"responseValueString %@",responseValueString);
 }
 
 -(NSString *) getVerifyCode
 {
-    NSData *data = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:@"http://register.5211game.com/11/login?returnurl="]];
+    NSData *data = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:@"http://register.5211game.com/11/register"]];
     
     TFHpple *xpathParser = [[TFHpple alloc] initWithHTMLData:data];
     
-    NSArray *mainElements = [xpathParser searchWithXPathQuery:@"//div[@class='login-form']"];
+    NSArray *mainElements = [xpathParser searchWithXPathQuery:@"//div[@class='reg-rcon']"];
     
     NSString *verifyString = @"";
     
     for (TFHppleElement *tfElement in mainElements)
     {
         //物品图片
-        NSString *getverifyPicString = [Tools getHtmlValueWithXPathParser:tfElement XPathQuery:@"//p[@class='row jym clearfix']" DetailXPathQuery:@"//img" DetailKey:@"src"];
+        NSString *getverifyPicString = [Tools getHtmlValueWithXPathParser:tfElement XPathQuery:@"//p[@class='row row-code clearfix']" DetailXPathQuery:@"//img" DetailKey:@"src"];
         
         NSLog(@"getverifyPicString %@",getverifyPicString);
         
@@ -233,11 +308,5 @@
     
     return verifyString;
 }
-
--(void) getAndSaveCookie:(NSString *) response
-{
-    NSLog(@"response %@",response);
-}
-
 
 @end
