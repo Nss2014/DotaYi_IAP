@@ -164,9 +164,9 @@
     
     self.R13_frontView.RF_textField2.secureTextEntry = YES;
     
-    UIImage *verifyImage = [Tools imageFromURLString:[self getVerifyCode]];
+//    UIImage *verifyImage = [Tools imageFromURLString:[self getVerifyCode]];
     
-    self.R13_frontView.RF_verifyCodeImageView.image = verifyImage;
+    [self.R13_frontView.RF_verifyCodeImageView sd_setImageWithURL:[NSURL URLWithString:[self getVerifyCode]] placeholderImage:nil];
     
     self.R13_frontView.RF_verifyCodeImageView.userInteractionEnabled = YES;
     
@@ -262,13 +262,18 @@
             
             [Tools setStr:loginResponseUserStr key:LOGIN_RESPONSE_USERNAME];
             
-            //登录第二步  GET请求
+            //登录第二步  Post请求
             NSString *loginSecondUrlString = [NSString stringWithFormat:@"http://app.5211game.com/sso/login?returnurl=http://www.5211game.com/?logout=1&st=%@",loginResponseDataStr];
+            
+            NSString *body = [NSString stringWithFormat:@"returnurl=http://www.5211game.com/?logout=1&st=%@",loginResponseDataStr];
+            
+            NSLog(@"loginSecondUrlString %@",loginSecondUrlString);
+            
+            NSLog(@"body %@",body);
 
-//            CoreSVPLoading(nil, nil);
+            CoreSVPLoading(nil, nil);
             
-            [Tools platform11SecondGetRequest:loginSecondUrlString target:self action:@selector(loginSecondCallBack:)];
-            
+            [Tools platform11SecondPostRequest:loginSecondUrlString body:body target:self action:@selector(loginSecondCallBack:)];
         }
         else
         {
@@ -284,6 +289,80 @@
     CoreSVPDismiss;
     
     NSLog(@"responseValueString %@",responseValueString);
+    
+    if (responseValueString)
+    {
+        NSArray *sepArray1 = [responseValueString componentsSeparatedByString:@"siteid"];
+        
+        if (sepArray1.count > 1)
+        {
+            NSArray *sepArray2 = [sepArray1[1] componentsSeparatedByString:@"&returnurl="];
+            
+            NSString *getSiteId;
+            
+            NSString *getReturnUrl;
+            
+            if (sepArray2.count > 0)
+            {
+                getSiteId = sepArray2[0];
+            }
+            
+            if (sepArray2.count > 1)
+            {
+                getReturnUrl = sepArray2[1];
+            }
+            
+            NSString *body = [NSString stringWithFormat:@"siteid=%@&returnurl=%@",getSiteId,getReturnUrl];
+            
+            [Tools platform11SecondPostRequest:responseValueString body:body target:self action:@selector(loginThirdCallBack:)];
+
+        }
+    }
+}
+
+-(void) loginThirdCallBack:(NSString *) thirdResponseStr
+{
+    NSLog(@"thirdResponseStr %@",thirdResponseStr);
+    
+    if (thirdResponseStr)
+    {
+        NSArray *sepArray1 = [thirdResponseStr componentsSeparatedByString:@"&st="];
+        
+        if (sepArray1.count > 1)
+        {
+            NSArray *sepArray2 = [sepArray1[1] componentsSeparatedByString:@"&sid="];
+            
+            NSString *getSt;
+            
+            NSString *getSid;
+            
+            if (sepArray2.count > 0)
+            {
+                getSt = sepArray2[0];
+            }
+            
+            if (sepArray2.count > 1)
+            {
+                getSid = sepArray2[1];
+            }
+            
+            NSString *body = [NSString stringWithFormat:@"returnurl=http://www.5211game.com/?logout=1&st=%@&sid=%@",getSt,getSid];
+            
+            [Tools platform11FourthPostRequest:thirdResponseStr body:body target:sepArray2 action:@selector(loginFouthCallBack:)];
+            
+        }
+
+    }
+}
+
+-(void) loginFouthCallBack:(NSString *) fourthResponse
+{
+    NSLog(@"fourthResponse %@",fourthResponse);
+    
+    if (fourthResponse)
+    {
+        //登录成功 跳转页面
+    }
 }
 
 -(NSString *) getVerifyCode
