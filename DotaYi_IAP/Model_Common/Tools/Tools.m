@@ -678,6 +678,12 @@ NSString *const NewFeatureVersionKey = @"NewFeatureVersionKey";
     
     //设置http请求模式
     [backRequest setHTTPMethod:@"GET"];
+
+    [backRequest setValue:@"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:46.0) Gecko/20100101 Firefox/46.0" forHTTPHeaderField:@"User-Agent"];
+    
+    [backRequest setValue:@"app.5211game.com" forHTTPHeaderField:@"Host"];
+    
+    [backRequest setValue:@"http://register.5211game.com/11/iframe/login?style=blue&returnurl=http://app.5211game.com/sso/login?returnurl=http://www.5211game.com/?logout=1" forHTTPHeaderField:@"Referer"];
     
     [NSURLConnection sendAsynchronousRequest:backRequest queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         
