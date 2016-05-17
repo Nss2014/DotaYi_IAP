@@ -308,9 +308,6 @@
 //本地记录DeviceToken
 #define LOCAL_DEVICETOKEN @"dvsToken"
 
-//本地记录登录状态 0=未登陆 1=登陆
-#define LOCAL_LOGINSTATUS @"loginStatus"
-
 
 //DZN空列表默认提示
 #define DZN_TITLE_EMPTYTABLE @"暂无数据"
@@ -430,7 +427,7 @@
 #define LOGIN_RESPONSE_TOKEN @"loginResponseToken"
 
 /**
- *  登录返回用户ID
+ *  登录返回userId
  */
 #define LOGIN_RESPONSE_USERID @"loginResponseUserId"
 
@@ -438,5 +435,10 @@
  *  登录返回用户名字
  */
 #define LOGIN_RESPONSE_USERNAME @"loginResponseUserName"
+
+/**
+ *  本地记录登录状态 0=未登陆 1=登陆
+ */
+#define LOCAL_LOGINSTATUS @"loginStatus"
 
 #endif

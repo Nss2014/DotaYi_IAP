@@ -14,6 +14,14 @@
 
 @interface MeViewController ()
 
+@property (nonatomic,strong) JJCViewController *jjcVC;
+
+@property (nonatomic,strong) MJViewController *mjVC;
+
+@property (nonatomic,strong) TTViewController *ttVC;
+
+@property (nonatomic,assign) NSInteger selectIndex;//记录选择的下标
+
 @end
 
 @implementation MeViewController
@@ -36,15 +44,22 @@
 {
     self.navigationItem.title = @"我";
     
-    [self addEmptyTipsViewWithTitle:@"请使用11平台账号登录" IsShowButton:YES ButtonTitle:@"请登录"];
+    BOOL localLoginStatus = [Tools boolForKey:LOCAL_LOGINSTATUS];
     
-    [self showEmptyTipView];
-    
-//    [self _setUp];
-//    
-//    [self setChildVC];
-//    
-//    [self _baseConfigs];
+    if (localLoginStatus)
+    {
+        [self _setUp];
+        
+        [self setChildVC];
+        
+        [self _baseConfigs];
+    }
+    else
+    {
+        [self addEmptyTipsViewWithTitle:@"请使用11平台账号登录" IsShowButton:YES ButtonTitle:@"请登录"];
+        
+        [self showEmptyTipView];
+    }
 }
 
 -(void)setViewControllers:(NSArray *)viewControllers
@@ -63,13 +78,13 @@
 
 -(void) setChildVC
 {
-    JJCViewController *jjcVC = [[JJCViewController alloc] init];
+    self.jjcVC = [[JJCViewController alloc] init];
     
-    MJViewController *mjVC = [[MJViewController alloc] init];
+    self.mjVC = [[MJViewController alloc] init];
     
-    TTViewController *ttVC = [[TTViewController alloc] init];
+    self.ttVC = [[TTViewController alloc] init];
     
-    [self setViewControllers:@[jjcVC,mjVC,ttVC]];
+    [self setViewControllers:@[self.jjcVC,self.mjVC,self.ttVC]];
 }
 
 -(void)_baseConfigs
@@ -158,6 +173,8 @@
     
     [self.view layoutIfNeeded];
     
+    self.selectIndex = index;
+    
     if (index == 0)
     {
         //竞技场
@@ -211,6 +228,34 @@
     LoginViewController *loginVC = [[LoginViewController alloc] init];
     
     UINavigationController *loginNavController = [[UINavigationController alloc] initWithRootViewController:loginVC];
+    
+    WS(ws);
+    
+    [loginVC refreshBlock:^{
+       
+        [self hideEmptyTipView];
+        
+        [self _setUp];
+        
+        [self setChildVC];
+        
+        [self _baseConfigs];
+        
+        if (ws.selectIndex == 0)
+        {
+            //竞技场 刷新数据
+            [self.jjcVC addListDataRequest];
+        }
+        else if (ws.selectIndex == 1)
+        {
+            //名将
+        }
+        else if (ws.selectIndex == 2)
+        {
+            //天梯
+        }
+        
+    }];
     
     [self presentViewController:loginNavController animated:YES completion:nil];
 }

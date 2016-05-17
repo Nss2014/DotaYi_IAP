@@ -66,11 +66,8 @@
 
 +(void) platform11LoginRequest:(NSString *) theLoginURL ParamsBody:(NSString *) theBody target:(id)target action:(SEL)action;
 
-+(void) platform11SecondPostRequest:(NSString *)urlString body:(NSString *) theBody target:(id)target action:(SEL)action;
++(NSURLConnection *) addURLConnectionPostRequestWithURLString:(NSString *)urlString BodyData:(NSData *)bodyData AndDelegate:(id)delegate;
 
-+(void) platform11ThirdPostRequest:(NSString *)urlString body:(NSString *) theBody target:(id)target action:(SEL)action;
-
-+(void) platform11FourthPostRequest:(NSString *)urlString body:(NSString *) theBody target:(id)target action:(SEL)action;
 
 @end
 

@@ -109,15 +109,6 @@
     [self.window setRootViewController:loginNavC];
 }
 
-- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
-{
-    if (tabBarController.selectedIndex == 2)
-    {
-        
-    }
-}
-
-
 - (void)applicationWillResignActive:(UIApplication *)application {
 }
 

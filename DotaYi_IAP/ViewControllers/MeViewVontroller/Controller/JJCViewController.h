@@ -10,4 +10,6 @@
 
 @interface JJCViewController : BaseViewController
 
+-(void) addListDataRequest;
+
 @end

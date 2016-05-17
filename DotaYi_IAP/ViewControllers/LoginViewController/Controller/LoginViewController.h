@@ -8,6 +8,14 @@
 
 #import "BaseViewController.h"
 
+//回调block
+typedef void (^CallBackRefreshLoginBlock)();
+
 @interface LoginViewController : BaseViewController
+{
+    CallBackRefreshLoginBlock _callBackBlock;
+}
+
+-(void) refreshBlock:(CallBackRefreshLoginBlock) callBackblock;
 
 @end

@@ -16,6 +16,13 @@
 
 @property (nonatomic,strong) RegisteFrontView *R13_frontView;
 
+@property (nonatomic,strong) NSURLConnection *secondLoginConnection;//第二次登录
+
+@property (nonatomic,strong) NSURLConnection *thirdLoginConnection;//第三次登录
+
+@property (nonatomic,strong) NSURLConnection *fourthLoginConnection;//第四次登录
+
+
 @end
 
 @implementation LoginViewController
@@ -164,9 +171,15 @@
     
     self.R13_frontView.RF_textField2.secureTextEntry = YES;
     
-//    UIImage *verifyImage = [Tools imageFromURLString:[self getVerifyCode]];
-    
-    [self.R13_frontView.RF_verifyCodeImageView sd_setImageWithURL:[NSURL URLWithString:[self getVerifyCode]] placeholderImage:nil];
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        
+        UIImage *verifyImage = [Tools imageFromURLString:[self getVerifyCode]];
+        
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            
+            self.R13_frontView.RF_verifyCodeImageView.image = verifyImage;
+        });
+    });
     
     self.R13_frontView.RF_verifyCodeImageView.userInteractionEnabled = YES;
     
@@ -225,10 +238,7 @@
     
     NSLog(@"body %@",body);
     
-    NSLog(@"getVerifyCode %@",[self getVerifyCode]);
-    
     CoreSVPLoading(nil, nil);
-    
     
     //登录第一步
     [Tools platform11LoginRequest:DT_LOGIN_URL ParamsBody:body target:self action:@selector(LoginPlatform11CallBack:)];
@@ -273,7 +283,10 @@
 
             CoreSVPLoading(nil, nil);
             
-            [Tools platform11SecondPostRequest:loginSecondUrlString body:body target:self action:@selector(loginSecondCallBack:)];
+            NSData * postData = [body dataUsingEncoding:NSUTF8StringEncoding];
+            
+            self.secondLoginConnection = [Tools addURLConnectionPostRequestWithURLString:loginSecondUrlString BodyData:postData AndDelegate:self];
+            
         }
         else
         {
@@ -284,15 +297,85 @@
     }
 }
 
--(void) loginSecondCallBack:(NSString *) responseValueString
+#pragma mark 请求回调
+
+- (nullable NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(nullable NSURLResponse *)response
 {
     CoreSVPDismiss;
     
-    NSLog(@"responseValueString %@",responseValueString);
+    NSLog(@"response %@",response);
     
-    if (responseValueString)
+    NSHTTPURLResponse *HTTPResponse = (NSHTTPURLResponse *)response;
+    
+    if (HTTPResponse.statusCode == 302)
     {
-        NSArray *sepArray1 = [responseValueString componentsSeparatedByString:@"siteid"];
+        //此处拦截302重定向
+        NSDictionary *fields = [HTTPResponse allHeaderFields];
+        
+        NSLog(@"fields %@",fields);
+        
+        NSString *locationString = [fields valueForKey:@"Location"];
+        
+        if (connection == self.secondLoginConnection)
+        {
+            //开始第三步登录
+            [self thirdStepLogin:locationString];
+        }
+        else if (connection == self.thirdLoginConnection)
+        {
+            //开始第四步登录
+            [self fourthStepLogin:locationString];
+        }
+        else if (connection == self.fourthLoginConnection)
+        {
+            //获取并存储utoken
+            NSString *uToken = [fields valueForKey:@"Set-Cookie"];
+            
+            NSLog(@"uToken %@",uToken);
+            
+            if (uToken && ![uToken isEqualToString:@""])
+            {
+                NSString *getExchangedCookie = [uToken stringByReplacingOccurrencesOfString:@"domain=.5211game.com; path=/" withString:@""];
+                
+                NSLog(@"getExchangedCookie %@",getExchangedCookie);
+                
+                [Tools setStr:getExchangedCookie key:LOGIN_COOKIE];
+                
+                //登录状态改变
+                [Tools setBool:YES key:LOCAL_LOGINSTATUS];
+                
+                //登录成功 跳转页面
+                
+                //使用block回调刷新首页数据
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    _callBackBlock();
+                    
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                    
+                });
+            }
+
+        }
+        
+        return nil;
+    }
+    
+    return request;
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+    CoreSVPError(@"请求失败，请重试", nil);
+}
+
+-(void) thirdStepLogin:(NSString *) aUrlString
+{
+    NSLog(@"aUrlString %@",aUrlString);
+    
+    if (aUrlString)
+    {
+        NSArray *sepArray1 = [aUrlString componentsSeparatedByString:@"siteid"];
         
         if (sepArray1.count > 1)
         {
@@ -314,19 +397,30 @@
             
             NSString *body = [NSString stringWithFormat:@"siteid=%@&returnurl=%@",getSiteId,getReturnUrl];
             
-            [Tools platform11SecondPostRequest:responseValueString body:body target:self action:@selector(loginThirdCallBack:)];
-
+            NSData * postData = [body dataUsingEncoding:NSUTF8StringEncoding];
+            
+            self.thirdLoginConnection = [Tools addURLConnectionPostRequestWithURLString:aUrlString BodyData:postData AndDelegate:self];
+            
+        }
+        else
+        {
+            CoreSVPError(@"登录失败，请重试", nil);
         }
     }
+    else
+    {
+        CoreSVPError(@"登录失败，请重试", nil);
+    }
+
 }
 
--(void) loginThirdCallBack:(NSString *) thirdResponseStr
+-(void) fourthStepLogin:(NSString *) aUrlString
 {
-    NSLog(@"thirdResponseStr %@",thirdResponseStr);
+    NSLog(@"aUrlString %@",aUrlString);
     
-    if (thirdResponseStr)
+    if (aUrlString)
     {
-        NSArray *sepArray1 = [thirdResponseStr componentsSeparatedByString:@"&st="];
+        NSArray *sepArray1 = [aUrlString componentsSeparatedByString:@"st="];
         
         if (sepArray1.count > 1)
         {
@@ -348,20 +442,42 @@
             
             NSString *body = [NSString stringWithFormat:@"returnurl=http://www.5211game.com/?logout=1&st=%@&sid=%@",getSt,getSid];
             
-            [Tools platform11FourthPostRequest:thirdResponseStr body:body target:sepArray2 action:@selector(loginFouthCallBack:)];
+            NSLog(@"body %@",body);
+            
+            //url解码
+            NSString *getFinalUrl = [aUrlString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            
+            NSLog(@"getFinalUr11111l %@",getFinalUrl);
+            
+            NSLog(@"substringToIndex %@",[getFinalUrl substringToIndex:4]);
+            
+            //去除字符串http前面的多余字符   Location = "/http%3a%2f%
+            
+            if (![[getFinalUrl substringToIndex:4] isEqualToString:@"http"])
+            {
+                NSRange range= [[getFinalUrl substringToIndex:4] rangeOfString: @"/"];
+                
+                if(range.location!=NSNotFound)
+                {
+                    getFinalUrl= [getFinalUrl substringWithRange:NSMakeRange(range.location+1, getFinalUrl.length-range.length-1)];
+                    
+                    NSLog(@"getFinalUrl %@",getFinalUrl);
+                }
+            }
+            
+            NSData * postData = [body dataUsingEncoding:NSUTF8StringEncoding];
+            
+            self.fourthLoginConnection = [Tools addURLConnectionPostRequestWithURLString:getFinalUrl BodyData:postData AndDelegate:self];
             
         }
-
+        else
+        {
+            CoreSVPError(@"登录失败，请重试", nil);
+        }
     }
-}
-
--(void) loginFouthCallBack:(NSString *) fourthResponse
-{
-    NSLog(@"fourthResponse %@",fourthResponse);
-    
-    if (fourthResponse)
+    else
     {
-        //登录成功 跳转页面
+        CoreSVPError(@"登录失败，请重试", nil);
     }
 }
 
@@ -386,6 +502,11 @@
     }
     
     return verifyString;
+}
+
+-(void) refreshBlock:(CallBackRefreshLoginBlock) callBackblock
+{
+    _callBackBlock = callBackblock;
 }
 
 @end
