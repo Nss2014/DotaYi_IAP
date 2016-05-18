@@ -47,6 +47,7 @@
 #import "CoreModel.h"
 #import <Accelerate/Accelerate.h>
 #import "APJSONParser.h"
+#import "MJExtension.h"
 
 #endif
 

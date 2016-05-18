@@ -352,6 +352,7 @@
 //iPad微信封面图宽高比例
 #define IPAD_WECHAT_COVERIMG_SCALE 186.f/524
 
+
 #pragma mark - 秀丽媤色值--------------------------------------
 //页面背景色
 #define HRBACKVIEW_COLOR [Tools colorFromHexCode:@"#f2f2f2"]
@@ -371,6 +372,11 @@
 
 #define APP_HKBG_DEV @"ios"
 
+
+/**
+ *  segment高度
+ */
+#define SEGMENT_HEIGHT 40
 
 #pragma mark - 太平洋游戏网英雄&物品数据接口
 

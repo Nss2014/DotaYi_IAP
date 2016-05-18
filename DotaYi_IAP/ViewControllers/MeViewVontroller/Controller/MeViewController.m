@@ -100,7 +100,7 @@
     }
     self.extendedLayoutIncludesOpaqueBars = NO;
     
-    self.segmentView = [[ARSegmentView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
+    self.segmentView = [[ARSegmentView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SEGMENT_HEIGHT)];
     
     [self.segmentView.segmentControl addTarget:self action:@selector(segmentControlDidChangedValue:) forControlEvents:UIControlEventValueChanged];
     
@@ -183,14 +183,17 @@
     if (index == 0)
     {
         //竞技场
+        self.navigationItem.title = @"竞技场";
     }
     else if (index == 1)
     {
         //名将
+        self.navigationItem.title = @"名将";
     }
     else if (index == 2)
     {
         //天梯
+        self.navigationItem.title = @"天梯";
     }
 }
 

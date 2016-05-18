@@ -32,7 +32,7 @@
 
 -(void) initUI
 {
-    self.navigationItem.title = @"排行榜";
+    self.navigationItem.title = @"总排行榜";
     
     [self _setUp];
     
@@ -72,7 +72,7 @@
     }
     self.extendedLayoutIncludesOpaqueBars = NO;
     
-    self.segmentView = [[ARSegmentView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
+    self.segmentView = [[ARSegmentView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SEGMENT_HEIGHT)];
     
     [self.segmentView.segmentControl addTarget:self action:@selector(segmentControlDidChangedValue:) forControlEvents:UIControlEventValueChanged];
     
@@ -149,6 +149,15 @@
     [self.view setNeedsLayout];
     
     [self.view layoutIfNeeded];
+    
+    if (index == 0)
+    {
+        self.navigationItem.title = @"总排行榜";
+    }
+    else if (index == 1)
+    {
+        self.navigationItem.title = @"英雄排行榜";
+    }
 }
 
 -(UIScrollView *)scrollViewInPageController:(UIViewController <ARSegmentControllerDelegate> *)controller
