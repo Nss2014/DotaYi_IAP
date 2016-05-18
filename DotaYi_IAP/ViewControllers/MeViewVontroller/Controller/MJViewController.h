@@ -10,4 +10,6 @@
 
 @interface MJViewController : BaseViewController
 
+-(void) addListDataRequest;
+
 @end

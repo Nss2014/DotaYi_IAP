@@ -10,4 +10,6 @@
 
 @interface TTViewController : BaseViewController
 
+-(void) addListDataRequest;
+
 @end

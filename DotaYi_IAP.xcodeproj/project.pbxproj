@@ -23,6 +23,8 @@
 		074C19BB1CE088B300711A2E /* odds_image7.png in Resources */ = {isa = PBXBuildFile; fileRef = 074C19AE1CE088B300711A2E /* odds_image7.png */; };
 		074C19BC1CE088B300711A2E /* odds_image8.png in Resources */ = {isa = PBXBuildFile; fileRef = 074C19AF1CE088B300711A2E /* odds_image8.png */; };
 		074C19BD1CE088B300711A2E /* odds_image9.png in Resources */ = {isa = PBXBuildFile; fileRef = 074C19B01CE088B300711A2E /* odds_image9.png */; };
+		0765619E1CEC66B0005B52B6 /* TotalRankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0765619D1CEC66B0005B52B6 /* TotalRankViewController.m */; };
+		076561A11CEC66BB005B52B6 /* HeroRankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 076561A01CEC66BB005B52B6 /* HeroRankViewController.m */; };
 		077118D11CE18AE800BD13CE /* OddsTypeInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 077118D01CE18AE800BD13CE /* OddsTypeInfoModel.m */; };
 		077A5DFD1CE97C0300C231CB /* APBeanParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 077A5DF61CE97C0300C231CB /* APBeanParser.m */; };
 		077A5DFE1CE97C0300C231CB /* APJSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 077A5DF81CE97C0300C231CB /* APJSONParser.m */; };
@@ -284,6 +286,10 @@
 		074C19AE1CE088B300711A2E /* odds_image7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = odds_image7.png; sourceTree = "<group>"; };
 		074C19AF1CE088B300711A2E /* odds_image8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = odds_image8.png; sourceTree = "<group>"; };
 		074C19B01CE088B300711A2E /* odds_image9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = odds_image9.png; sourceTree = "<group>"; };
+		0765619C1CEC66B0005B52B6 /* TotalRankViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TotalRankViewController.h; sourceTree = "<group>"; };
+		0765619D1CEC66B0005B52B6 /* TotalRankViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TotalRankViewController.m; sourceTree = "<group>"; };
+		0765619F1CEC66BB005B52B6 /* HeroRankViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeroRankViewController.h; sourceTree = "<group>"; };
+		076561A01CEC66BB005B52B6 /* HeroRankViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeroRankViewController.m; sourceTree = "<group>"; };
 		077118CF1CE18AE800BD13CE /* OddsTypeInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OddsTypeInfoModel.h; sourceTree = "<group>"; };
 		077118D01CE18AE800BD13CE /* OddsTypeInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OddsTypeInfoModel.m; sourceTree = "<group>"; };
 		077A5DF51CE97C0300C231CB /* APBeanParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APBeanParser.h; sourceTree = "<group>"; };
@@ -940,6 +946,10 @@
 				841064B81CC3C1C8008AAD95 /* RankListViewController.m */,
 				0746A0FE1CDB4811007EC2AD /* HeroDetailInfoViewController.h */,
 				0746A0FF1CDB4811007EC2AD /* HeroDetailInfoViewController.m */,
+				0765619C1CEC66B0005B52B6 /* TotalRankViewController.h */,
+				0765619D1CEC66B0005B52B6 /* TotalRankViewController.m */,
+				0765619F1CEC66BB005B52B6 /* HeroRankViewController.h */,
+				076561A01CEC66BB005B52B6 /* HeroRankViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2359,6 +2369,7 @@
 				841064B61CC3C1A9008AAD95 /* OddsViewController.m in Sources */,
 				07AC6B381CC0A65D0030B298 /* Tools.m in Sources */,
 				07DC15E61CDA04780054EA20 /* NSObject+CoreModelCommon.m in Sources */,
+				0765619E1CEC66B0005B52B6 /* TotalRankViewController.m in Sources */,
 				841064A71CC3B62B008AAD95 /* JJCViewController.m in Sources */,
 				07AC6B0B1CC0A65D0030B298 /* MASCompositeConstraint.m in Sources */,
 				07AC6ABC1CC0A65D0030B298 /* CoreCountBtn.m in Sources */,
@@ -2407,6 +2418,7 @@
 				07AC6AD61CC0A65D0030B298 /* DGActivityIndicatorBallPulseAnimation.m in Sources */,
 				07AC6AE51CC0A65D0030B298 /* DGActivityIndicatorLineScalePartyAnimation.m in Sources */,
 				07AC6C011CC0A66C0030B298 /* ARSegmentPageHeader.m in Sources */,
+				076561A11CEC66BB005B52B6 /* HeroRankViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

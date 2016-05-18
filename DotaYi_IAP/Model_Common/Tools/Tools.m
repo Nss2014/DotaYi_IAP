@@ -536,14 +536,6 @@ NSString *const NewFeatureVersionKey = @"NewFeatureVersionKey";
     //设置POST正文的内容
     [backRequest setHTTPBody:postData];
     
-    [backRequest setValue:@"application/x-www-form-urlencoded; charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
-    
-    [backRequest setValue:@"Mozilla/5.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit/600.1.3 (KHTML, like Gecko) Version/8.0 Mobile/12A4345d Safari/600.1.4" forHTTPHeaderField:@"User-Agent"];
-    
-    [backRequest setValue:@"register.5211game.com" forHTTPHeaderField:@"Host"];
-    
-    [backRequest setValue:@"http://register.5211game.com/11/login?returnurl=" forHTTPHeaderField:@"Referer"];
-    
     NSLog(@"LOGIN_COOKIE %@",[self strForKey:LOGIN_COOKIE]);
     
     [backRequest setValue:[self strForKey:LOGIN_COOKIE] forHTTPHeaderField:@"Cookie"];

@@ -391,16 +391,9 @@
 #define DT_LOGIN_URL @"http://register.5211game.com/11/login/login"
 
 /**
- *  获取登录验证码
+ *  获取竞技场排行榜数据      总排行榜：action=UserRankDatas  英雄排行：action=HerosUserDatas
  */
-#define DT_LOGINVERYFYCODE_URL @"http://www.5211game.com/?logout=1"
-
-
-/**
- *  获取登录Cookie
- */
-#define DT_GETLOGINCOOKIE_URL @"http://register.5211game.com/11/login/LoginResult"
-
+#define DT_GETJJCRANK_URL @"http://score.5211game.com/arena/request/handler.ashx"
 
 
 

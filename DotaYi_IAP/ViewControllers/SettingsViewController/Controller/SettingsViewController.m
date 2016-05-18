@@ -28,7 +28,7 @@
 
 -(void) initData
 {
-    self.sectionTwoTitlesArray = [NSArray arrayWithObjects:@"清除缓存",@"推荐给好友",@"关于我们",@"长得帅的请点这里评分", nil];
+    self.sectionTwoTitlesArray = [NSArray arrayWithObjects:@"清除缓存",@"推荐给好友",@"建议与反馈",@"帅的点这儿评分", nil];
 }
 
 -(void) initUI

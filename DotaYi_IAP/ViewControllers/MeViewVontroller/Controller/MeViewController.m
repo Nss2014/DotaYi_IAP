@@ -26,13 +26,18 @@
 
 @implementation MeViewController
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self initUI];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     [self initData];
-    
-    [self initUI];
 }
 
 -(void) initData
@@ -249,10 +254,12 @@
         else if (ws.selectIndex == 1)
         {
             //名将
+            [self.mjVC addListDataRequest];
         }
         else if (ws.selectIndex == 2)
         {
             //天梯
+            [self.ttVC addListDataRequest];
         }
         
     }];
