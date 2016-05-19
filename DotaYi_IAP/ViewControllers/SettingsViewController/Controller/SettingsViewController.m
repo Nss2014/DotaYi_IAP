@@ -13,6 +13,8 @@
 
 @property (nonatomic,strong) NSArray *sectionTwoTitlesArray;
 
+@property (nonatomic,strong) NSMutableArray *listImagesNameArray;
+
 @end
 
 @implementation SettingsViewController
@@ -29,6 +31,13 @@
 -(void) initData
 {
     self.sectionTwoTitlesArray = [NSArray arrayWithObjects:@"清除缓存",@"推荐给好友",@"建议与反馈",@"帅的点这儿评分", nil];
+    
+    self.listImagesNameArray = [NSMutableArray array];
+    
+    for (int i=0; i<4; i++)
+    {
+        [self.listImagesNameArray addObject:[NSString stringWithFormat:@"settings_left_icon%d.png",i+1]];
+    }
 }
 
 -(void) initUI
@@ -124,7 +133,7 @@
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        cell.ST_iconImageView.image = [UIImage imageNamed:@"login_logoImage"];
+        cell.ST_iconImageView.image = [UIImage imageNamed:self.listImagesNameArray[indexPath.row]];
         
         cell.ST_nameLabel.text = self.sectionTwoTitlesArray[indexPath.row];
         
