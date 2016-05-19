@@ -47,7 +47,14 @@
 
 -(void) initUI
 {
-    self.navigationItem.title = @"我";
+    if (!self.sendNavigationTitle)
+    {
+        self.sendNavigationTitle = @"我";
+    }
+    
+    self.navigationItem.title = self.sendNavigationTitle;
+    
+    [self addEmptyTipsViewWithTitle:@"请使用11平台账号登录" IsShowButton:YES ButtonTitle:@"请登录"];
     
     BOOL localLoginStatus = [Tools boolForKey:LOCAL_LOGINSTATUS];
     
@@ -58,11 +65,11 @@
         [self setChildVC];
         
         [self _baseConfigs];
+        
+        [self hideEmptyTipView];
     }
     else
     {
-        [self addEmptyTipsViewWithTitle:@"请使用11平台账号登录" IsShowButton:YES ButtonTitle:@"请登录"];
-        
         [self showEmptyTipView];
     }
 }
@@ -183,17 +190,14 @@
     if (index == 0)
     {
         //竞技场
-        self.navigationItem.title = @"竞技场";
     }
     else if (index == 1)
     {
         //名将
-        self.navigationItem.title = @"名将";
     }
     else if (index == 2)
     {
         //天梯
-        self.navigationItem.title = @"天梯";
     }
 }
 
@@ -241,33 +245,70 @@
     
     [loginVC refreshBlock:^{
        
-        [self hideEmptyTipView];
+        [ws hideEmptyTipView];
         
-        [self _setUp];
+        [ws _setUp];
         
-        [self setChildVC];
+        [ws setChildVC];
         
-        [self _baseConfigs];
+        [ws _baseConfigs];
         
-        if (ws.selectIndex == 0)
-        {
-            //竞技场 刷新数据
-            [self.jjcVC addListDataRequest];
-        }
-        else if (ws.selectIndex == 1)
-        {
-            //名将
-            [self.mjVC addListDataRequest];
-        }
-        else if (ws.selectIndex == 2)
-        {
-            //天梯
-            [self.ttVC addListDataRequest];
-        }
+        //获取当前登录的用户ID
+        self.sendUserId = [Tools strForKey:LOGIN_RESPONSE_USERID];
+        
+        [ws addListDataRequestWithUserId];
         
     }];
     
     [self presentViewController:loginNavController animated:YES completion:nil];
 }
+
+//根据用户ID请求一个用户的所有数据  包括竞技场、名将、天梯
+-(void) addListDataRequestWithUserId
+{
+    //获取名将、天梯、竞技场数据
+    NSString *urlString = @"http://score.5211game.com/RecordCenter/request/record";
+    
+    NSString *body = [NSString stringWithFormat:@"method=getrecord&u=%@&t=10001",self.sendUserId];
+    
+    NSLog(@"body %@",body);
+    
+    [Tools platform11PostRequest:urlString ParamsBody:body target:self action:@selector(getJjcTtMjListDataCallBack:)];
+}
+
+-(void) getJjcTtMjListDataCallBack:(NSDictionary *) responseDic
+{
+    NSLog(@"responseDic %@",responseDic);
+    
+    NSNumber *getErrorCode = responseDic[@"error"];
+    
+    if ([getErrorCode isEqualToNumber:[NSNumber numberWithInteger:0]])
+    {
+        [Tools setBool:YES key:LOCAL_LOGINSTATUS];
+        
+        if (self.selectIndex == 0)
+        {
+            //竞技场 刷新数据
+            [self.jjcVC reloadCurrentTableView];
+        }
+        else if (self.selectIndex == 1)
+        {
+            //名将
+            [self.mjVC reloadCurrentTableView];
+        }
+        else if (self.selectIndex == 2)
+        {
+            //天梯
+            [self.ttVC reloadCurrentTableView];
+        }
+    }
+    else
+    {
+        [Tools setBool:NO key:LOCAL_LOGINSTATUS];
+        
+        //失效后跳转登录页面
+    }
+}
+
 
 @end

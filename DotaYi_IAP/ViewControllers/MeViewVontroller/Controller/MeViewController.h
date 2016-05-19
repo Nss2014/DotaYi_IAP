@@ -25,4 +25,10 @@
 
 #pragma mark - ARSegmentView --- end ---
 
+@property (nonatomic,copy) NSString *sendNavigationTitle;
+
+@property (nonatomic,copy) NSString *sendUserId;
+
+-(void) addListDataRequestWithUserId;
+
 @end

@@ -10,6 +10,6 @@
 
 @interface MJViewController : BaseViewController
 
--(void) addListDataRequest;
+-(void) reloadCurrentTableView;//刷新列表
 
 @end
