@@ -27,6 +27,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    [self creatFMDBTable];
+    
     [self initRootViewController];
     
     [self handleNavigationBar];
@@ -34,6 +36,11 @@
     [self handleUM:launchOptions];
     
     return YES;
+}
+
+-(void) creatFMDBTable
+{
+    [[HP_Application sharedApplication].store createTableWithName:DB_ODDS];
 }
 
 -(void)handleUM:(NSDictionary *) launchOptions

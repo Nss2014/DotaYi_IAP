@@ -8,13 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import "CommonHeader.h"
+#import "YTKKeyValueStore.h"
 
 //单例，保存应用数据
 
 @interface HP_Application : NSObject
 
 
-
+@property (nonatomic,strong) YTKKeyValueStore *store;
 
 + (HP_Application *)sharedApplication;
 

@@ -440,4 +440,10 @@
  */
 #define LOCAL_LOGINSTATUS @"loginStatus"
 
+
+#pragma mark - YTKKeyValueStore数据库
+
+//物品数据
+#define DB_ODDS @"odds_db"
+
 #endif

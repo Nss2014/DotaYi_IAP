@@ -8,7 +8,7 @@
 
 #import "CoreModel.h"
 
-@interface OddsMainModel : CoreModel
+@interface OddsMainModel : NSObject
 
 @property (nonatomic,copy) NSString *oddsMainImgString;
 
@@ -16,12 +16,12 @@
 
 @end
 
-@interface OddsTypeInfoModel : CoreModel
+@interface OddsTypeInfoModel : NSObject
 
 @property (nonatomic,copy) NSString *oddsTypeNameString;
 
 @property (nonatomic,copy) NSString *oddsTypeImgString;
 
-@property (nonatomic,strong) NSArray *oddsTypeArray;
+@property (nonatomic,strong) NSMutableArray *oddsTypeArray;
 
 @end

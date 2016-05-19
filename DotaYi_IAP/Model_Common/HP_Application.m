@@ -35,4 +35,15 @@ static HP_Application *_sharedApplication = nil;
     return self;
 }
 
+-(YTKKeyValueStore *)store
+{
+    if (!_store)
+    {
+        NSString *path = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/main.db"];
+        //建数据库
+        _store = [[YTKKeyValueStore alloc] initWithDBWithPath:path];
+    }
+    return _store;
+}
+
 @end

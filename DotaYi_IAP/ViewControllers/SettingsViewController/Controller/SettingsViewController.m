@@ -104,7 +104,7 @@
         }
         else
         {
-            cell.SS_userImageView.image = [UIImage imageNamed:@"login_logoImage"];
+            cell.SS_userImageView.image = [UIImage imageNamed:@"user_defaultHeader"];
             
             cell.SS_userNameLabel.text = @"未登录";
         }

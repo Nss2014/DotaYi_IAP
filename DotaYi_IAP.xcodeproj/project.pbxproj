@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		071947381CEDAC80000FEC50 /* YTKKeyValueStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 071947371CEDAC80000FEC50 /* YTKKeyValueStore.m */; };
+		0719473B1CEDC3BF000FEC50 /* user_defaultHeader.png in Resources */ = {isa = PBXBuildFile; fileRef = 0719473A1CEDC3BF000FEC50 /* user_defaultHeader.png */; };
 		072EF0651CE432AE00C7B6E0 /* Register1_3View.m in Sources */ = {isa = PBXBuildFile; fileRef = 072EF0641CE432AE00C7B6E0 /* Register1_3View.m */; };
 		0746A1001CDB4811007EC2AD /* HeroDetailInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0746A0FF1CDB4811007EC2AD /* HeroDetailInfoViewController.m */; };
 		0747401A1CDC4C43001CC6C4 /* HeroDetailDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 074740191CDC4C43001CC6C4 /* HeroDetailDataModel.m */; };
@@ -281,6 +283,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		071947361CEDAC80000FEC50 /* YTKKeyValueStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YTKKeyValueStore.h; sourceTree = "<group>"; };
+		071947371CEDAC80000FEC50 /* YTKKeyValueStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YTKKeyValueStore.m; sourceTree = "<group>"; };
+		0719473A1CEDC3BF000FEC50 /* user_defaultHeader.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user_defaultHeader.png; sourceTree = "<group>"; };
 		072EF0631CE432AE00C7B6E0 /* Register1_3View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Register1_3View.h; sourceTree = "<group>"; };
 		072EF0641CE432AE00C7B6E0 /* Register1_3View.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Register1_3View.m; sourceTree = "<group>"; };
 		0746A0FE1CDB4811007EC2AD /* HeroDetailInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeroDetailInfoViewController.h; sourceTree = "<group>"; };
@@ -803,6 +808,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		071947351CEDAC80000FEC50 /* YTKKey-Value */ = {
+			isa = PBXGroup;
+			children = (
+				071947361CEDAC80000FEC50 /* YTKKeyValueStore.h */,
+				071947371CEDAC80000FEC50 /* YTKKeyValueStore.m */,
+			);
+			path = "YTKKey-Value";
+			sourceTree = "<group>";
+		};
+		071947391CEDC3BF000FEC50 /* common_images */ = {
+			isa = PBXGroup;
+			children = (
+				0719473A1CEDC3BF000FEC50 /* user_defaultHeader.png */,
+			);
+			path = common_images;
+			sourceTree = "<group>";
+		};
 		074C19A31CE088B300711A2E /* odds_images */ = {
 			isa = PBXGroup;
 			children = (
@@ -1106,6 +1128,7 @@
 		07AC69291CC0A65D0030B298 /* Model_Common */ = {
 			isa = PBXGroup;
 			children = (
+				071947351CEDAC80000FEC50 /* YTKKey-Value */,
 				84900F671CECAE64002F2098 /* MJExtension */,
 				077A5DF41CE97C0300C231CB /* APBeanParser */,
 				07DC15961CDA04780054EA20 /* CoreModel */,
@@ -2066,9 +2089,9 @@
 		8417D1F11CC214710075D2D7 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				071947391CEDC3BF000FEC50 /* common_images */,
 				074C19A31CE088B300711A2E /* odds_images */,
 				841064BD1CC3D756008AAD95 /* setting_images */,
-				8417D1F21CC214710075D2D7 /* common_images */,
 				8417D1F31CC214710075D2D7 /* default_images */,
 				8417D1F41CC214710075D2D7 /* login_images */,
 				8417D1F71CC214710075D2D7 /* nav_images */,
@@ -2076,13 +2099,6 @@
 			);
 			name = images;
 			path = DotaYi_IAP/images;
-			sourceTree = "<group>";
-		};
-		8417D1F21CC214710075D2D7 /* common_images */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = common_images;
 			sourceTree = "<group>";
 		};
 		8417D1F31CC214710075D2D7 /* default_images */ = {
@@ -2260,6 +2276,7 @@
 				07AC6AF61CC0A65D0030B298 /* SVP.bundle in Resources */,
 				07AC6C371CC0A66D0030B298 /* bubble_min@2x.png in Resources */,
 				07AC6C3E1CC0A66D0030B298 /* ToolViewInputVoiceHL@2x.png in Resources */,
+				0719473B1CEDC3BF000FEC50 /* user_defaultHeader.png in Resources */,
 				07AC6C3C1CC0A66D0030B298 /* ToolViewInputTextHL@2x.png in Resources */,
 				07AC6AF81CC0A65D0030B298 /* SVProgressHUD.bundle in Resources */,
 				07AC6C431CC0A66D0030B298 /* umeng_fb_audio_play_02@2x.png in Resources */,
@@ -2478,6 +2495,7 @@
 				07DC15EC1CDA04780054EA20 /* NSObject+Update.m in Sources */,
 				07DC15EF1CDA04780054EA20 /* CoreModelConst.m in Sources */,
 				07AC6B2F1CC0A65D0030B298 /* SDWebImageManager.m in Sources */,
+				071947381CEDAC80000FEC50 /* YTKKeyValueStore.m in Sources */,
 				07AC6C231CC0A66D0030B298 /* KSDefaultFootRefreshView.m in Sources */,
 				07AC6AD71CC0A65D0030B298 /* DGActivityIndicatorBallPulseSyncAnimation.m in Sources */,
 				07AC6C601CC0CD700030B298 /* TFModel.m in Sources */,

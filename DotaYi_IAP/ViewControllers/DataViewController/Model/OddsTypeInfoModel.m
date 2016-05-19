@@ -10,9 +10,19 @@
 
 @implementation OddsTypeInfoModel
 
-+(NSDictionary *)statementForNSArrayProperties{
-    return @{@"oddsTypeArray":NSStringFromClass([OddsMainModel class])};
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        
+        self.oddsTypeArray = [NSMutableArray array];
+    }
+    return self;
 }
+
+//+(NSDictionary *)statementForNSArrayProperties{
+//    return @{@"oddsTypeArray":NSStringFromClass([OddsMainModel class])};
+//}
 
 @end
 
