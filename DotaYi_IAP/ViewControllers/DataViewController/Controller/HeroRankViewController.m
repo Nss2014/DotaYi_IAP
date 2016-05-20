@@ -7,7 +7,7 @@
 //
 
 #import "HeroRankViewController.h"
-#import "JJCHeroTableViewCell.h"
+#import "JJCRankTableViewCell.h"
 #import "JJCRankDataModel.h"
 
 @interface HeroRankViewController ()<ARSegmentControllerDelegate>
@@ -115,18 +115,18 @@
 {
     static NSString *identifier = @"cell";
     
-    JJCHeroTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    JJCRankTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     
     if (!cell)
     {
-        cell = [[JJCHeroTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        cell = [[JJCRankTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     
     DetailRankInfo *detailDataInfo = self.dataSourceArray[indexPath.row];
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    cell.rankOrderLabel.text = detailDataInfo.HeroName;
+    cell.rankOrderLabel.text = [NSString stringWithFormat:@"%ld",indexPath.row + 1];
     
     //英雄属性 0=力量 1=敏捷 2=智力
     
@@ -145,11 +145,13 @@
         heroProperty = @"智力";
     }
     
-    cell.rankUserNameLabel.text = heroProperty;
+    cell.rankUserNameLabel.text = detailDataInfo.HeroName;
     
-    cell.rankPointLabel.text = detailDataInfo.Ranking;
+    cell.rankPointLabel.text = heroProperty;
     
-    cell.rankTotalPlaysLabel.text = detailDataInfo.UserName;
+    cell.rankTotalPlaysLabel.text = detailDataInfo.Ranking;
+    
+    cell.rankWinningProbabilityLabel.text = detailDataInfo.UserName;
     
     if (indexPath.row % 2 == 1)
     {
@@ -174,7 +176,7 @@
     
     UILabel *rankOrderLabel = [[UILabel alloc] init];
     
-    rankOrderLabel.text = @"英雄名";
+    rankOrderLabel.text = @"排名";
     
     rankOrderLabel.font = TEXT12_BOLD_FONT;
     
@@ -186,7 +188,7 @@
     
     UILabel *rankUserNameLabel = [[UILabel alloc] init];
     
-    rankUserNameLabel.text = @"英雄属性";
+    rankUserNameLabel.text = @"英雄名";
     
     rankUserNameLabel.font = TEXT12_BOLD_FONT;
     
@@ -198,7 +200,7 @@
     
     UILabel *rankPointLabel = [[UILabel alloc] init];
     
-    rankPointLabel.text = @"英雄积分";
+    rankPointLabel.text = @"英雄属性";
     
     rankPointLabel.font = TEXT12_BOLD_FONT;
     
@@ -210,7 +212,7 @@
     
     UILabel *rankTotalPlaysLabel = [[UILabel alloc] init];
     
-    rankTotalPlaysLabel.text = @"用户名";
+    rankTotalPlaysLabel.text = @"英雄积分";
     
     rankTotalPlaysLabel.font = TEXT12_BOLD_FONT;
     
@@ -220,25 +222,37 @@
     
     [headerBackView addSubview:rankTotalPlaysLabel];
     
+    UILabel *rankWinningLabel = [[UILabel alloc] init];
+    
+    rankWinningLabel.text = @"用户名";
+    
+    rankWinningLabel.font = TEXT12_BOLD_FONT;
+    
+    rankWinningLabel.textColor = COLOR_TITLE_BLACK;
+    
+    rankWinningLabel.textAlignment = NSTextAlignmentCenter;
+    
+    [headerBackView addSubview:rankWinningLabel];
+    
     [rankOrderLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(headerBackView.mas_left);
         make.top.equalTo(headerBackView.mas_top);
         make.bottom.equalTo(headerBackView.mas_bottom);
-        make.width.equalTo(headerBackView.mas_width).multipliedBy(0.25);
+        make.width.equalTo(headerBackView.mas_width).multipliedBy(0.15);
     }];
     
     [rankUserNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(rankOrderLabel.mas_right);
         make.top.equalTo(rankOrderLabel.mas_top);
         make.bottom.equalTo(rankOrderLabel.mas_bottom);
-        make.width.equalTo(rankOrderLabel.mas_width);
+        make.width.equalTo(headerBackView.mas_width).multipliedBy(0.25);
     }];
     
     [rankPointLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(rankUserNameLabel.mas_right);
         make.top.equalTo(rankUserNameLabel.mas_top);
         make.bottom.equalTo(rankUserNameLabel.mas_bottom);
-        make.width.equalTo(rankUserNameLabel.mas_width);
+        make.width.equalTo(headerBackView.mas_width).multipliedBy(0.2);
     }];
     
     [rankTotalPlaysLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -246,6 +260,13 @@
         make.top.equalTo(rankPointLabel.mas_top);
         make.bottom.equalTo(rankPointLabel.mas_bottom);
         make.width.equalTo(rankPointLabel.mas_width);
+    }];
+    
+    [rankWinningLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(rankTotalPlaysLabel.mas_right);
+        make.top.equalTo(rankTotalPlaysLabel.mas_top);
+        make.bottom.equalTo(rankTotalPlaysLabel.mas_bottom);
+        make.width.equalTo(rankTotalPlaysLabel.mas_width);
     }];
     
     return headerBackView;

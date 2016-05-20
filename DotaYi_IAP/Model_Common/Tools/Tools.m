@@ -489,7 +489,10 @@ NSString *const NewFeatureVersionKey = @"NewFeatureVersionKey";
                     {
                         NSString *valueStr = [tempAElement objectForKey:detailKey];
                         
-                        [getValueArray addObject:valueStr];
+                        if (valueStr)
+                        {
+                            [getValueArray addObject:valueStr];
+                        }
                         
                     }
                     else

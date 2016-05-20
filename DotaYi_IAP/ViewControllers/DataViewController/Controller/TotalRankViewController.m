@@ -226,21 +226,21 @@
         make.left.equalTo(headerBackView.mas_left);
         make.top.equalTo(headerBackView.mas_top);
         make.bottom.equalTo(headerBackView.mas_bottom);
-        make.width.equalTo(headerBackView.mas_width).multipliedBy(0.2);
+        make.width.equalTo(headerBackView.mas_width).multipliedBy(0.15);
     }];
     
     [rankUserNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(rankOrderLabel.mas_right);
         make.top.equalTo(rankOrderLabel.mas_top);
         make.bottom.equalTo(rankOrderLabel.mas_bottom);
-        make.width.equalTo(rankOrderLabel.mas_width);
+        make.width.equalTo(headerBackView.mas_width).multipliedBy(0.25);
     }];
     
     [rankPointLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(rankUserNameLabel.mas_right);
         make.top.equalTo(rankUserNameLabel.mas_top);
         make.bottom.equalTo(rankUserNameLabel.mas_bottom);
-        make.width.equalTo(rankUserNameLabel.mas_width);
+        make.width.equalTo(headerBackView.mas_width).multipliedBy(0.2);
     }];
     
     [rankTotalPlaysLabel mas_makeConstraints:^(MASConstraintMaker *make) {

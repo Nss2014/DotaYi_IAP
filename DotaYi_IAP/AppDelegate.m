@@ -41,6 +41,8 @@
 -(void) creatFMDBTable
 {
     [[HP_Application sharedApplication].store createTableWithName:DB_ODDS];
+    
+    [[HP_Application sharedApplication].store createTableWithName:DB_HEROS];
 }
 
 -(void)handleUM:(NSDictionary *) launchOptions

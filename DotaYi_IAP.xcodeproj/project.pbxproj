@@ -29,6 +29,11 @@
 		074C19BB1CE088B300711A2E /* odds_image7.png in Resources */ = {isa = PBXBuildFile; fileRef = 074C19AE1CE088B300711A2E /* odds_image7.png */; };
 		074C19BC1CE088B300711A2E /* odds_image8.png in Resources */ = {isa = PBXBuildFile; fileRef = 074C19AF1CE088B300711A2E /* odds_image8.png */; };
 		074C19BD1CE088B300711A2E /* odds_image9.png in Resources */ = {isa = PBXBuildFile; fileRef = 074C19B01CE088B300711A2E /* odds_image9.png */; };
+		075627F31CEEB1AD00568B09 /* HeroDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 075627F21CEEB1AD00568B09 /* HeroDetailTableViewCell.m */; };
+		075627FA1CEEB2B900568B09 /* ASHorizontalScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 075627F61CEEB2B900568B09 /* ASHorizontalScrollView.m */; };
+		075627FB1CEEB2B900568B09 /* ASHorizontalScrollViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 075627F81CEEB2B900568B09 /* ASHorizontalScrollViewDelegate.m */; };
+		075627FC1CEEB2B900568B09 /* license.txt in Resources */ = {isa = PBXBuildFile; fileRef = 075627F91CEEB2B900568B09 /* license.txt */; };
+		075627FE1CEEBAC000568B09 /* officialWebPic_default.png in Resources */ = {isa = PBXBuildFile; fileRef = 075627FD1CEEBAC000568B09 /* officialWebPic_default.png */; };
 		0765619E1CEC66B0005B52B6 /* TotalRankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0765619D1CEC66B0005B52B6 /* TotalRankViewController.m */; };
 		076561A11CEC66BB005B52B6 /* HeroRankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 076561A01CEC66BB005B52B6 /* HeroRankViewController.m */; };
 		077118D11CE18AE800BD13CE /* OddsTypeInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 077118D01CE18AE800BD13CE /* OddsTypeInfoModel.m */; };
@@ -211,6 +216,7 @@
 		07AC6C8A1CC0D4D90030B298 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 07AC6C891CC0D4D90030B298 /* libxml2.tbd */; };
 		07AC6C8C1CC0D4E00030B298 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 07AC6C8B1CC0D4E00030B298 /* libstdc++.tbd */; };
 		07AD6AE21CE31F4700D0D537 /* OddsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07AD6AE11CE31F4700D0D537 /* OddsDetailViewController.m */; };
+		07C273521CEEFBEB0093FDAC /* webBgPic_default.png in Resources */ = {isa = PBXBuildFile; fileRef = 07C273511CEEFBEB0093FDAC /* webBgPic_default.png */; };
 		07D7B7961CDAED63005E8FB0 /* CollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07D7B7931CDAED63005E8FB0 /* CollectionReusableView.m */; };
 		07D7B7971CDAED63005E8FB0 /* CollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 07D7B7951CDAED63005E8FB0 /* CollectionViewCell.m */; };
 		07DC158C1CD9D7D50054EA20 /* JKDBHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 07DC157D1CD9D7D50054EA20 /* JKDBHelper.m */; };
@@ -313,6 +319,14 @@
 		074C19AE1CE088B300711A2E /* odds_image7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = odds_image7.png; sourceTree = "<group>"; };
 		074C19AF1CE088B300711A2E /* odds_image8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = odds_image8.png; sourceTree = "<group>"; };
 		074C19B01CE088B300711A2E /* odds_image9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = odds_image9.png; sourceTree = "<group>"; };
+		075627F11CEEB1AD00568B09 /* HeroDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeroDetailTableViewCell.h; sourceTree = "<group>"; };
+		075627F21CEEB1AD00568B09 /* HeroDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeroDetailTableViewCell.m; sourceTree = "<group>"; };
+		075627F51CEEB2B900568B09 /* ASHorizontalScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASHorizontalScrollView.h; sourceTree = "<group>"; };
+		075627F61CEEB2B900568B09 /* ASHorizontalScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASHorizontalScrollView.m; sourceTree = "<group>"; };
+		075627F71CEEB2B900568B09 /* ASHorizontalScrollViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASHorizontalScrollViewDelegate.h; sourceTree = "<group>"; };
+		075627F81CEEB2B900568B09 /* ASHorizontalScrollViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASHorizontalScrollViewDelegate.m; sourceTree = "<group>"; };
+		075627F91CEEB2B900568B09 /* license.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = license.txt; sourceTree = "<group>"; };
+		075627FD1CEEBAC000568B09 /* officialWebPic_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = officialWebPic_default.png; sourceTree = "<group>"; };
 		0765619C1CEC66B0005B52B6 /* TotalRankViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TotalRankViewController.h; sourceTree = "<group>"; };
 		0765619D1CEC66B0005B52B6 /* TotalRankViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TotalRankViewController.m; sourceTree = "<group>"; };
 		0765619F1CEC66BB005B52B6 /* HeroRankViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeroRankViewController.h; sourceTree = "<group>"; };
@@ -663,6 +677,7 @@
 		07AC6C8B1CC0D4E00030B298 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
 		07AD6AE01CE31F4700D0D537 /* OddsDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OddsDetailViewController.h; sourceTree = "<group>"; };
 		07AD6AE11CE31F4700D0D537 /* OddsDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OddsDetailViewController.m; sourceTree = "<group>"; };
+		07C273511CEEFBEB0093FDAC /* webBgPic_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = webBgPic_default.png; sourceTree = "<group>"; };
 		07D7B7921CDAED63005E8FB0 /* CollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionReusableView.h; sourceTree = "<group>"; };
 		07D7B7931CDAED63005E8FB0 /* CollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionReusableView.m; sourceTree = "<group>"; };
 		07D7B7941CDAED63005E8FB0 /* CollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewCell.h; sourceTree = "<group>"; };
@@ -828,7 +843,9 @@
 		071947391CEDC3BF000FEC50 /* common_images */ = {
 			isa = PBXGroup;
 			children = (
+				075627FD1CEEBAC000568B09 /* officialWebPic_default.png */,
 				0719473A1CEDC3BF000FEC50 /* user_defaultHeader.png */,
+				07C273511CEEFBEB0093FDAC /* webBgPic_default.png */,
 			);
 			path = common_images;
 			sourceTree = "<group>";
@@ -851,6 +868,18 @@
 				074C19B01CE088B300711A2E /* odds_image9.png */,
 			);
 			path = odds_images;
+			sourceTree = "<group>";
+		};
+		075627F41CEEB2B900568B09 /* ASHorizontalScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				075627F51CEEB2B900568B09 /* ASHorizontalScrollView.h */,
+				075627F61CEEB2B900568B09 /* ASHorizontalScrollView.m */,
+				075627F71CEEB2B900568B09 /* ASHorizontalScrollViewDelegate.h */,
+				075627F81CEEB2B900568B09 /* ASHorizontalScrollViewDelegate.m */,
+				075627F91CEEB2B900568B09 /* license.txt */,
+			);
+			path = ASHorizontalScrollView;
 			sourceTree = "<group>";
 		};
 		077A5DF41CE97C0300C231CB /* APBeanParser */ = {
@@ -1055,6 +1084,8 @@
 				84900F621CECA1CA002F2098 /* JJCRankTableViewCell.m */,
 				84900F8A1CECC1EB002F2098 /* JJCHeroTableViewCell.h */,
 				84900F8B1CECC1EB002F2098 /* JJCHeroTableViewCell.m */,
+				075627F11CEEB1AD00568B09 /* HeroDetailTableViewCell.h */,
+				075627F21CEEB1AD00568B09 /* HeroDetailTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1554,6 +1585,7 @@
 		07AC6B401CC0A66C0030B298 /* Interfac_Views */ = {
 			isa = PBXGroup;
 			children = (
+				075627F41CEEB2B900568B09 /* ASHorizontalScrollView */,
 				07AC6B411CC0A66C0030B298 /* AFViewShaker */,
 				07AC6B441CC0A66C0030B298 /* ARSegmentPageController */,
 				07AC6B561CC0A66C0030B298 /* BackButtonHandler */,
@@ -2281,6 +2313,7 @@
 			files = (
 				074C19BB1CE088B300711A2E /* odds_image7.png in Resources */,
 				07AC6C381CC0A66D0030B298 /* cancel@2x.png in Resources */,
+				075627FE1CEEBAC000568B09 /* officialWebPic_default.png in Resources */,
 				07AC6C3A1CC0A66D0030B298 /* save@2x.png in Resources */,
 				07AC6C5F1CC0CD700030B298 /* CoreTFManagerVC.bundle in Resources */,
 				074C19BC1CE088B300711A2E /* odds_image8.png in Resources */,
@@ -2296,6 +2329,7 @@
 				071947481CEDC9FD000FEC50 /* settings_left_icon3.png in Resources */,
 				07AC6C3B1CC0A66D0030B298 /* ToolViewInputText@2x.png in Resources */,
 				074C19BD1CE088B300711A2E /* odds_image9.png in Resources */,
+				075627FC1CEEB2B900568B09 /* license.txt in Resources */,
 				07AC6C3F1CC0A66D0030B298 /* umeng_add_photo@2x.png in Resources */,
 				07AC6C251CC0A66D0030B298 /* KSRefresh.bundle in Resources */,
 				07AC6C351CC0A66D0030B298 /* UMFeedbackLocalizable.strings in Resources */,
@@ -2312,6 +2346,7 @@
 				0719474B1CEDC9FD000FEC50 /* settings_left_icon4.png in Resources */,
 				0719474F1CEDCB33000FEC50 /* settings_left_icon2.png in Resources */,
 				8417D1FD1CC214710075D2D7 /* main_leftNav_image.png in Resources */,
+				07C273521CEEFBEB0093FDAC /* webBgPic_default.png in Resources */,
 				07AC68E81CC0A2820030B298 /* Assets.xcassets in Resources */,
 				074C19B51CE088B300711A2E /* odds_image12.png in Resources */,
 				07AC6C5E1CC0CD700030B298 /* CoreTFKeyBoardToolBarView.xib in Resources */,
@@ -2396,6 +2431,7 @@
 				07DC15DF1CDA04780054EA20 /* FMDatabaseAdditions.m in Sources */,
 				07AC6ADA1CC0A65D0030B298 /* DGActivityIndicatorBallScaleMultipleAnimation.m in Sources */,
 				07AC6AF91CC0A65D0030B298 /* SVProgressHUD.m in Sources */,
+				075627FA1CEEB2B900568B09 /* ASHorizontalScrollView.m in Sources */,
 				07AC6C5C1CC0CD700030B298 /* CoreTFManagerVC.m in Sources */,
 				07DC15E21CDA04780054EA20 /* FMResultSet.m in Sources */,
 				07AC6AD01CC0A65D0030B298 /* DGActivityIndicatorBallBeatAnimation.m in Sources */,
@@ -2437,6 +2473,7 @@
 				07AC6ACE1CC0A65D0030B298 /* CoreIV.m in Sources */,
 				84900F631CECA1CA002F2098 /* JJCRankTableViewCell.m in Sources */,
 				07AC6ADD1CC0A65D0030B298 /* DGActivityIndicatorBallSpinFadeLoader.m in Sources */,
+				075627FB1CEEB2B900568B09 /* ASHorizontalScrollViewDelegate.m in Sources */,
 				077A5DFF1CE97C0300C231CB /* NSArray+DateString.m in Sources */,
 				07AC6B111CC0A65D0030B298 /* NSArray+MASAdditions.m in Sources */,
 				07AC6B331CC0A65D0030B298 /* UIImage+MultiFormat.m in Sources */,
@@ -2534,6 +2571,7 @@
 				07AC6AD51CC0A65D0030B298 /* DGActivityIndicatorBallGridPulseAnimation.m in Sources */,
 				07AC6ABF1CC0A65D0030B298 /* UIImage+btnColor.m in Sources */,
 				07AC6B311CC0A65D0030B298 /* UIButton+WebCache.m in Sources */,
+				075627F31CEEB1AD00568B09 /* HeroDetailTableViewCell.m in Sources */,
 				07DC15DC1CDA04780054EA20 /* CoreFMDB.m in Sources */,
 				07AC6C221CC0A66D0030B298 /* KSAutoFootRefreshView.m in Sources */,
 				07AC6C5D1CC0CD700030B298 /* CoreTFKeyBoardToolBarView.m in Sources */,

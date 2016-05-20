@@ -15,4 +15,6 @@
 
 @property (nonatomic,copy) NSString *sendHeroLink;//传入英雄链接 解析数据用
 
+@property (nonatomic,copy) NSString *sendHeroName;//传入英雄名称
+
 @end

@@ -153,6 +153,20 @@
     [self.collectionView registerClass:[CollectionViewCell class] forCellWithReuseIdentifier:@"MyCollectionCell"];
     
     [self.collectionView registerClass:[CollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"Header"];
+    
+    UILabel *tipsFromLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, -40, SCREEN_WIDTH, 30)];
+    
+    tipsFromLabel.numberOfLines = 0;
+    
+    tipsFromLabel.textAlignment = NSTextAlignmentCenter;
+    
+    tipsFromLabel.text = @"物品数据来自太平洋游戏网\n版本：6.81c";
+    
+    tipsFromLabel.font = TEXT12_FONT;
+    
+    tipsFromLabel.textColor = COLOR_TITLE_LIGHTGRAY;
+    
+    [self.collectionView addSubview:tipsFromLabel];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -231,6 +245,8 @@
         OddsTypeInfoModel *typeModel = self.dataSourceArray[indexPath.section];
 
         view.title.text = typeModel.oddsTypeNameString;
+        
+        view.title.font = TEXT16_BOLD_FONT;
         
         reusable = view;
     }

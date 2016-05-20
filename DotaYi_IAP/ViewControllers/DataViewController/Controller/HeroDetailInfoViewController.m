@@ -7,10 +7,13 @@
 //
 
 #import "HeroDetailInfoViewController.h"
+#import "HeroDetailTableViewCell.h"
 
 @interface HeroDetailInfoViewController ()
 
 @property (nonatomic,strong) HeroDetailDataModel *heroDetailModel;
+
+@property (nonatomic,strong) NSArray *sectionHeaderArray;
 
 @end
 
@@ -20,88 +23,91 @@
 {
     [super viewDidLoad];
     
+    [self initData];
+    
     [self getHeroDetailData];
     
     [self initHeroDetailUI];
+    
+    [self addTableViewHeader];
+}
+
+-(void) initData
+{
+    self.sectionHeaderArray = [NSArray arrayWithObjects:
+                               @"配合英雄推荐",
+                               @"克制英雄推荐",
+                               @"加点方案推荐",
+                               @"初期出装推荐",
+                               @"中期出装推荐",
+                               @"后期出装推荐",
+                               @"技能介绍",nil];
 }
 
 -(void) getHeroDetailData
 {
     if (self.sendHeroId != nil && ![self.sendHeroId isKindOfClass:[NSNull class]])
     {
-        WS(ws);
+        //取出数据库数据
+        NSDictionary *getValueDic = [[HP_Application sharedApplication].store getObjectById:self.sendHeroId fromTable:DB_HEROS];
         
-        NSLog(@"sendHeroId %@   %@",self.sendHeroId,self.sendHeroLink);
+        //字典转模型
+        HeroDetailDataModel *heroModel = [HeroDetailDataModel mj_objectWithKeyValues:getValueDic];
         
-        __block NSInteger tempChanged = 0;
+        NSLog(@"heroModel %@",heroModel);
         
-        [HeroDetailDataModel find:[self.sendHeroId integerValue] selectResultBlock:^(id selectResult) {
-            
-            HeroDetailDataModel *getHeroDetailModel = selectResult;
-            
-            if (getHeroDetailModel != nil && ![getHeroDetailModel isKindOfClass:[NSNull class]])
+        if (heroModel != nil && ![heroModel isKindOfClass:[NSNull class]])
+        {
+            self.heroDetailModel = heroModel;
+        }
+        else
+        {
+            if (self.sendHeroLink != nil && ![self.sendHeroLink isKindOfClass:[NSNull class]])
             {
-                ws.heroDetailModel = getHeroDetailModel;
+                NSData *data = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:self.sendHeroLink]];
                 
-                tempChanged ++;
+                TFHpple *xpathParser = [[TFHpple alloc] initWithHTMLData:data];
+                
+                HeroDetailDataModel *saveModel = [[HeroDetailDataModel alloc] init];
+                
+                saveModel.hostID = [self.sendHeroId integerValue];
+                
+                //TableHeader数据（头像、背景图片、名称、初始属性）
+                [self getTableHeaderData:xpathParser SaveModel:saveModel];
+                
+                //section数据
+                //推荐加点方案
+                [self getRecommendAddpointData:xpathParser SaveModel:saveModel];
+                
+                //配合英雄推荐&克制英雄推荐
+                [self getMatchHeroData:xpathParser SaveModel:saveModel];
+                
+                //推荐出装
+                [self getRecommendEquipmentsData:xpathParser SaveModel:saveModel];
+                
+                //技能介绍
+                [self getSkillIntroduceData:xpathParser SaveModel:saveModel];
+                
+                self.heroDetailModel = saveModel;
+                
+                //存入数据库
+                //使用MJExtension 模型转换字典
+                NSDictionary *saveHeroDic = saveModel.mj_keyValues;
+                
+                if (saveHeroDic != nil && ![saveHeroDic isKindOfClass:[NSNull class]])
+                {
+                    [[HP_Application sharedApplication].store putObject:saveHeroDic
+                                                                 withId:self.sendHeroId
+                                                              intoTable:DB_HEROS];
+                }
             }
             else
             {
-                if (ws.sendHeroLink != nil && ![ws.sendHeroLink isKindOfClass:[NSNull class]])
-                {
-                    NSData *data = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:ws.sendHeroLink]];
-                    
-                    TFHpple *xpathParser = [[TFHpple alloc] initWithHTMLData:data];
-                    
-                    HeroDetailDataModel *saveModel = [[HeroDetailDataModel alloc] init];
-                    
-                    saveModel.hostID = [ws.sendHeroId integerValue];
-                    
-                    //TableHeader数据（头像、背景图片、名称、初始属性）
-                    [ws getTableHeaderData:xpathParser SaveModel:saveModel];
-                    
-                    //section数据
-                    //推荐加点方案
-                    [ws getRecommendAddpointData:xpathParser SaveModel:saveModel];
-                    
-                    //配合英雄推荐&克制英雄推荐
-                    [ws getMatchHeroData:xpathParser SaveModel:saveModel];
-                    
-                    //推荐出装
-                    [ws getRecommendEquipmentsData:xpathParser SaveModel:saveModel];
-                    
-                    //技能介绍
-                    [ws getSkillIntroduceData:xpathParser SaveModel:saveModel];
-                    
-                    [HeroDetailDataModel save:saveModel resBlock:nil];
-                    
-                    ws.heroDetailModel = saveModel;
-                    
-                    tempChanged ++;
-                }
-                else
-                {
-                    NSLog(@"传入英雄link为空错误！！！");
-                    
-                    CoreSVPError(@"数据出错，请重试", nil);
-                }
+                NSLog(@"传入英雄link为空错误！！！");
+                
+                CoreSVPError(@"数据出错，请重试", nil);
             }
-            
-            if (tempChanged == 1)
-            {
-                //主线程更新页面
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    
-                    NSLog(@"heroDetailModel %@",ws.heroDetailModel);
-                    
-                    NSLog(@"detailHeroSkillsArray %@",ws.heroDetailModel.detailHeroHPString);
-                    
-                    [ws.viwTable reloadData];
-                    
-                });
-            }
-            
-        }];
+        }
     }
     else
     {
@@ -109,6 +115,14 @@
         
         CoreSVPError(@"数据出错，请重试", nil);
     }
+
+    WS(ws);
+    
+    //主线程更新页面
+    dispatch_async(dispatch_get_main_queue(), ^{
+ 
+        [ws.viwTable reloadData];
+    });
 }
 
 
@@ -146,12 +160,12 @@
     NSString *heroRangeString = [Tools getHtmlValueWithXPathParser:xpathParser XPathQuery:@"//div[@class='lay254 fr']" DetailXPathQuery:@"//dd[@class='d3']" DetailKey:nil];
 
     //攻击&攻速&护甲
-    NSString *heroAttackString = [Tools getHtmlValueWithXPathParser:xpathParser XPathQuery:@"//div[@class='lay254 fr']" DetailXPathQuery:@"//dd[@class='d4']" DetailKey:nil];
+    NSString *heroAttackString = [Tools getHtmlValueWithXPathParser:xpathParser XPathQuery:@"//dl[@class='dlInfo clearfix']" DetailXPathQuery:@"//dd[@class='d4']" DetailKey:nil];
 
     //力量&智力&敏捷
     NSString *heroStrengthString = [Tools getHtmlValueWithXPathParser:xpathParser XPathQuery:@"//div[@class='lay254 fr']" DetailXPathQuery:@"//dd[@class='d5']" DetailKey:nil];
     
-    NSLog(@"heroHPString %@  %@  %@  %@  %@",heroHPString,heroMPString,heroRangeString,heroAttackString,heroStrengthString);
+    NSLog(@"heroHPString %@  heroMPString %@  heroRangeString %@  heroAttackString %@  heroStrengthString %@",heroHPString,heroMPString,heroRangeString,heroAttackString,heroStrengthString);
     
     saveModel.detailHeroHPString = heroHPString;
     
@@ -311,7 +325,14 @@
             {
                 NSString *getImgString = getRecommendSecondImgArray[i];
                 
-                NSString *getLinkString = getRecommendSecondLinkArray[i];
+                NSLog(@"iiiiii %d   %@",i,getRecommendSecondImgArray);
+                
+                NSString *getLinkString;
+                
+                if (i < getRecommendSecondLinkArray.count)
+                {
+                    getLinkString = getRecommendSecondLinkArray[i];
+                }
                 
                 RecommendEqumentsModel *recommendEqumentsModel = [[RecommendEqumentsModel alloc] init];
                 
@@ -322,6 +343,7 @@
                 recommendEqumentsModel.reLinkString = getLinkString;
                 
                 [tempModelArray addObject:recommendEqumentsModel];
+
             }
             
             saveModel.detailHeroSecondRecommendEquipmentsArray = [NSArray arrayWithArray:tempModelArray];
@@ -482,6 +504,379 @@
 
 -(void) initHeroDetailUI
 {   
+    self.navigationItem.title = self.sendHeroName;
+    
+    [self addTableView:UITableViewStylePlain separatorStyle:UITableViewCellSeparatorStyleSingleLine];
+    
+    self.viwTable.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT);
+    
+    [Tools setExtraCellLineHidden:self.viwTable];
+}
+
+-(void) addTableViewHeader
+{
+    //背景图
+    UIImageView *heroBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * HEROBG_SCALE)];
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        
+        UIImage *backImg = [self blurryImage:[Tools imageFromURLString:self.heroDetailModel.detailHeroPictureUrlString] withBlurLevel:0.3];
+        
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            
+            heroBgView.contentMode = UIViewContentModeScaleAspectFit;
+            
+            heroBgView.image = backImg;
+        });
+    });
+
+    
+    //头像
+    UIImageView *heroHeaderImgView = [[UIImageView alloc] init];
+    
+    heroHeaderImgView.layer.cornerRadius = (SCREEN_WIDTH * HEROBG_SCALE - 50)/5;
+    
+    heroHeaderImgView.clipsToBounds = YES;
+    
+    [heroHeaderImgView sd_setImageWithURL:[NSURL URLWithString:self.heroDetailModel.detailHeroImgString] placeholderImage:[UIImage imageNamed:DEFAULT_USERHEADER_PIC]];
+    
+    [heroBgView addSubview:heroHeaderImgView];
+    
+    //HP
+    UILabel *heroHPLabel = [[UILabel alloc] init];
+    
+    heroHPLabel.font = TEXT12_BOLD_FONT;
+    
+    heroHPLabel.backgroundColor = [UIColor colorWithRed:64/255.0 green:155/255.0 blue:117/255.0 alpha:1.0];
+    
+    heroHPLabel.textColor = WHITE_COLOR;
+    
+    heroHPLabel.textAlignment = NSTextAlignmentCenter;
+    
+    heroHPLabel.text = [NSString stringWithFormat:@"HP %@",self.heroDetailModel.detailHeroHPString];
+    
+    heroHPLabel.layer.cornerRadius = (SCREEN_WIDTH * HEROBG_SCALE - 50) * 3/40;
+    
+    heroHPLabel.clipsToBounds = YES;
+    
+    [heroBgView addSubview:heroHPLabel];
+    
+    //MP
+    UILabel *heroMPLabel = [[UILabel alloc] init];
+    
+    heroMPLabel.font = TEXT12_BOLD_FONT;
+    
+    heroMPLabel.textColor = WHITE_COLOR;
+    
+    heroMPLabel.text = [NSString stringWithFormat:@"MP %@",self.heroDetailModel.detailHeroMPString];
+    
+    heroMPLabel.textAlignment = NSTextAlignmentCenter;
+    
+    heroMPLabel.layer.cornerRadius = (SCREEN_WIDTH * HEROBG_SCALE - 50) * 3/40;
+    
+    heroMPLabel.clipsToBounds = YES;
+
+    heroMPLabel.backgroundColor = [UIColor colorWithRed:71/255.0 green:129/255.0 blue:169/255.0 alpha:1.0];
+    [heroBgView addSubview:heroMPLabel];
+    
+    //射程
+    UILabel *heroDistanceLabel = [[UILabel alloc] init];
+    
+    heroDistanceLabel.font = TEXT12_FONT;
+    
+    heroDistanceLabel.textColor = WHITE_COLOR;
+    
+    heroDistanceLabel.textAlignment = NSTextAlignmentCenter;
+    
+    heroDistanceLabel.numberOfLines = 0;
+    
+    heroDistanceLabel.text = [NSString stringWithFormat:@"初始%@",self.heroDetailModel.detailHeroRangeString];
+    
+    [heroBgView addSubview:heroDistanceLabel];
+    
+    //攻速
+    UILabel *heroSpeedLabel = [[UILabel alloc] init];
+    
+    heroSpeedLabel.font = TEXT12_FONT;
+    
+    heroSpeedLabel.textColor = WHITE_COLOR;
+    
+    heroSpeedLabel.numberOfLines = 0;
+    
+    heroSpeedLabel.textAlignment = NSTextAlignmentCenter;
+    
+    NSString *exchangedSpeedString = [self.heroDetailModel.detailHeroAttackString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];  //去除掉首尾的空白字符和换行字符
+    
+    exchangedSpeedString = [exchangedSpeedString stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+    
+    exchangedSpeedString = [exchangedSpeedString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    
+    heroSpeedLabel.text = [NSString stringWithFormat:@"初始%@",exchangedSpeedString];
+    
+    [heroBgView addSubview:heroSpeedLabel];
+    
+    [heroHeaderImgView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(heroBgView.mas_centerX);
+        make.top.equalTo(heroBgView.mas_top).offset(PADDING_WIDTH);
+        make.height.mas_equalTo((SCREEN_WIDTH * HEROBG_SCALE - 50) * 2/5);
+        make.width.equalTo(heroHeaderImgView.mas_height);
+    }];
+    
+    [heroHPLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(heroBgView.mas_centerX);
+        make.top.equalTo(heroHeaderImgView.mas_bottom).offset(PADDING_WIDTH);
+        make.width.mas_equalTo(160);
+        make.height.mas_equalTo((SCREEN_WIDTH * HEROBG_SCALE - 50) * 3/20);
+    }];
+    
+    [heroMPLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(heroHPLabel.mas_centerX);
+        make.top.equalTo(heroHPLabel.mas_bottom).offset(PADDING_WIDTH);
+        make.width.equalTo(heroHPLabel.mas_width);
+        make.height.equalTo(heroHPLabel.mas_height);
+    }];
+    
+    [heroDistanceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(heroBgView.mas_left).offset(PADDING_WIDTH);
+        make.right.equalTo(heroBgView.mas_right).offset(-PADDING_WIDTH);
+        make.top.equalTo(heroMPLabel.mas_bottom).offset(PADDING_WIDTH);
+        make.height.mas_equalTo((SCREEN_WIDTH * HEROBG_SCALE - 50) * 3/20);
+    }];
+    
+    [heroSpeedLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(heroDistanceLabel.mas_left);
+        make.right.equalTo(heroDistanceLabel.mas_right);
+        make.top.equalTo(heroDistanceLabel.mas_bottom);
+        make.height.equalTo(heroDistanceLabel.mas_height);
+    }];
+    
+    self.viwTable.tableHeaderView = heroBgView;
+}
+
+#pragma mark 列表代理
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return self.sectionHeaderArray.count;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 70;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *indentifier = @"CellPortrait";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:indentifier];
+    
+    if (!cell)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:indentifier];
+        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        ASHorizontalScrollView *horizontalScrollView = [[ASHorizontalScrollView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 50)];
+        
+        horizontalScrollView.miniAppearPxOfLastItem = 10;
+        
+        horizontalScrollView.uniformItemSize = CGSizeMake(50, 50);
+        
+        [horizontalScrollView setItemsMarginOnce];
+        
+        NSMutableArray *buttons = [NSMutableArray array];
+        
+        switch (indexPath.section)
+        {
+            case 0:
+            {
+                NSArray *tempModelArr = [MatchOrDefenceHeroModel mj_objectArrayWithKeyValuesArray:self.heroDetailModel.detailHeroMatchArray];
+                
+                for (int i=0; i<tempModelArr.count; i++)
+                {
+                    MatchOrDefenceHeroModel *matchOrDefenceModel = tempModelArr[i];
+                    
+                    UIImageView *hdImgView = [[UIImageView alloc] init];
+                    
+                    NSLog(@"mdHeroImgString %@",matchOrDefenceModel.mdHeroImgString);
+                    
+                    [hdImgView sd_setImageWithURL:[NSURL URLWithString:matchOrDefenceModel.mdHeroImgString] placeholderImage:[UIImage imageNamed:DEFAULT_WEBPIC_PIC]];
+                    
+                    [buttons addObject:hdImgView];
+                }
+                
+            }
+                break;
+            case 1:
+            {
+                NSArray *tempModelArr = [MatchOrDefenceHeroModel mj_objectArrayWithKeyValuesArray:self.heroDetailModel.detailHeroRestrainArray];
+                
+                for (int i=0; i<tempModelArr.count; i++)
+                {
+                    MatchOrDefenceHeroModel *matchOrDefenceModel = tempModelArr[i];
+                    
+                    UIImageView *hdImgView = [[UIImageView alloc] init];
+                    
+                    NSLog(@"mdHeroImgString %@",matchOrDefenceModel.mdHeroImgString);
+                    
+                    [hdImgView sd_setImageWithURL:[NSURL URLWithString:matchOrDefenceModel.mdHeroImgString] placeholderImage:[UIImage imageNamed:DEFAULT_WEBPIC_PIC]];
+                    
+                    [buttons addObject:hdImgView];
+                }
+            }
+                break;
+            case 2:
+            {
+                for (int i=0; i<self.heroDetailModel.detaiHeroRecommendAddPointArray.count; i++)
+                {
+                    NSString *imgString = self.heroDetailModel.detaiHeroRecommendAddPointArray[i];
+                    
+                    UIImageView *hdImgView = [[UIImageView alloc] init];
+                    
+                    NSLog(@"imgString %@",imgString);
+                    
+                    [hdImgView sd_setImageWithURL:[NSURL URLWithString:imgString] placeholderImage:[UIImage imageNamed:DEFAULT_WEBPIC_PIC]];
+                    
+                    //添加等级角标
+                    UILabel *cornerLevelLabel = [[UILabel alloc] init];
+                    
+                    cornerLevelLabel.text = [NSString stringWithFormat:@"%d",i+1];
+                    
+                    cornerLevelLabel.font = TEXT10_FONT;
+                    
+                    cornerLevelLabel.textColor = WHITE_COLOR;
+                    
+                    cornerLevelLabel.textAlignment = NSTextAlignmentCenter;
+                    
+                    [hdImgView addSubview:cornerLevelLabel];
+                    
+                    [cornerLevelLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                        make.right.equalTo(hdImgView.mas_right);
+                        make.bottom.equalTo(hdImgView.mas_bottom);
+                        make.width.mas_equalTo(15);
+                        make.height.mas_equalTo(15);
+                    }];
+                    
+                    [buttons addObject:hdImgView];
+                }
+            }
+                break;
+            case 3:
+            {
+                NSArray *tempArr = [RecommendEqumentsModel mj_objectArrayWithKeyValuesArray:self.heroDetailModel.detailHeroFirstRecommendEquipmentsArray];
+                
+                for (int i=0; i<tempArr.count; i++)
+                {
+                    RecommendEqumentsModel *recommendEqumentsModel = tempArr[i];
+                    
+                    UIImageView *hdImgView = [[UIImageView alloc] init];
+                    
+                    NSLog(@"recommendEqumentsModel.reImgString %@",recommendEqumentsModel.reImgString);
+                    
+                    [hdImgView sd_setImageWithURL:[NSURL URLWithString:recommendEqumentsModel.reImgString] placeholderImage:[UIImage imageNamed:DEFAULT_WEBPIC_PIC]];
+                    
+                    [buttons addObject:hdImgView];
+                }
+            }
+                break;
+            case 4:
+            {
+                NSArray *tempArr = [RecommendEqumentsModel mj_objectArrayWithKeyValuesArray:self.heroDetailModel.detailHeroSecondRecommendEquipmentsArray];
+                
+                for (int i=0; i<tempArr.count; i++)
+                {
+                    RecommendEqumentsModel *recommendEqumentsModel = tempArr[i];
+                    
+                    UIImageView *hdImgView = [[UIImageView alloc] init];
+                    
+                    NSLog(@"recommendEqumentsModel.reImgString %@",recommendEqumentsModel.reImgString);
+                    
+                    [hdImgView sd_setImageWithURL:[NSURL URLWithString:recommendEqumentsModel.reImgString] placeholderImage:[UIImage imageNamed:DEFAULT_WEBPIC_PIC]];
+                    
+                    [buttons addObject:hdImgView];
+                }
+            }
+                break;
+            case 5:
+            {
+                NSArray *tempArr = [RecommendEqumentsModel mj_objectArrayWithKeyValuesArray:self.heroDetailModel.detailHeroThirdRecommendEquipmentsArray];
+                
+                for (int i=0; i<tempArr.count; i++)
+                {
+                    RecommendEqumentsModel *recommendEqumentsModel = tempArr[i];
+                    
+                    UIImageView *hdImgView = [[UIImageView alloc] init];
+                    
+                    NSLog(@"recommendEqumentsModel.reImgString %@",recommendEqumentsModel.reImgString);
+                    
+                    [hdImgView sd_setImageWithURL:[NSURL URLWithString:recommendEqumentsModel.reImgString] placeholderImage:[UIImage imageNamed:DEFAULT_WEBPIC_PIC]];
+                    
+                    [buttons addObject:hdImgView];
+                }
+            }
+                break;
+            case 6:
+            {
+                
+            }
+                break;
+                
+            default:
+                break;
+        }
+        
+        [horizontalScrollView addItems:buttons];
+        
+        [cell.contentView addSubview:horizontalScrollView];
+        
+        [horizontalScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(cell.contentView.mas_left);
+            make.top.equalTo(cell.contentView.mas_top);
+            make.right.equalTo(cell.contentView.mas_right);
+            make.bottom.equalTo(cell.contentView.mas_bottom).offset(-PADDING_WIDTH/2);
+        }];
+    }
+    
+    return cell;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 30;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *headerBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 30)];
+    
+    UILabel *rankOrderLabel = [[UILabel alloc] init];
+    
+    rankOrderLabel.text = self.sectionHeaderArray[section];
+    
+    rankOrderLabel.font = TEXT12_BOLD_FONT;
+    
+    rankOrderLabel.textColor = COLOR_TITLE_BLACK;
+    
+    [headerBackView addSubview:rankOrderLabel];
+    
+    [rankOrderLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(headerBackView.mas_left).offset(PADDING_WIDTH);
+        make.top.equalTo(headerBackView.mas_top);
+        make.bottom.equalTo(headerBackView.mas_bottom);
+        make.right.equalTo(headerBackView.mas_right).offset(-PADDING_WIDTH);
+    }];
+    
+    return headerBackView;
+}
+
+#pragma mark -  点击行响应
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
     
 }
 

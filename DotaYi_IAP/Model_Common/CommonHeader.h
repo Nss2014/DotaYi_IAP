@@ -372,11 +372,32 @@
 
 #define APP_HKBG_DEV @"ios"
 
+/**
+ *  默认加载图 200x200
+ */
+#define DEFAULT_WEBPIC_PIC @"officialWebPic_default"
+
+/**
+ *  默认长方形加载图 650x260
+ */
+#define DEFAULT_WEBBG_PIC @"webBgPic_default"
+
+/**
+ *  默认用户头像  默认英雄头像
+ */
+#define DEFAULT_USERHEADER_PIC @"user_defaultHeader"
+
 
 /**
  *  segment高度
  */
 #define SEGMENT_HEIGHT 40
+
+
+/**
+ *  英雄背景图宽高比例  320x250
+ */
+#define HEROBG_SCALE 25.0/32
 
 #pragma mark - 太平洋游戏网英雄&物品数据接口
 
@@ -445,5 +466,8 @@
 
 //物品数据
 #define DB_ODDS @"odds_db"
+
+//英雄数据  按英雄id存储
+#define DB_HEROS @"heros_db"
 
 #endif

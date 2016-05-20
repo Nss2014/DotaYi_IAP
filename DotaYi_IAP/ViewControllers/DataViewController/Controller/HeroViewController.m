@@ -39,6 +39,20 @@
 -(void) setViewUI
 {
     self.navigationItem.title = @"英雄";
+    
+    UILabel *tipsFromLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, -40, SCREEN_WIDTH, 30)];
+    
+    tipsFromLabel.numberOfLines = 0;
+    
+    tipsFromLabel.textAlignment = NSTextAlignmentCenter;
+    
+    tipsFromLabel.text = @"英雄数据来自太平洋游戏网\n版本：6.81c";
+    
+    tipsFromLabel.font = TEXT12_FONT;
+    
+    tipsFromLabel.textColor = COLOR_TITLE_LIGHTGRAY;
+    
+    [self.collectionView addSubview:tipsFromLabel];
 }
 
 -(void) creatCollectionViewData
@@ -350,6 +364,8 @@
     {
         CollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"Header" forIndexPath:indexPath];
         
+        view.title.font = TEXT16_BOLD_FONT;
+        
         if (indexPath.section == 0)
         {
             view.title.text = self.saveMJHeroModel.heroTypeName;
@@ -372,22 +388,27 @@
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-//    NSString *message = [[NSString alloc] initWithFormat:@"你点击了第%ld个section，第%ld个cell",(long)indexPath.section,(long)indexPath.row];
-    
     NSString *heroLinkString = @"";
+    
+    NSString *heroNameString = @"";
     
     if (indexPath.section == 0)
     {
         heroLinkString = self.saveMJHeroModel.heroInfoLinkArray[indexPath.row];
+        
+        heroNameString = self.saveMJHeroModel.heroNameArray[indexPath.row + 1];
     }
     else if (indexPath.section == 1)
     {
         heroLinkString = self.saveZLHeroModel.heroInfoLinkArray[indexPath.row];
+        
+        heroNameString = self.saveZLHeroModel.heroNameArray[indexPath.row + 1];
     }
     else if (indexPath.section == 2)
     {
         heroLinkString = self.saveLLHeroModel.heroInfoLinkArray[indexPath.row];
+        
+        heroNameString = self.saveLLHeroModel.heroNameArray[indexPath.row + 1];
     }
     
     NSLog(@"heroLinkString %@",heroLinkString);
@@ -397,6 +418,8 @@
     heroDetailVC.sendHeroLink = heroLinkString;
     
     heroDetailVC.sendHeroId = [self getHeroIdFromLink:heroLinkString];
+    
+    heroDetailVC.sendHeroName = heroNameString;
     
     [self setHidesBottomBarWhenPushed:YES];
     
