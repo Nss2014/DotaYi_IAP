@@ -31,6 +31,8 @@ const float kCellHeight = 60.0f;
 
 @property (nonatomic,copy) NSString *signSkillDetailText;//可变技能介绍
 
+@property (nonatomic,assign) NSInteger signLastSelectIndex;//
+
 @property (nonatomic,assign) NSInteger signSkillSelectIndex;//标记当前查看的技能
 
 @end
@@ -91,7 +93,7 @@ const float kCellHeight = 60.0f;
         
         skillLevelString = skillIntroduceModel.skillLevelString;
         
-        NSString *showDetailText = [NSString stringWithFormat:@"%@%@",skillDistanceString,skillLevelString];
+        NSString *showDetailText = [NSString stringWithFormat:@"%@%@",[Tools exchangeNullToEmptyString:skillDistanceString],[Tools exchangeNullToEmptyString:skillLevelString]];
         
         NSString *exchangedSpeedString = [showDetailText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];  //去除掉首尾的空白字符和换行字符
         
@@ -502,7 +504,9 @@ const float kCellHeight = 60.0f;
         
         //技能介绍分为两部分  两个数组
         //技能图片
-        NSArray *skillImgStringArray = [Tools getHtmlValueArrayWithXPathParser:beginAElement XPathQuery:@"//img" DetailXPathQuery:nil DetailKey:@"src"];
+//        NSArray *skillImgStringArray = [Tools getHtmlValueArrayWithXPathParser:beginAElement XPathQuery:@"//img" DetailXPathQuery:nil DetailKey:@"src"];
+        
+        NSArray *skillImgStringArray = [Tools getHtmlValueArrayWithXPathParser:beginAElement XPathQuery:@"//div[@class='tbA clearfix']" DetailXPathQuery:@"//img" DetailKey:@"src"];
         
         NSLog(@"skillImgStringArray %@",skillImgStringArray);
         
@@ -771,7 +775,7 @@ const float kCellHeight = 60.0f;
     
     NSString *skillLevelString = skillIntroduceModel.skillLevelString;
     
-    NSString *skillDetailStr = [NSString stringWithFormat:@"%@%@",skillDistanceString,skillLevelString];
+    NSString *skillDetailStr = [NSString stringWithFormat:@"%@%@",[Tools exchangeNullToEmptyString:skillDistanceString],[Tools exchangeNullToEmptyString:skillLevelString]];
     
     NSString *exchangedSpeedString = [skillDetailStr stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];  //去除掉首尾的空白字符和换行字符
     
@@ -788,11 +792,16 @@ const float kCellHeight = 60.0f;
     self.signSkillDetailText = exchangedSpeedString;
     
     self.signSkillSelectIndex = selectIndex;
+
+    
+    [self.viwTable beginUpdates];
     
     //一个section刷新
     NSIndexSet *indexSet = [[NSIndexSet alloc] initWithIndex:6];
     
-    [self.viwTable reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.viwTable reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
+
+    [self.viwTable endUpdates];
 }
 
 #pragma mark 列表代理
@@ -827,9 +836,7 @@ const float kCellHeight = 60.0f;
             
             CGSize skillDetaiSize = [Tools getAdaptionSizeWithText:exchangedSpeedString andFont:TEXT12_FONT andLabelWidth:SCREEN_WIDTH - 2 * PADDING_WIDTH];
             
-            
-            NSLog(@"signSkillCellHeight %f   %f",self.signSkillCellHeight,kCellHeight + skillDetaiSize.height - 30);
-            
+  
             return self.signSkillCellHeight;
 
         }
@@ -901,6 +908,16 @@ const float kCellHeight = 60.0f;
         
         [cell.contentView addSubview:horizontalScrollView];
         
+        CGFloat tempValue0 = self.signLastSelectIndex * kCellHeight - SCREEN_WIDTH/2 > 0 ? self.signLastSelectIndex * kCellHeight - SCREEN_WIDTH/2 : 0;
+        
+        [horizontalScrollView scrollRectToVisible:CGRectMake(tempValue0, 0, horizontalScrollView.frame.size.width, horizontalScrollView.frame.size.height) animated:NO];
+        
+        
+        CGFloat tempValue = self.signSkillSelectIndex * kCellHeight - SCREEN_WIDTH/2 > 0 ? self.signSkillSelectIndex * kCellHeight - SCREEN_WIDTH/2 : 0;
+        
+        [horizontalScrollView scrollRectToVisible:CGRectMake(tempValue, 0, horizontalScrollView.frame.size.width, horizontalScrollView.frame.size.height) animated:YES];
+        
+        self.signLastSelectIndex = self.signSkillSelectIndex;
         
         UILabel *skillNameLabel = [[UILabel alloc] init];
         
