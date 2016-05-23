@@ -70,6 +70,7 @@
     });
 }
 
+
 -(void) getOddsData
 {
     NSData *data = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:DT_ODDSLISTDATA_URL]];
@@ -77,7 +78,9 @@
     TFHpple *xpathParser = [[TFHpple alloc] initWithHTMLData:data];
     
     NSArray *oddsElements = [xpathParser searchWithXPathQuery:@"//div[@class='layAB']"];
-
+    
+    BOOL isParserSuccess = YES;
+    
     for (TFHppleElement *tfElement in oddsElements)
     {
         NSArray *oddsTypeNameArray = [tfElement searchWithXPathQuery:@"//div[@class='thA']"];
@@ -123,23 +126,37 @@
             }
             else
             {
-                //解析出错  停止并报错
-                CoreSVPError(@"更新数据出错，请重试", nil);
+                isParserSuccess = NO;
                 
                 break;
             }
         }
+        
+        if (!isParserSuccess)
+        {
+            break;
+        }
     }
     
-    //存入数据库
-    //使用MJExtension 模型数组转换字典数组
-    NSArray *channelDicArray = [OddsTypeInfoModel mj_keyValuesArrayWithObjectArray:self.dataSourceArray];
-    
-    if (channelDicArray != nil && ![channelDicArray isKindOfClass:[NSNull class]])
+    if (isParserSuccess)
     {
-        [[HP_Application sharedApplication].store putObject:channelDicArray
-                                                     withId:DB_ODDS
-                                                  intoTable:DB_ODDS];
+        //存入数据库
+        //使用MJExtension 模型数组转换字典数组
+        NSArray *channelDicArray = [OddsTypeInfoModel mj_keyValuesArrayWithObjectArray:self.dataSourceArray];
+        
+        if (channelDicArray != nil && ![channelDicArray isKindOfClass:[NSNull class]])
+        {
+            [[HP_Application sharedApplication].store putObject:channelDicArray
+                                                         withId:DB_ODDS
+                                                      intoTable:DB_ODDS];
+        }
+    }
+    else
+    {
+        //解析出错  停止并报错  清空表 下次重新写入数据
+        CoreSVPError(@"更新数据出错，请重试", nil);
+        
+        [[HP_Application sharedApplication].store clearTable:DB_ODDS];
     }
     
 }

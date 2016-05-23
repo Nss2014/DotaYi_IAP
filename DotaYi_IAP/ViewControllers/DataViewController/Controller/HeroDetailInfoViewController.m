@@ -71,41 +71,51 @@ const float kCellHeight = 60.0f;
     
     NSString *skillLevelString;//等级提升介绍
     
-    SkillsIntroduceModel *skillIntroduceModel = tempArr[0];
+    NSLog(@"tempArr %@",tempArr);
     
-    skillNameString = skillIntroduceModel.skillNameString;
+    if (tempArr.count)
+    {
+        SkillsIntroduceModel *skillIntroduceModel = tempArr[0];
+        
+        skillNameString = skillIntroduceModel.skillNameString;
+        
+        skillIntroduceString = skillIntroduceModel.skillIntroduceString;
+        
+        skillQuickNameString = skillIntroduceModel.skillQuickNameString;
+        
+        skillDistanceString = skillIntroduceModel.skillDistanceString;
+        
+        skillIntervalString = skillIntroduceModel.skillIntervalString;
+        
+        skillMPExpendString = skillIntroduceModel.skillMPExpendString;
+        
+        skillLevelString = skillIntroduceModel.skillLevelString;
+        
+        NSString *showDetailText = [NSString stringWithFormat:@"%@%@",skillDistanceString,skillLevelString];
+        
+        NSString *exchangedSpeedString = [showDetailText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];  //去除掉首尾的空白字符和换行字符
+        
+        exchangedSpeedString = [exchangedSpeedString stringByReplacingOccurrencesOfString:@"\r\n\r\n" withString:@"\r\n"];
+        
+        exchangedSpeedString = [exchangedSpeedString stringByReplacingOccurrencesOfString:@"\r\n" withString:@"\n"];
+        
+        CGSize skillDetaiSize = [Tools getAdaptionSizeWithText:exchangedSpeedString andFont:TEXT12_FONT andLabelWidth:SCREEN_WIDTH - 2 * PADDING_WIDTH];
+        
+        self.signSkillCellHeight = kCellHeight + 10  + 20  + 10 + skillDetaiSize.height + 10;
+        
+        self.signSkillName = skillIntroduceModel.skillNameString;
+        
+        self.signSkillDetailText = exchangedSpeedString;
+        
+        self.signSkillSelectIndex = 0;
+        
+        self.isShowOtherSkill = NO;
+    }
+    else
+    {
+        
+    }
     
-    skillIntroduceString = skillIntroduceModel.skillIntroduceString;
-    
-    skillQuickNameString = skillIntroduceModel.skillQuickNameString;
-    
-    skillDistanceString = skillIntroduceModel.skillDistanceString;
-    
-    skillIntervalString = skillIntroduceModel.skillIntervalString;
-    
-    skillMPExpendString = skillIntroduceModel.skillMPExpendString;
-    
-    skillLevelString = skillIntroduceModel.skillLevelString;
-    
-    NSString *showDetailText = [NSString stringWithFormat:@"%@%@",skillDistanceString,skillLevelString];
-    
-    NSString *exchangedSpeedString = [showDetailText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];  //去除掉首尾的空白字符和换行字符
-    
-    exchangedSpeedString = [exchangedSpeedString stringByReplacingOccurrencesOfString:@"\r\n\r\n" withString:@"\r\n"];
-    
-    exchangedSpeedString = [exchangedSpeedString stringByReplacingOccurrencesOfString:@"\r\n" withString:@"\n"];
-    
-    CGSize skillDetaiSize = [Tools getAdaptionSizeWithText:exchangedSpeedString andFont:TEXT12_FONT andLabelWidth:SCREEN_WIDTH - 2 * PADDING_WIDTH];
-    
-    self.signSkillCellHeight = kCellHeight + 10  + 20  + 10 + skillDetaiSize.height + 10;
-    
-    self.signSkillName = skillIntroduceModel.skillNameString;
-    
-    self.signSkillDetailText = exchangedSpeedString;
-    
-    self.signSkillSelectIndex = 0;
-    
-    self.isShowOtherSkill = NO;
 }
 
 -(void) initData
@@ -131,6 +141,10 @@ const float kCellHeight = 60.0f;
         HeroDetailDataModel *heroModel = [HeroDetailDataModel mj_objectWithKeyValues:getValueDic];
         
         NSLog(@"heroModel %@",heroModel);
+        
+        NSLog(@"sendHeroId %@",self.sendHeroId);
+        
+        NSLog(@"detailHeroImgString %@  %@",heroModel.detailHeroImgString,heroModel.detailHeroLinkString);
         
         if (heroModel != nil && ![heroModel isKindOfClass:[NSNull class]])
         {
@@ -164,11 +178,14 @@ const float kCellHeight = 60.0f;
                 //技能介绍
                 [self getSkillIntroduceData:xpathParser SaveModel:saveModel];
                 
+                
                 self.heroDetailModel = saveModel;
                 
                 //存入数据库
                 //使用MJExtension 模型转换字典
                 NSDictionary *saveHeroDic = saveModel.mj_keyValues;
+                
+                NSLog(@"saveHeroDic %@",saveHeroDic);
                 
                 if (saveHeroDic != nil && ![saveHeroDic isKindOfClass:[NSNull class]])
                 {
@@ -595,7 +612,7 @@ const float kCellHeight = 60.0f;
 {   
     self.navigationItem.title = self.sendHeroName;
     
-    [self addTableView:UITableViewStylePlain separatorStyle:UITableViewCellSeparatorStyleSingleLine];
+    [self addTableView:UITableViewStylePlain separatorStyle:UITableViewCellSeparatorStyleNone];
     
     self.viwTable.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT);
     
@@ -793,24 +810,30 @@ const float kCellHeight = 60.0f;
 {
     if (indexPath.section == 6)
     {
+        
         NSArray *tempArr = [SkillsIntroduceModel mj_objectArrayWithKeyValuesArray:self.heroDetailModel.detailHeroSkillsArray];
         
-        SkillsIntroduceModel *skillIntroduceModel = tempArr[0];
+        if (tempArr.count)
+        {
+            SkillsIntroduceModel *skillIntroduceModel = tempArr[0];
+            
+            NSString *skillDistanceString = skillIntroduceModel.skillDistanceString;
+            
+            NSString *skillLevelString = skillIntroduceModel.skillLevelString;
+            
+            NSString *skillDetailStr = [NSString stringWithFormat:@"%@%@",skillDistanceString,skillLevelString];
+            
+            NSString *exchangedSpeedString = [skillDetailStr stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];  //去除掉首尾的空白字符和换行字符
+            
+            CGSize skillDetaiSize = [Tools getAdaptionSizeWithText:exchangedSpeedString andFont:TEXT12_FONT andLabelWidth:SCREEN_WIDTH - 2 * PADDING_WIDTH];
+            
+            
+            NSLog(@"signSkillCellHeight %f   %f",self.signSkillCellHeight,kCellHeight + skillDetaiSize.height - 30);
+            
+            return self.signSkillCellHeight;
+
+        }
         
-        NSString *skillDistanceString = skillIntroduceModel.skillDistanceString;
-        
-        NSString *skillLevelString = skillIntroduceModel.skillLevelString;
-        
-        NSString *skillDetailStr = [NSString stringWithFormat:@"%@%@",skillDistanceString,skillLevelString];
-        
-        NSString *exchangedSpeedString = [skillDetailStr stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];  //去除掉首尾的空白字符和换行字符
-        
-        CGSize skillDetaiSize = [Tools getAdaptionSizeWithText:exchangedSpeedString andFont:TEXT12_FONT andLabelWidth:SCREEN_WIDTH - 2 * PADDING_WIDTH];
-        
-        
-        NSLog(@"signSkillCellHeight %f   %f",self.signSkillCellHeight,kCellHeight + skillDetaiSize.height - 30);
-        
-        return self.signSkillCellHeight;
     }
     
     return kCellHeight;
@@ -966,6 +989,11 @@ const float kCellHeight = 60.0f;
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:indentifier];
             
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        
+        for (UIView *cellView in  cell.contentView.subviews)
+        {
+            [cellView removeFromSuperview];
         }
         
         ASHorizontalScrollView *horizontalScrollView = [[ASHorizontalScrollView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, kCellHeight)];
