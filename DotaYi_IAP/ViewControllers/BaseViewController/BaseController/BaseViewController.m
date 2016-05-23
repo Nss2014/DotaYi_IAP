@@ -638,7 +638,7 @@
             
             [reCallBtn setTitle:theBtnTitle forState:UIControlStateNormal];
             
-            reCallBtn.backgroundColor = XLS_COLOR_MAIN_RED;
+            reCallBtn.backgroundColor = XLS_COLOR_MAIN_GRAY;
             
             reCallBtn.layer.cornerRadius = CORNERRADIUS_BUTTON;
             
@@ -773,13 +773,13 @@
     
     //clean up
     CGContextRelease(ctx);
-    CGColorSpaceRelease(colorSpace);
+//    CGColorSpaceRelease(colorSpace);
     
     free(pixelBuffer);
     free(pixelBuffer2);
     CFRelease(inBitmapData);
     
-    CGColorSpaceRelease(colorSpace);   //多余的释放
+//    CGColorSpaceRelease(colorSpace);   //多余的释放
     CGImageRelease(imageRef);
     
     return returnImage;

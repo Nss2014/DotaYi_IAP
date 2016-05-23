@@ -16,6 +16,6 @@
 
 @property (nonatomic,strong) NSArray *HD_scrollViewDataArray;//传入scrollView数据源
 
-@property (nonatomic,assign) NSInteger HD_type;//0=@"配合英雄推荐",@"克制英雄推荐",@"加点方案推荐",@"初期出装推荐",@"中期出装推荐",@"后期出装推荐",@"技能介绍
+@property (nonatomic,assign) NSInteger HD_type;//0=@"配合英雄推荐",@"克制英雄推荐",@"加点方案推荐",@"初期出装推荐",@"中期出装推荐",@"后期出装推荐"
 
 @end

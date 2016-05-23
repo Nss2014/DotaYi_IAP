@@ -22,7 +22,7 @@
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     [self.tabBar setBackgroundColor:WHITE_COLOR];
-    [self.tabBar setTintColor:XLS_COLOR_MAIN_RED];
+    [self.tabBar setTintColor:XLS_COLOR_MAIN_GRAY];
     
     [self initChildViewControllers];
 }

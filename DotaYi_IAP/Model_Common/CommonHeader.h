@@ -353,12 +353,15 @@
 #define IPAD_WECHAT_COVERIMG_SCALE 186.f/524
 
 
-#pragma mark - 秀丽媤色值--------------------------------------
+#pragma mark - DT1色值--------------------------------------
 //页面背景色
 #define HRBACKVIEW_COLOR [Tools colorFromHexCode:@"#f2f2f2"]
 
-//主题红
-#define XLS_COLOR_MAIN_RED [UIColor colorWithRed:160.0/255 green:20.0/255  blue:65.0/255 alpha:1.0f]
+//主题灰
+#define XLS_COLOR_MAIN_GRAY [UIColor colorWithRed:67.0/255 green:65.0/255  blue:68.0/255 alpha:1.0f]
+
+//绿色
+//#define XLS_COLOR_MAIN_GRAY [UIColor colorWithRed:31.0/255.0 green:187.0/255.0 blue:166.0/255.0 alpha:1.0]
 
 //系统背景颜色
 #define COLOR_VIEW_BG [Tools colorFromHexCode:@"#F5F5F5"]

@@ -62,7 +62,7 @@
     
     _segmentControl.selectedSegmentIndex = 0;
     
-    _segmentControl.tintColor = XLS_COLOR_MAIN_RED;
+    _segmentControl.tintColor = XLS_COLOR_MAIN_GRAY;
     
 //    _segmentControl.tintColor = SEPRATELINE_GRAYCOLOR;
     

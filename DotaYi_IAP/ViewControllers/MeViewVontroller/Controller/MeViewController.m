@@ -11,6 +11,7 @@
 #import "MJViewController.h"
 #import "TTViewController.h"
 #import "LoginViewController.h"
+#import "SearchViewController.h"
 
 @interface MeViewController ()
 
@@ -31,6 +32,9 @@
     [super viewWillAppear:animated];
     
     [self initUI];
+    
+    //添加导航搜索按钮
+    [self addNavSearchButton];
 }
 
 - (void)viewDidLoad
@@ -72,6 +76,22 @@
     {
         [self showEmptyTipView];
     }
+}
+
+-(void) addNavSearchButton
+{
+    UIBarButtonItem *searchBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(searchBarItemPressed)];
+    
+    self.navigationItem.rightBarButtonItem = searchBarItem;
+}
+
+-(void) searchBarItemPressed
+{
+    SearchViewController *searchVC = [[SearchViewController alloc] init];
+    
+    [self setHidesBottomBarWhenPushed:YES];
+    
+    [self.navigationController pushViewController:searchVC animated:YES];
 }
 
 -(void)setViewControllers:(NSArray *)viewControllers

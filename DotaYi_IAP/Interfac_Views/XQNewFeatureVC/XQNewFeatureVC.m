@@ -70,7 +70,7 @@
     pageControl.hidesForSinglePage       = YES;
     pageControl.hidden                   = self.pageControlHidden;
     pageControl.defersCurrentPageDisplay = YES;
-    pageControl.currentPageIndicatorTintColor = XLS_COLOR_MAIN_RED;
+    pageControl.currentPageIndicatorTintColor = XLS_COLOR_MAIN_GRAY;
 
     [self.view addSubview:pageControl];
     self.pageControl                     = pageControl;
@@ -95,7 +95,7 @@
                     completeBtn.layer.masksToBounds = YES;
                     [completeBtn addTarget:self action:@selector(completeBtnClick) forControlEvents:UIControlEventTouchUpInside];
                     [completeBtn setTitle:@"GO" forState:UIControlStateNormal];
-                    [completeBtn setTitleColor:XLS_COLOR_MAIN_RED forState:UIControlStateNormal];
+                    [completeBtn setTitleColor:XLS_COLOR_MAIN_GRAY forState:UIControlStateNormal];
                     
                     [completeBtn.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:18]];
                     [completeBtn setBackgroundImage:self.completeBtnBackgroundImage?self.completeBtnBackgroundImage:nil forState:UIControlStateNormal];

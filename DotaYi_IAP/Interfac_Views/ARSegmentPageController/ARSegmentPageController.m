@@ -127,7 +127,7 @@ const void* _ARSEGMENTPAGE_CURRNTPAGE_SCROLLVIEWOFFSET = &_ARSEGMENTPAGE_CURRNTP
     
     self.segmentView.tintColor = WHITE_COLOR;
     
-    self.segmentView.barTintColor= XLS_COLOR_MAIN_RED;
+    self.segmentView.barTintColor= XLS_COLOR_MAIN_GRAY;
     
     [self.segmentView.segmentControl addTarget:self action:@selector(segmentControlDidChangedValue:) forControlEvents:UIControlEventValueChanged];
     [self.navigationController.view addSubview:self.segmentView];

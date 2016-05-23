@@ -74,6 +74,8 @@
     //setup new item size and origin
     if (self.items.count>0) {
         CGRect lastItemRect = ((UIView*)self.items.lastObject).frame;
+        NSLog(@"itemY %f  %f",itemY, self.uniformItemSize.height);
+        
         [item setFrame:CGRectMake(lastItemRect.origin.x + self.uniformItemSize.width + self.itemsMargin, itemY, self.uniformItemSize.width, self.uniformItemSize.height)];
     }
     else [item setFrame:CGRectMake(self.leftMarginPx, itemY, self.uniformItemSize.width, self.uniformItemSize.height)];

@@ -9,11 +9,29 @@
 #import "HeroDetailInfoViewController.h"
 #import "HeroDetailTableViewCell.h"
 
+#define SKILLBORDER_WIDTH 5.0
+
+#define TRANSFORM_TIME 0.3
+
+#define TRANSFORM_SCALE 1.2
+
+const float kCellHeight = 60.0f;
+
 @interface HeroDetailInfoViewController ()
 
 @property (nonatomic,strong) HeroDetailDataModel *heroDetailModel;
 
 @property (nonatomic,strong) NSArray *sectionHeaderArray;
+
+@property (nonatomic,assign) BOOL isShowOtherSkill;//是否点击了其他技能
+
+@property (nonatomic,assign) CGFloat signSkillCellHeight;//可变cell高度
+
+@property (nonatomic,copy) NSString *signSkillName;//可变技能名称
+
+@property (nonatomic,copy) NSString *signSkillDetailText;//可变技能介绍
+
+@property (nonatomic,assign) NSInteger signSkillSelectIndex;//标记当前查看的技能
 
 @end
 
@@ -27,9 +45,67 @@
     
     [self getHeroDetailData];
     
+    //初始化技能介绍数据源 section＝6
+    [self initSkillIntroduceData];
+    
     [self initHeroDetailUI];
     
     [self addTableViewHeader];
+}
+
+-(void) initSkillIntroduceData
+{
+    NSArray *tempArr = [SkillsIntroduceModel mj_objectArrayWithKeyValuesArray:self.heroDetailModel.detailHeroSkillsArray];
+    
+    NSString *skillNameString;//技能名
+    
+    NSString *skillIntroduceString;//技能介绍
+    
+    NSString *skillQuickNameString;//快捷键
+    
+    NSString *skillDistanceString;//施法距离
+    
+    NSString *skillIntervalString;//施法间隔
+    
+    NSString *skillMPExpendString;//魔法消耗
+    
+    NSString *skillLevelString;//等级提升介绍
+    
+    SkillsIntroduceModel *skillIntroduceModel = tempArr[0];
+    
+    skillNameString = skillIntroduceModel.skillNameString;
+    
+    skillIntroduceString = skillIntroduceModel.skillIntroduceString;
+    
+    skillQuickNameString = skillIntroduceModel.skillQuickNameString;
+    
+    skillDistanceString = skillIntroduceModel.skillDistanceString;
+    
+    skillIntervalString = skillIntroduceModel.skillIntervalString;
+    
+    skillMPExpendString = skillIntroduceModel.skillMPExpendString;
+    
+    skillLevelString = skillIntroduceModel.skillLevelString;
+    
+    NSString *showDetailText = [NSString stringWithFormat:@"%@%@",skillDistanceString,skillLevelString];
+    
+    NSString *exchangedSpeedString = [showDetailText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];  //去除掉首尾的空白字符和换行字符
+    
+    exchangedSpeedString = [exchangedSpeedString stringByReplacingOccurrencesOfString:@"\r\n\r\n" withString:@"\r\n"];
+    
+    exchangedSpeedString = [exchangedSpeedString stringByReplacingOccurrencesOfString:@"\r\n" withString:@"\n"];
+    
+    CGSize skillDetaiSize = [Tools getAdaptionSizeWithText:exchangedSpeedString andFont:TEXT12_FONT andLabelWidth:SCREEN_WIDTH - 2 * PADDING_WIDTH];
+    
+    self.signSkillCellHeight = kCellHeight + 10  + 20  + 10 + skillDetaiSize.height + 10;
+    
+    self.signSkillName = skillIntroduceModel.skillNameString;
+    
+    self.signSkillDetailText = exchangedSpeedString;
+    
+    self.signSkillSelectIndex = 0;
+    
+    self.isShowOtherSkill = NO;
 }
 
 -(void) initData
@@ -445,8 +521,6 @@
         //技能介绍&施法距离等等。。
         NSArray *introduceArray3 = [Tools getHtmlValueArrayWithXPathParser:beginAElement XPathQuery:@"//table[@class='table1']" DetailXPathQuery:@"//tbody" DetailKey:nil];
         
-        NSLog(@"introduceArray3 %@ \n %@ \n %@",introduceArray3[0],introduceArray3[1],introduceArray3[2]);
-        
         for (NSString *name3String in introduceArray3)
         {
             NSLog(@"name3String %@",name3String);
@@ -473,11 +547,26 @@
             
             NSString *nameString = tempSkillNameArray[i];
             
-            NSString *quickShotString = tempSkillQuickShotArray[i];
+            NSString *quickShotString;
             
-            NSString *spellDistanceString = tempSkillSpellArray[i];
+            NSString *spellDistanceString;
             
-            NSString *levelUpString = tempSkillLevelUpArray[i];
+            NSString *levelUpString;
+            
+            if (i < tempSkillQuickShotArray.count)
+            {
+                quickShotString = tempSkillQuickShotArray[i];
+            }
+            
+            if (i < tempSkillSpellArray.count)
+            {
+                spellDistanceString = tempSkillSpellArray[i];
+            }
+            
+            if (i < tempSkillLevelUpArray.count)
+            {
+                levelUpString = tempSkillLevelUpArray[i];
+            }
             
             SkillsIntroduceModel *skillIntroduceModel = [[SkillsIntroduceModel alloc] init];
             
@@ -537,7 +626,7 @@
     heroHeaderImgView.layer.cornerRadius = (SCREEN_WIDTH * HEROBG_SCALE - 50)/5;
     
     heroHeaderImgView.clipsToBounds = YES;
-    
+
     [heroHeaderImgView sd_setImageWithURL:[NSURL URLWithString:self.heroDetailModel.detailHeroImgString] placeholderImage:[UIImage imageNamed:DEFAULT_USERHEADER_PIC]];
     
     [heroBgView addSubview:heroHeaderImgView];
@@ -653,6 +742,42 @@
     self.viwTable.tableHeaderView = heroBgView;
 }
 
+-(void) skillImageTaped:(UITapGestureRecognizer *) sender
+{
+    NSInteger selectIndex = sender.view.tag - 199;
+    
+    NSArray *tempArr = [SkillsIntroduceModel mj_objectArrayWithKeyValuesArray:self.heroDetailModel.detailHeroSkillsArray];
+    
+    SkillsIntroduceModel *skillIntroduceModel = tempArr[selectIndex];
+    
+    NSString *skillDistanceString = skillIntroduceModel.skillDistanceString;
+    
+    NSString *skillLevelString = skillIntroduceModel.skillLevelString;
+    
+    NSString *skillDetailStr = [NSString stringWithFormat:@"%@%@",skillDistanceString,skillLevelString];
+    
+    NSString *exchangedSpeedString = [skillDetailStr stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];  //去除掉首尾的空白字符和换行字符
+    
+    exchangedSpeedString = [exchangedSpeedString stringByReplacingOccurrencesOfString:@"\r\n\r\n" withString:@"\r\n"];
+    
+    exchangedSpeedString = [exchangedSpeedString stringByReplacingOccurrencesOfString:@"\r\n" withString:@"\n"];
+    
+    CGSize skillDetaiSize = [Tools getAdaptionSizeWithText:exchangedSpeedString andFont:TEXT12_FONT andLabelWidth:SCREEN_WIDTH - 2 * PADDING_WIDTH];
+    
+    self.signSkillCellHeight = kCellHeight + 10  + 20  + 10 + skillDetaiSize.height + 10 ;
+    
+    self.signSkillName = skillIntroduceModel.skillNameString;
+    
+    self.signSkillDetailText = exchangedSpeedString;
+    
+    self.signSkillSelectIndex = selectIndex;
+    
+    //一个section刷新
+    NSIndexSet *indexSet = [[NSIndexSet alloc] initWithIndex:6];
+    
+    [self.viwTable reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
 #pragma mark 列表代理
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -666,22 +791,186 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 70;
+    if (indexPath.section == 6)
+    {
+        NSArray *tempArr = [SkillsIntroduceModel mj_objectArrayWithKeyValuesArray:self.heroDetailModel.detailHeroSkillsArray];
+        
+        SkillsIntroduceModel *skillIntroduceModel = tempArr[0];
+        
+        NSString *skillDistanceString = skillIntroduceModel.skillDistanceString;
+        
+        NSString *skillLevelString = skillIntroduceModel.skillLevelString;
+        
+        NSString *skillDetailStr = [NSString stringWithFormat:@"%@%@",skillDistanceString,skillLevelString];
+        
+        NSString *exchangedSpeedString = [skillDetailStr stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];  //去除掉首尾的空白字符和换行字符
+        
+        CGSize skillDetaiSize = [Tools getAdaptionSizeWithText:exchangedSpeedString andFont:TEXT12_FONT andLabelWidth:SCREEN_WIDTH - 2 * PADDING_WIDTH];
+        
+        
+        NSLog(@"signSkillCellHeight %f   %f",self.signSkillCellHeight,kCellHeight + skillDetaiSize.height - 30);
+        
+        return self.signSkillCellHeight;
+    }
+    
+    return kCellHeight;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *indentifier = @"CellPortrait";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:indentifier];
-    
-    if (!cell)
+    if (indexPath.section == 6)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:indentifier];
+        static NSString *indentifier = @"CellSection";
+        
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:indentifier];
+        
+        if (!cell)
+        {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:indentifier];
+        }
+        
+        for (UIView *cellView in  cell.contentView.subviews)
+        {
+            [cellView removeFromSuperview];
+        }
+        
+        ASHorizontalScrollView *horizontalScrollView = [[ASHorizontalScrollView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, kCellHeight)];
+        
+        horizontalScrollView.tag = 888 + indexPath.section;
+        
+        horizontalScrollView.miniAppearPxOfLastItem = 10;
+        
+        horizontalScrollView.uniformItemSize = CGSizeMake(50, 50);
+        
+        [horizontalScrollView setItemsMarginOnce];
+        
+        NSMutableArray *sectionButtons = [NSMutableArray array];
+        
+        NSArray *tempArr = [SkillsIntroduceModel mj_objectArrayWithKeyValuesArray:self.heroDetailModel.detailHeroSkillsArray];
+        
+        NSLog(@"signSkillName %@  %ld",self.signSkillName,self.signSkillSelectIndex);
+        
+        for (int i=0; i<tempArr.count; i++)
+        {
+            SkillsIntroduceModel *skillIntroduceModel = tempArr[i];
+            
+            UIImageView *hdImgView = [[UIImageView alloc] init];
+            
+            NSLog(@"skillImgString %@",skillIntroduceModel.skillImgString);
+            
+            [hdImgView sd_setImageWithURL:[NSURL URLWithString:skillIntroduceModel.skillImgString] placeholderImage:[UIImage imageNamed:DEFAULT_WEBPIC_PIC]];
+            
+            UITapGestureRecognizer *imgTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(skillImageTaped:)];
+            
+            hdImgView.tag = 199 + i;
+            
+            hdImgView.userInteractionEnabled = YES;
+            
+            [hdImgView addGestureRecognizer:imgTap];
+            
+            [sectionButtons addObject:hdImgView];
+        }
+        
+        [horizontalScrollView addItems:sectionButtons];
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        ASHorizontalScrollView *horizontalScrollView = [[ASHorizontalScrollView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 50)];
+        [cell.contentView addSubview:horizontalScrollView];
+        
+        
+        UILabel *skillNameLabel = [[UILabel alloc] init];
+        
+        skillNameLabel.tag = 1999;
+        
+        skillNameLabel.font = TEXT14_BOLD_FONT;
+        
+        skillNameLabel.textColor = COLOR_TITLE_BLACK;
+        
+        [cell.contentView addSubview:skillNameLabel];
+        
+        UILabel * skillIntrLabel = [[UILabel alloc] init];
+        
+        skillIntrLabel.tag = 2999;
+        
+        skillIntrLabel.numberOfLines = 0;
+        
+        skillIntrLabel.font = TEXT12_FONT;
+        
+        skillIntrLabel.textColor = COLOR_TITLE_LIGHTGRAY;
+        
+        [cell.contentView addSubview:skillIntrLabel];
+        
+        [horizontalScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(cell.contentView.mas_left);
+            make.top.equalTo(cell.contentView.mas_top);
+            make.right.equalTo(cell.contentView.mas_right);
+            make.height.mas_equalTo(kCellHeight);
+        }];
+        
+        [skillNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(cell.contentView.mas_left).offset(PADDING_WIDTH);
+            make.right.equalTo(cell.contentView.mas_right).offset(-PADDING_WIDTH);
+            make.top.equalTo(horizontalScrollView.mas_bottom).offset(PADDING_WIDTH);
+            make.height.mas_equalTo(20);
+        }];
+        
+        [skillIntrLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(skillNameLabel.mas_left);
+            make.right.equalTo(skillNameLabel.mas_right);
+            make.top.equalTo(skillNameLabel.mas_bottom);
+            make.bottom.equalTo(cell.contentView.mas_bottom).offset(-PADDING_WIDTH);
+        }];
+        
+        
+        
+        skillNameLabel.text = self.signSkillName;
+        
+        skillIntrLabel.text = self.signSkillDetailText;
+        
+        NSLog(@"horizontalScrollView %@",horizontalScrollView.items);
+        
+        for (int i=0; i<horizontalScrollView.items.count; i++)
+        {
+            UIImageView *normalImageView = horizontalScrollView.items[i];
+            
+            if (self.signSkillSelectIndex == i)
+            {
+                [UIView animateWithDuration:TRANSFORM_TIME animations:^{
+                    
+                    normalImageView.transform = CGAffineTransformScale(CGAffineTransformIdentity, TRANSFORM_SCALE, TRANSFORM_SCALE);
+                    
+                }];
+            }
+            else
+            {
+                
+                [UIView animateWithDuration:TRANSFORM_TIME animations:^{
+                    
+                    normalImageView.transform = CGAffineTransformIdentity;
+                    
+                }];
+            }
+        }
+        
+        return cell;
+    }
+    else
+    {
+        static NSString *indentifier = @"CellPortrait";
+        
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:indentifier];
+        
+        if (!cell)
+        {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:indentifier];
+            
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        
+        ASHorizontalScrollView *horizontalScrollView = [[ASHorizontalScrollView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, kCellHeight)];
+        
+        horizontalScrollView.tag = 888 + indexPath.section;
         
         horizontalScrollView.miniAppearPxOfLastItem = 10;
         
@@ -838,11 +1127,11 @@
             make.left.equalTo(cell.contentView.mas_left);
             make.top.equalTo(cell.contentView.mas_top);
             make.right.equalTo(cell.contentView.mas_right);
-            make.bottom.equalTo(cell.contentView.mas_bottom).offset(-PADDING_WIDTH/2);
+            make.height.mas_equalTo(kCellHeight);
         }];
+        
+        return cell;
     }
-    
-    return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -858,7 +1147,7 @@
     
     rankOrderLabel.text = self.sectionHeaderArray[section];
     
-    rankOrderLabel.font = TEXT12_BOLD_FONT;
+    rankOrderLabel.font = TEXT14_BOLD_FONT;
     
     rankOrderLabel.textColor = COLOR_TITLE_BLACK;
     

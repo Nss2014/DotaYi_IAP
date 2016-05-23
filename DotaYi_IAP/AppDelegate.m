@@ -80,7 +80,7 @@
 
 -(void) handleNavigationBar
 {
-    [[UINavigationBar appearance] setBarTintColor:XLS_COLOR_MAIN_RED];
+    [[UINavigationBar appearance] setBarTintColor:XLS_COLOR_MAIN_GRAY];
     
     [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:
                                                            WHITE_COLOR, NSForegroundColorAttributeName,

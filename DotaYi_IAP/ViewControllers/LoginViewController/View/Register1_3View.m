@@ -135,7 +135,7 @@
     
     self.RF_doneButton.titleLabel.font = TEXT18_FONT;
     
-    self.RF_doneButton.backgroundColor = XLS_COLOR_MAIN_RED;
+    self.RF_doneButton.backgroundColor = XLS_COLOR_MAIN_GRAY;
     
     self.RF_doneButton.layer.cornerRadius = CORNERRADIUS_BUTTON;
     

@@ -14,6 +14,8 @@
 		0719474B1CEDC9FD000FEC50 /* settings_left_icon4.png in Resources */ = {isa = PBXBuildFile; fileRef = 071947421CEDC9FD000FEC50 /* settings_left_icon4.png */; };
 		0719474F1CEDCB33000FEC50 /* settings_left_icon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0719474E1CEDCB33000FEC50 /* settings_left_icon2.png */; };
 		072EF0651CE432AE00C7B6E0 /* Register1_3View.m in Sources */ = {isa = PBXBuildFile; fileRef = 072EF0641CE432AE00C7B6E0 /* Register1_3View.m */; };
+		074280E01CF2B4740043A825 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 074280DF1CF2B4740043A825 /* SearchViewController.m */; };
+		074280E31CF2E05F0043A825 /* HeroSkillsIntroduceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 074280E21CF2E05F0043A825 /* HeroSkillsIntroduceTableViewCell.m */; };
 		0746A1001CDB4811007EC2AD /* HeroDetailInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0746A0FF1CDB4811007EC2AD /* HeroDetailInfoViewController.m */; };
 		0747401A1CDC4C43001CC6C4 /* HeroDetailDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 074740191CDC4C43001CC6C4 /* HeroDetailDataModel.m */; };
 		074C19B11CE088B300711A2E /* odds_image0.png in Resources */ = {isa = PBXBuildFile; fileRef = 074C19A41CE088B300711A2E /* odds_image0.png */; };
@@ -302,6 +304,10 @@
 		0719474E1CEDCB33000FEC50 /* settings_left_icon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings_left_icon2.png; sourceTree = "<group>"; };
 		072EF0631CE432AE00C7B6E0 /* Register1_3View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Register1_3View.h; sourceTree = "<group>"; };
 		072EF0641CE432AE00C7B6E0 /* Register1_3View.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Register1_3View.m; sourceTree = "<group>"; };
+		074280DE1CF2B4740043A825 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		074280DF1CF2B4740043A825 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		074280E11CF2E05F0043A825 /* HeroSkillsIntroduceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeroSkillsIntroduceTableViewCell.h; sourceTree = "<group>"; };
+		074280E21CF2E05F0043A825 /* HeroSkillsIntroduceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeroSkillsIntroduceTableViewCell.m; sourceTree = "<group>"; };
 		0746A0FE1CDB4811007EC2AD /* HeroDetailInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeroDetailInfoViewController.h; sourceTree = "<group>"; };
 		0746A0FF1CDB4811007EC2AD /* HeroDetailInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeroDetailInfoViewController.m; sourceTree = "<group>"; };
 		074740181CDC4C43001CC6C4 /* HeroDetailDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeroDetailDataModel.h; sourceTree = "<group>"; };
@@ -1086,6 +1092,8 @@
 				84900F8B1CECC1EB002F2098 /* JJCHeroTableViewCell.m */,
 				075627F11CEEB1AD00568B09 /* HeroDetailTableViewCell.h */,
 				075627F21CEEB1AD00568B09 /* HeroDetailTableViewCell.m */,
+				074280E11CF2E05F0043A825 /* HeroSkillsIntroduceTableViewCell.h */,
+				074280E21CF2E05F0043A825 /* HeroSkillsIntroduceTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1111,6 +1119,8 @@
 				841064A91CC3B636008AAD95 /* MJViewController.m */,
 				841064AB1CC3B63F008AAD95 /* TTViewController.h */,
 				841064AC1CC3B63F008AAD95 /* TTViewController.m */,
+				074280DE1CF2B4740043A825 /* SearchViewController.h */,
+				074280DF1CF2B4740043A825 /* SearchViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2448,6 +2458,7 @@
 				07DC15EA1CDA04780054EA20 /* NSObject+Save.m in Sources */,
 				07AC6B121CC0A65D0030B298 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
 				07AC6C331CC0A66D0030B298 /* UIButton+touch.m in Sources */,
+				074280E01CF2B4740043A825 /* SearchViewController.m in Sources */,
 				07AC6C071CC0A66C0030B298 /* UIViewController+BackButtonHandler.m in Sources */,
 				84900F891CECAE64002F2098 /* NSString+MJExtension.m in Sources */,
 				07AC6AD21CC0A65D0030B298 /* DGActivityIndicatorBallClipRotateMultipleAnimation.m in Sources */,
@@ -2489,6 +2500,7 @@
 				07AC6ADB1CC0A65D0030B298 /* DGActivityIndicatorBallScaleRippleAnimation.m in Sources */,
 				07AC6AEB1CC0A65D0030B298 /* DGActivityIndicatorRotatingTrigonAnimation.m in Sources */,
 				07AC6B351CC0A65D0030B298 /* UIImageView+HighlightedWebCache.m in Sources */,
+				074280E31CF2E05F0043A825 /* HeroSkillsIntroduceTableViewCell.m in Sources */,
 				07AC6B2D1CC0A65D0030B298 /* SDWebImageDownloader.m in Sources */,
 				84900F8C1CECC1EB002F2098 /* JJCHeroTableViewCell.m in Sources */,
 				07AC6B0D1CC0A65D0030B298 /* MASConstraintMaker.m in Sources */,

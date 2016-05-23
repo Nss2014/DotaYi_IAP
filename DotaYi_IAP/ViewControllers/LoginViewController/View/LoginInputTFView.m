@@ -146,7 +146,7 @@
     
     self.clipsToBounds = YES;
     
-    self.IW_separetLineView.backgroundColor = XLS_COLOR_MAIN_RED;
+    self.IW_separetLineView.backgroundColor = XLS_COLOR_MAIN_GRAY;
     
     [self.IW_getVerifyButton setTitle:@"获取验证码" forState:UIControlStateNormal];
     
