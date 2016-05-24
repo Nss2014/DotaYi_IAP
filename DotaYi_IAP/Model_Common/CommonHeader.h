@@ -473,4 +473,7 @@
 //英雄数据  按英雄id存储
 #define DB_HEROS @"heros_db"
 
+//物品详细数据  按物品id存储
+#define DB_ODDSDETAIL @"oddsDetail_db"
+
 #endif

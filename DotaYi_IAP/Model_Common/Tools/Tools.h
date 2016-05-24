@@ -68,6 +68,8 @@
 
 +(NSURLConnection *) addURLConnectionPostRequestWithURLString:(NSString *)urlString BodyData:(NSData *)bodyData AndDelegate:(id)delegate;
 
++(NSString *) getHeroIdFromLink:(NSString *) theLink;
+
 
 @end
 

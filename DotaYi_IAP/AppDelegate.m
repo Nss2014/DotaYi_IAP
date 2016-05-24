@@ -43,6 +43,8 @@
     [[HP_Application sharedApplication].store createTableWithName:DB_ODDS];
     
     [[HP_Application sharedApplication].store createTableWithName:DB_HEROS];
+    
+    [[HP_Application sharedApplication].store createTableWithName:DB_ODDSDETAIL];
 }
 
 -(void)handleUM:(NSDictionary *) launchOptions

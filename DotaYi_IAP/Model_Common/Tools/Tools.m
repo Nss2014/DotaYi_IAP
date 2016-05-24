@@ -665,5 +665,30 @@ NSString *const NewFeatureVersionKey = @"NewFeatureVersionKey";
     return [NSURLConnection connectionWithRequest:request delegate:delegate];
 }
 
+//从英雄链接中提取英雄id
++(NSString *) getHeroIdFromLink:(NSString *) theLink
+{
+    //http://fight.pcgames.com.cn/warcraft/dota/heros/1103/2158993.html
+    
+    NSString *getHeroId = @"";
+    
+    NSArray *sepLinkArray = [theLink componentsSeparatedByString:@".html"];
+    
+    if (sepLinkArray.count)
+    {
+        NSString *getSepFirstString = sepLinkArray[0];
+        
+        NSArray *sepSecArray = [getSepFirstString componentsSeparatedByString:@"/"];
+        
+        if (sepSecArray.count)
+        {
+            //得到英雄id
+            getHeroId = [sepSecArray lastObject];
+        }
+    }
+    
+    return getHeroId;
+}
+
 
 @end

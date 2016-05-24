@@ -10,6 +10,7 @@
 #import "OddsTypeInfoModel.h"
 #import "CollectionViewCell.h"
 #import "CollectionReusableView.h"
+#import "OddsDetailViewController.h"
 
 @interface OddsViewController ()
 
@@ -274,7 +275,36 @@
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    OddsTypeInfoModel *typeModel = self.dataSourceArray[indexPath.section];
     
+    NSArray *detailModelArr = [OddsMainModel mj_objectArrayWithKeyValuesArray:typeModel.oddsTypeArray];
+
+    NSArray *rowArray;
+    
+    if (indexPath.section < 6)
+    {
+        rowArray = [detailModelArr subarrayWithRange : NSMakeRange (indexPath.section * 12 , 12)];
+    }
+    else if (indexPath.section == 6)
+    {
+        rowArray = [detailModelArr subarrayWithRange : NSMakeRange (indexPath.section * 12 , 10)];
+    }
+    else
+    {
+        rowArray = [detailModelArr subarrayWithRange : NSMakeRange (indexPath.section * 12 - 2, 12)];
+    }
+    
+    OddsMainModel *detailModel = rowArray[indexPath.row];
+    
+    OddsDetailViewController *oddsDetailVC = [[OddsDetailViewController alloc] init];
+    
+    oddsDetailVC.sendOddId = [self getHeroIdFromLink:detailModel.oddsMainLinkString];
+    
+    oddsDetailVC.sendOddLink = detailModel.oddsMainLinkString;
+    
+    [self setHidesBottomBarWhenPushed:YES];
+    
+    [self.navigationController pushViewController:oddsDetailVC animated:YES];
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout
@@ -291,6 +321,31 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
 {
     return CGSizeMake(300, 20);
+}
+
+//从物品链接中提取物品id
+-(NSString *) getHeroIdFromLink:(NSString *) theLink
+{
+    //http://db.pcgames.com.cn/dota/item_965.html
+    
+    NSString *getHeroId = @"";
+    
+    NSArray *sepLinkArray = [theLink componentsSeparatedByString:@".html"];
+    
+    if (sepLinkArray.count)
+    {
+        NSString *getSepFirstString = sepLinkArray[0];
+        
+        NSArray *sepSecArray = [getSepFirstString componentsSeparatedByString:@"item_"];
+        
+        if (sepSecArray.count)
+        {
+            //得到英雄id
+            getHeroId = [sepSecArray lastObject];
+        }
+    }
+    
+    return getHeroId;
 }
 
 @end

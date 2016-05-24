@@ -29,6 +29,25 @@
     [self initData];
     
     [self initUI];
+    
+    [self addTipViewUI];
+}
+
+-(void) addTipViewUI
+{
+    UILabel *tipsFromLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, -40, SCREEN_WIDTH, 30)];
+    
+    tipsFromLabel.numberOfLines = 0;
+    
+    tipsFromLabel.textAlignment = NSTextAlignmentCenter;
+    
+    tipsFromLabel.text = @"11对战平台英雄排行榜";
+    
+    tipsFromLabel.font = TEXT12_FONT;
+    
+    tipsFromLabel.textColor = COLOR_TITLE_LIGHTGRAY;
+    
+    [self.viwTable addSubview:tipsFromLabel];
 }
 
 #pragma mark ARSegmentControllerDelegate

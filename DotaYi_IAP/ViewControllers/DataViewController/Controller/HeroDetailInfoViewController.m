@@ -8,6 +8,7 @@
 
 #import "HeroDetailInfoViewController.h"
 #import "HeroDetailTableViewCell.h"
+#import "HeroViewController.h"
 
 #define SKILLBORDER_WIDTH 5.0
 
@@ -181,6 +182,12 @@ const float kCellHeight = 60.0f;
                 [self getSkillIntroduceData:xpathParser SaveModel:saveModel];
                 
                 
+                if ([self.sendHeroId isEqualToString:@"2410363"])
+                {
+                    //火猫数据手动重新加入
+                    [self manualInsertHeroEMData:saveModel];
+                }
+                
                 self.heroDetailModel = saveModel;
                 
                 //存入数据库
@@ -216,10 +223,333 @@ const float kCellHeight = 60.0f;
     //主线程更新页面
     dispatch_async(dispatch_get_main_queue(), ^{
  
+        ws.navigationItem.title = ws.heroDetailModel.detailHeroNameString;
+        
         [ws.viwTable reloadData];
     });
 }
 
+-(void) manualInsertHeroEMData:(HeroDetailDataModel *) saveModel
+{
+    saveModel.detailHeroPictureUrlString = @"http://img0.pcgames.com.cn/pcgames/1112/26/2382339_hxm320.jpg";
+    
+    saveModel.detailHeroImgString = @"http://img0.pcgames.com.cn/pcgames/1112/26/2322546_2409183_BTNFireBrewmaster.jpg";
+    
+    saveModel.detailHeroNameString = @"灰烬之灵";
+    
+    saveModel.detailHeroHPString = @"549/549";
+    
+    saveModel.detailHeroMPString = @"260/260";
+    
+    saveModel.detailHeroRangeString = @"射程：128 | 移动速度：310";
+    
+    saveModel.detailHeroAttackString = @"攻击 52 - 56";
+    
+    saveModel.detailHeroStrengthString = @"力量 19(+2.0)";
+    
+    NSArray *matchImgArray = [NSArray arrayWithObjects:
+                                      @"http://img0.pcgames.com.cn/pcgames/1106/16/2239537_00067.jpg",
+                                      @"http://img0.pcgames.com.cn/pcgames/1106/16/2239537_00093.jpg",
+                                      @"http://img0.pcgames.com.cn/pcgames/1106/15/2238433_00007.jpg",
+                                      @"http://img0.pcgames.com.cn/pcgames/1106/16/2239537_00041.jpg",
+                                      @"http://img0.pcgames.com.cn/pcgames/1106/16/2239537_00025.jpg",
+                                      @"http://img0.pcgames.com.cn/pcgames/1106/16/2239524_00023.jpg", nil];
+    
+    NSArray *matchLinkArray = [NSArray arrayWithObjects:
+                               @"http://fight.pcgames.com.cn/warcraft/dota/heros/1103/2157025.html",
+                               @"http://fight.pcgames.com.cn/warcraft/dota/heros/1103/2144607.html",
+                               @"http://fight.pcgames.com.cn/warcraft/dota/heros/1102/2132457.html",
+                               @"http://fight.pcgames.com.cn/warcraft/dota/heros/1102/2131385.html",
+                               @"http://fight.pcgames.com.cn/warcraft/dota/heros/1102/2131154.html",
+                               @"http://fight.pcgames.com.cn/warcraft/dota/heros/1103/2150200.html",nil];
+    
+    NSArray *restrainImgArray = [NSArray arrayWithObjects:
+                                         @"http://img0.pcgames.com.cn/pcgames/1106/15/2238433_00052.gif",
+                                         @"http://img0.pcgames.com.cn/pcgames/1106/16/2239537_00043.jpg",
+                                         @"http://img0.pcgames.com.cn/pcgames/1106/15/2238433_00003.gif",
+                                         @"http://img0.pcgames.com.cn/pcgames/1106/16/2239524_00074.gif",
+                                         @"http://img0.pcgames.com.cn/pcgames/1106/16/2239537_00029.jpg",
+                                         @"http://img0.pcgames.com.cn/pcgames/1106/16/2239537_00041.jpg",nil];
+    
+    NSArray *restrainLinkArray = [NSArray arrayWithObjects:
+                                  @"http://fight.pcgames.com.cn/warcraft/dota/heros/1102/2134376.html",
+                                  @"http://fight.pcgames.com.cn/warcraft/dota/heros/1102/2138789.html",
+                                  @"http://fight.pcgames.com.cn/warcraft/dota/heros/1102/2132514.html",
+                                  @"http://fight.pcgames.com.cn/warcraft/dota/heros/1102/2139786.html",
+                                  @"http://fight.pcgames.com.cn/warcraft/dota/heros/1102/2131339.html",
+                                  @"http://fight.pcgames.com.cn/warcraft/dota/heros/1102/2131385.html",nil];
+    
+    NSMutableArray *tempModelArray = [NSMutableArray array];
+    
+    NSMutableArray *tempMatchArray = [NSMutableArray array];
+
+    NSMutableArray *tempRestainArray = [NSMutableArray array];
+
+    for (int i=0; i<matchImgArray.count; i++)
+    {
+        NSString *tempImgString = matchImgArray[i];
+        
+        NSString *tempLinkString = matchLinkArray[i];
+        
+        MatchOrDefenceHeroModel *matchOrDefence = [[MatchOrDefenceHeroModel alloc] init];
+        
+        matchOrDefence.hostID = 100 + i;
+        
+        matchOrDefence.mdHeroImgString = tempImgString;
+        
+        matchOrDefence.mdHeroLinkString = tempLinkString;
+        
+        //配合英雄
+        [tempMatchArray addObject:matchOrDefence];
+    }
+    
+    for (int i=0; i<restrainImgArray.count; i++)
+    {
+        NSString *tempImgString = restrainImgArray[i];
+        
+        NSString *tempLinkString = restrainLinkArray[i];
+        
+        MatchOrDefenceHeroModel *matchOrDefence = [[MatchOrDefenceHeroModel alloc] init];
+        
+        matchOrDefence.hostID = 100 + i;
+        
+        matchOrDefence.mdHeroImgString = tempImgString;
+        
+        matchOrDefence.mdHeroLinkString = tempLinkString;
+ 
+        //克制英雄
+        [tempRestainArray addObject:matchOrDefence];
+        
+    }
+    
+    if (tempMatchArray.count)
+    {
+        saveModel.detailHeroMatchArray = [NSArray arrayWithArray:tempMatchArray];
+    }
+    
+    if (tempRestainArray.count)
+    {
+        saveModel.detailHeroRestrainArray = [NSArray arrayWithArray:tempRestainArray];
+    }
+    
+    
+    saveModel.detaiHeroRecommendAddPointArray = [NSArray arrayWithObjects:
+                                                 @"http://img0.pcgames.com.cn/pcgames/1112/24/2409183_BTNFlameGuard.png",
+                                                 @"http://img0.pcgames.com.cn/pcgames/1112/24/2409183_BTNSearingChains.png",
+                                                 @"http://img0.pcgames.com.cn/pcgames/1112/24/2409183_BTNFlameGuard.png",
+                                                 @"http://img0.pcgames.com.cn/pcgames/1112/24/2409183_BTNSleightOfFist.png",
+                                                 @"http://img0.pcgames.com.cn/pcgames/1112/24/2409183_BTNFlameGuard.png",
+                                                 @"http://img0.pcgames.com.cn/pcgames/1112/24/2409183_BTNFireRemnant.png",
+                                                 @"http://img0.pcgames.com.cn/pcgames/1112/24/2409183_BTNFlameGuard.png",
+                                                 @"http://img0.pcgames.com.cn/pcgames/1112/24/2409183_BTNSearingChains.png",
+                                                 @"http://img0.pcgames.com.cn/pcgames/1112/24/2409183_BTNSearingChains.png",
+                                                 @"http://img0.pcgames.com.cn/pcgames/1112/24/2409183_BTNSearingChains.png",
+                                                 @"http://img0.pcgames.com.cn/pcgames/1112/24/2409183_BTNFireRemnant.png",
+                                                 @"http://img0.pcgames.com.cn/pcgames/1112/24/2409183_BTNSleightOfFist.png",
+                                                 @"http://img0.pcgames.com.cn/pcgames/1112/24/2409183_BTNSleightOfFist.png",
+                                                 @"http://img0.pcgames.com.cn/pcgames/1112/24/2409183_BTNSleightOfFist.png",
+                                                 @"http://img1.pcgames.com.cn/pcgames/1102/11/2125673_201006181543085935.jpg",
+                                                 @"http://img0.pcgames.com.cn/pcgames/1112/24/2409183_BTNFireRemnant.png",
+                                                 @"http://img1.pcgames.com.cn/pcgames/1102/11/2125673_201006181543085935.jpg",
+                                                 @"http://img1.pcgames.com.cn/pcgames/1102/11/2125673_201006181543085935.jpg",
+                                                 @"http://img1.pcgames.com.cn/pcgames/1102/11/2125673_201006181543085935.jpg",nil];
+    
+    NSArray *firstImgArray = [NSArray arrayWithObjects:
+                                                         @"http://www1.pcgames.com.cn/fight/warcraft/dota/heros/ico/Level-10-6.gif",
+                                                         @"http://img1.pcgames.com.cn/pcgames/1101/30/2125673_2.gif",
+                                                         @"http://www1.pcgames.com.cn/fight/warcraft/dota/heros/ico/Level-7-3.gif",
+                                                         @"http://www1.pcgames.com.cn/fight/warcraft/dota/heros/ico/Level-7-1.gif",
+                                                         @"http://www1.pcgames.com.cn/fight/warcraft/dota/heros/ico/Level-9-4.gif",
+                                                         @"http://www1.pcgames.com.cn/fight/warcraft/dota/heros/ico/Level-9-4.gif",nil];
+    
+    NSArray *firstLinkArray = [NSArray arrayWithObjects:
+                               @"http://db.pcgames.com.cn/dota/item_943.html",
+                               @"http://db.pcgames.com.cn/dota/item_760.html",
+                               @"http://db.pcgames.com.cn/dota/item_762.html",
+                               @"http://db.pcgames.com.cn/dota/item_761.html",
+                               @"http://db.pcgames.com.cn/dota/item_777.html",
+                               @"http://db.pcgames.com.cn/dota/item_777.html",nil];
+    
+    [tempModelArray removeAllObjects];
+    
+    for (int i=0; i<firstImgArray.count; i++)
+    {
+        NSString *getImgString = firstImgArray[i];
+        
+        NSString *getLinkString = firstLinkArray[i];
+        
+        RecommendEqumentsModel *recommendEqumentsModel = [[RecommendEqumentsModel alloc] init];
+        
+        recommendEqumentsModel.hostID = 100 + i;
+        
+        recommendEqumentsModel.reImgString = getImgString;
+        
+        recommendEqumentsModel.reLinkString = getLinkString;
+        
+        [tempModelArray addObject:recommendEqumentsModel];
+    }
+    
+    saveModel.detailHeroFirstRecommendEquipmentsArray = [NSArray arrayWithArray:tempModelArray];
+    
+    
+    NSArray *secondImgArray = [NSArray arrayWithObjects:
+                                                          @"http://www1.pcgames.com.cn/fight/warcraft/dota/heros/ico/Level-5-1.gif",
+                                                          @"http://img1.pcgames.com.cn/pcgames/1102/15/2125673_icon.jpg",
+                                                          @"http://img0.pcgames.com.cn/pcgames/1112/24/2409183_BTNRingJadeFalcon.png",
+                                                          @"http://img0.pcgames.com.cn/pcgames/1107/29/2133456_lijz.jpg",
+                                                          @"http://www1.pcgames.com.cn/fight/warcraft/dota/heros/ico/Level-6-11.gif",nil];
+    
+    NSArray *secondLinkArray = [NSArray arrayWithObjects:
+                                @"http://db.pcgames.com.cn/dota/item_941.html",
+                                @"http://db.pcgames.com.cn/dota/item_755.html",
+                                @"http://db.pcgames.com.cn/dota/item_847.html",
+                                @"http://db.pcgames.com.cn/dota/item_841.html",
+                                @"http://db.pcgames.com.cn/dota/item_785.html",nil];
+    
+    [tempModelArray removeAllObjects];
+    
+    for (int i=0; i<secondImgArray.count; i++)
+    {
+        NSString *getImgString = secondImgArray[i];
+        
+        NSString *getLinkString;
+        
+        if (i < secondLinkArray.count)
+        {
+            getLinkString = secondLinkArray[i];
+        }
+        
+        RecommendEqumentsModel *recommendEqumentsModel = [[RecommendEqumentsModel alloc] init];
+        
+        recommendEqumentsModel.hostID = 100 + i;
+        
+        recommendEqumentsModel.reImgString = getImgString;
+        
+        recommendEqumentsModel.reLinkString = getLinkString;
+        
+        [tempModelArray addObject:recommendEqumentsModel];
+        
+    }
+    
+    saveModel.detailHeroSecondRecommendEquipmentsArray = [NSArray arrayWithArray:tempModelArray];
+    
+    
+    NSArray *thirdImgArray = [NSArray arrayWithObjects:
+                                                         @"http://img0.pcgames.com.cn/pcgames/1105/23/2219109_0036.jpg",
+                                                         @"http://img0.pcgames.com.cn/pcgames/1105/23/2219109_0036.jpg",
+                                                         @"http://img0.pcgames.com.cn/pcgames/1105/23/2219109_0034.jpg",
+                                                         @"http://img0.pcgames.com.cn/pcgames/1105/24/2219109_0032.jpg",
+                                                         @"http://img0.pcgames.com.cn/pcgames/1105/23/2219109_0001.jpg",
+                                                         @"http://www1.pcgames.com.cn/fight/warcraft/dota/heros/ico/Level-1-5.gif",nil];
+    
+    NSArray *thirdLinkArray = [NSArray arrayWithObjects:
+                               @"http://db.pcgames.com.cn/dota/item_863.html",
+                               @"http://db.pcgames.com.cn/dota/item_863.html",
+                               @"http://db.pcgames.com.cn/dota/item_881.html",
+                               @"http://db.pcgames.com.cn/dota/item_931.html",
+                               @"http://db.pcgames.com.cn/dota/item_865.html",
+                               @"http://db.pcgames.com.cn/dota/item_759.html",nil];
+    
+    [tempModelArray removeAllObjects];
+    
+    for (int i=0; i<thirdImgArray.count; i++)
+    {
+        NSString *getImgString = thirdImgArray[i];
+        
+        NSString *getLinkString = thirdLinkArray[i];
+        
+        RecommendEqumentsModel *recommendEqumentsModel = [[RecommendEqumentsModel alloc] init];
+        
+        recommendEqumentsModel.hostID = 200 + i;
+        
+        recommendEqumentsModel.reImgString = getImgString;
+        
+        recommendEqumentsModel.reLinkString = getLinkString;
+        
+        [tempModelArray addObject:recommendEqumentsModel];
+    }
+    
+    saveModel.detailHeroThirdRecommendEquipmentsArray = [NSArray arrayWithArray:tempModelArray];
+
+    
+    NSArray *skillImgArray = [NSArray arrayWithObjects:
+                              @"http://img0.pcgames.com.cn/pcgames/1112/24/2409183_BTNSearingChains.png",
+                              @"http://img0.pcgames.com.cn/pcgames/1112/24/2409183_BTNSleightOfFist.png",
+                              @"http://img0.pcgames.com.cn/pcgames/1112/24/2409183_BTNFlameGuard.png",
+                              @"http://img0.pcgames.com.cn/pcgames/1112/24/2409183_BTNFireRemnant.png",nil];
+    
+    NSArray *skillNameArray = [NSArray arrayWithObjects:
+                               @"烧灼锁链",
+                               @"无影拳",
+                               @"火焰壁垒",
+                               @"火之余烬",nil];
+    
+    NSArray *skillQuickArray = [NSArray arrayWithObjects:
+                                @"快捷键：C",
+                                @"快捷键：T",
+                                @"快捷键：E",
+                                @"快捷键：F",nil];
+    
+    NSArray *skillDistanceArray = [NSArray arrayWithObjects:
+                                   @"烧灼锁链快捷键：C\r\n\n炘释放出二个火焰绳索来随机缠绕住附近的敌人，将他们困在区域内并每秒造成一定伤害。\r\n\n作用范围：400\r\n\n施法间隔：14/12/10/8秒\r\n\n魔法消耗：110点",
+                                   @"无影拳快捷键：T\r\n\n灰烬之灵以闪电般的速度横冲直撞，攻击目标区域内所有敌人，随后返回所在位置。对英雄额外造成伤害，对非英雄单位造成的伤害减少50%。\r\n\n作用范围：250/350/450/550\r\n\n施法间隔：30/22/14/6\r\n\n魔法消耗：50点",
+                                   @"火焰壁垒快捷键：E\r\n\n灰烬之灵用火焰之环将自己包裹起来，吸收大量魔法伤害。同时对周围400范围的敌人造成持续伤害。持续8/12/16/20秒（或伤害吸收达到上限）。\r\n\n施法间隔：35秒\r\n\n魔法消耗：80/90/100/110点",
+                                   @"火之余烬快捷键：F\r\n\n灰烬之灵为自身充能，每隔35秒创造出一个火之余烬，最多拥有3个。释放能量时，会指使一个火之余烬奔向目标地点并摧毁附近的树木（速度为你移动速度的2.5倍）。炘可以通过他的副技能R冲出去依次引爆火之余烬，造成范围伤害，并到达最后指定的那个火之余烬的地点。火之余烬最多存活45秒。\r\n\n激活冷却时间：4\r\n\n激活魔法消耗：150",nil];
+    
+    NSArray *skillLevelUpArray = [NSArray arrayWithObjects:
+                                   @"\r\n\n等级 1 - 持续1秒，每秒造成40点伤害。\r\n\n等级 2 - 持续2秒，每秒造成60点伤害。\r\n\n等级 3 - 持续2秒，每秒造成80点伤害。\r\n\n等级 4 - 持续3秒，每秒造成100点伤害。",
+                                   @"\r\n\n等级 1 - 20点额外伤害\r\n\n等级 2 - 40点额外伤害。\r\n\n等级 3 - 60点额外伤害。\r\n\n等级 4 - 80点额外伤害。",
+                                   @"\r\n\n等级 1 - 吸收50点魔法伤害；每秒造成30点伤害。\r\n\n等级 2 - 吸收200点魔法伤害；每秒造成40点伤害。\r\n\n等级 3 - 吸收350点魔法伤害；每秒造成50点伤害。\r\n\n等级 4 - 吸收500点魔法伤害；每秒造成60点伤害。",
+                                   @"\r\n\n等级 1 - 造成100点范围伤害\r\n\n等级 2 - 造成150点范围伤害\r\n\n等级 3 - 造成200点范围伤害",nil];
+    
+    [tempModelArray removeAllObjects];
+    
+    for (int i=0; i<skillImgArray.count; i++)
+    {
+        NSString *imgString = skillImgArray[i];
+        
+        NSString *nameString = skillNameArray[i];
+        
+        NSString *quickShotString;
+        
+        NSString *spellDistanceString;
+        
+        NSString *levelUpString;
+        
+        if (i < skillQuickArray.count)
+        {
+            quickShotString = skillQuickArray[i];
+        }
+        
+        if (i < skillDistanceArray.count)
+        {
+            spellDistanceString = skillDistanceArray[i];
+        }
+        
+        if (i < skillLevelUpArray.count)
+        {
+            levelUpString = skillLevelUpArray[i];
+        }
+        
+        SkillsIntroduceModel *skillIntroduceModel = [[SkillsIntroduceModel alloc] init];
+        
+        skillIntroduceModel.hostID = 100 + i;
+        
+        skillIntroduceModel.skillNameString = nameString;
+        
+        skillIntroduceModel.skillImgString = imgString;
+        
+        skillIntroduceModel.skillQuickNameString = quickShotString;
+        
+        skillIntroduceModel.skillDistanceString = spellDistanceString;
+        
+        skillIntroduceModel.skillLevelString = levelUpString;
+        
+        [tempModelArray addObject:skillIntroduceModel];
+    }
+    
+    saveModel.detailHeroSkillsArray = [NSArray arrayWithArray:tempModelArray];
+}
 
 -(void) getTableHeaderData:(TFHpple *) xpathParser  SaveModel:(HeroDetailDataModel *) saveModel
 {
@@ -316,7 +646,12 @@ const float kCellHeight = 60.0f;
         {
             NSString *tempImgString = tempChildImgArray[i];
             
-            NSString *tempLinkString = tempChildLinkArray[i];
+            NSString *tempLinkString;
+            
+            if (i < tempChildLinkArray.count)
+            {
+                tempLinkString = tempChildLinkArray[i];
+            }
             
             MatchOrDefenceHeroModel *matchOrDefence = [[MatchOrDefenceHeroModel alloc] init];
             
@@ -454,7 +789,12 @@ const float kCellHeight = 60.0f;
             {
                 NSString *getImgString = getRecommendThirdImgArray[i];
                 
-                NSString *getLinkString = getRecommendThirdLinkArray[i];
+                NSString *getLinkString;
+                
+                if (i < getRecommendThirdLinkArray.count)
+                {
+                    getLinkString = getRecommendThirdLinkArray[i];
+                }
                 
                 RecommendEqumentsModel *recommendEqumentsModel = [[RecommendEqumentsModel alloc] init];
                 
@@ -804,6 +1144,52 @@ const float kCellHeight = 60.0f;
     [self.viwTable endUpdates];
 }
 
+-(void) heroMatchImgTaped:(UITapGestureRecognizer *) sender
+{
+    //配合英雄点击
+    NSInteger selectIndex = sender.view.tag - 369;
+    
+    if (selectIndex < self.heroDetailModel.detailHeroMatchArray.count)
+    {
+        NSArray *tempArr = [MatchOrDefenceHeroModel mj_objectArrayWithKeyValuesArray:self.heroDetailModel.detailHeroMatchArray];
+        
+        MatchOrDefenceHeroModel *matchOrDefence = tempArr[selectIndex];
+        
+        HeroDetailInfoViewController *heroDetailVC = [[HeroDetailInfoViewController alloc] init];
+        
+        heroDetailVC.sendHeroLink = matchOrDefence.mdHeroLinkString;
+        
+        heroDetailVC.sendHeroId = [Tools getHeroIdFromLink:matchOrDefence.mdHeroLinkString];
+        
+        [self setHidesBottomBarWhenPushed:YES];
+        
+        [self.navigationController pushViewController:heroDetailVC animated:YES];
+    }
+}
+
+-(void) heroRestarinImgTaped:(UITapGestureRecognizer *) sender
+{
+    //克制英雄点击
+    NSInteger selectIndex = sender.view.tag - 369;
+    
+    if (selectIndex < self.heroDetailModel.detailHeroRestrainArray.count)
+    {
+        NSArray *tempArr = [MatchOrDefenceHeroModel mj_objectArrayWithKeyValuesArray:self.heroDetailModel.detailHeroRestrainArray];
+        
+        MatchOrDefenceHeroModel *matchOrDefence = tempArr[selectIndex];
+        
+        HeroDetailInfoViewController *heroDetailVC = [[HeroDetailInfoViewController alloc] init];
+        
+        heroDetailVC.sendHeroLink = matchOrDefence.mdHeroLinkString;
+        
+        heroDetailVC.sendHeroId = [Tools getHeroIdFromLink:matchOrDefence.mdHeroLinkString];
+        
+        [self setHidesBottomBarWhenPushed:YES];
+        
+        [self.navigationController pushViewController:heroDetailVC animated:YES];
+    }
+}
+
 #pragma mark 列表代理
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -1041,6 +1427,14 @@ const float kCellHeight = 60.0f;
                     
                     [hdImgView sd_setImageWithURL:[NSURL URLWithString:matchOrDefenceModel.mdHeroImgString] placeholderImage:[UIImage imageNamed:DEFAULT_WEBPIC_PIC]];
                     
+                    UITapGestureRecognizer *heroImgTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(heroMatchImgTaped:)];
+                    
+                    hdImgView.userInteractionEnabled = YES;
+                    
+                    hdImgView.tag = 369 + i;
+                    
+                    [hdImgView addGestureRecognizer:heroImgTap];
+                    
                     [buttons addObject:hdImgView];
                 }
                 
@@ -1059,6 +1453,14 @@ const float kCellHeight = 60.0f;
                     NSLog(@"mdHeroImgString %@",matchOrDefenceModel.mdHeroImgString);
                     
                     [hdImgView sd_setImageWithURL:[NSURL URLWithString:matchOrDefenceModel.mdHeroImgString] placeholderImage:[UIImage imageNamed:DEFAULT_WEBPIC_PIC]];
+                    
+                    UITapGestureRecognizer *heroImgTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(heroRestarinImgTaped:)];
+                    
+                    hdImgView.userInteractionEnabled = YES;
+                    
+                    hdImgView.tag = 369 + i;
+                    
+                    [hdImgView addGestureRecognizer:heroImgTap];
                     
                     [buttons addObject:hdImgView];
                 }
@@ -1213,5 +1615,22 @@ const float kCellHeight = 60.0f;
 {
     
 }
+
+#pragma mark - 系统返回键类别  返回键响应
+-(BOOL) navigationShouldPopOnBackButton ///在这个方法里写返回按钮的事件处理
+{
+    for (UIViewController *tempVC in self.navigationController.viewControllers)
+    {
+        if ([tempVC isKindOfClass:[HeroViewController class]])
+        {
+            [self.navigationController popToViewController:tempVC animated:YES];
+            
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
 
 @end

@@ -12,4 +12,6 @@
 
 @property (nonatomic,copy) NSString *sendOddId;//传入物品id  作为存储数据库的hostID
 
+@property (nonatomic,copy) NSString *sendOddLink;
+
 @end

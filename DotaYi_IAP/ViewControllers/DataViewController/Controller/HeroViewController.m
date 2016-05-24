@@ -415,8 +415,6 @@
 
     HeroDetailInfoViewController *heroDetailVC = [[HeroDetailInfoViewController alloc] init];
     
-    NSLog(@"heroLinkString %@",heroLinkString);
-    
     heroDetailVC.sendHeroLink = heroLinkString;
     
     heroDetailVC.sendHeroId = [self getHeroIdFromLink:heroLinkString];
