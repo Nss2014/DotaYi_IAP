@@ -32,6 +32,14 @@
 		077A5DFE1CE97C0300C231CB /* APJSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 077A5DF81CE97C0300C231CB /* APJSONParser.m */; };
 		077A5DFF1CE97C0300C231CB /* NSArray+DateString.m in Sources */ = {isa = PBXBuildFile; fileRef = 077A5DFA1CE97C0300C231CB /* NSArray+DateString.m */; };
 		077A5E001CE97C0300C231CB /* NSDictionary+DateString.m in Sources */ = {isa = PBXBuildFile; fileRef = 077A5DFC1CE97C0300C231CB /* NSDictionary+DateString.m */; };
+		078AD3811CF57DEC00B9DDEC /* BEMAverageLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 078AD3781CF57DEC00B9DDEC /* BEMAverageLine.m */; };
+		078AD3821CF57DEC00B9DDEC /* BEMCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = 078AD37A1CF57DEC00B9DDEC /* BEMCircle.m */; };
+		078AD3831CF57DEC00B9DDEC /* BEMLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 078AD37C1CF57DEC00B9DDEC /* BEMLine.m */; };
+		078AD3841CF57DEC00B9DDEC /* BEMPermanentPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 078AD37E1CF57DEC00B9DDEC /* BEMPermanentPopupView.m */; };
+		078AD3851CF57DEC00B9DDEC /* BEMSimpleLineGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 078AD3801CF57DEC00B9DDEC /* BEMSimpleLineGraphView.m */; };
+		078AD3881CF589FD00B9DDEC /* CustomGridPointView.m in Sources */ = {isa = PBXBuildFile; fileRef = 078AD3871CF589FD00B9DDEC /* CustomGridPointView.m */; };
+		078AD38B1CF59AE100B9DDEC /* JJCTopDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 078AD38A1CF59AE100B9DDEC /* JJCTopDataModel.m */; };
+		078AD38E1CF5A33C00B9DDEC /* MJGoodAtHeroModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 078AD38D1CF5A33C00B9DDEC /* MJGoodAtHeroModel.m */; };
 		07A7D5491CD89C13007B5D5E /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A7D5441CD89C13007B5D5E /* TFHpple.m */; };
 		07A7D54A1CD89C13007B5D5E /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A7D5461CD89C13007B5D5E /* TFHppleElement.m */; };
 		07A7D54B1CD89C13007B5D5E /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A7D5481CD89C13007B5D5E /* XPathQuery.m */; };
@@ -326,6 +334,22 @@
 		077A5DFA1CE97C0300C231CB /* NSArray+DateString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+DateString.m"; sourceTree = "<group>"; };
 		077A5DFB1CE97C0300C231CB /* NSDictionary+DateString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+DateString.h"; sourceTree = "<group>"; };
 		077A5DFC1CE97C0300C231CB /* NSDictionary+DateString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+DateString.m"; sourceTree = "<group>"; };
+		078AD3771CF57DEC00B9DDEC /* BEMAverageLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BEMAverageLine.h; sourceTree = "<group>"; };
+		078AD3781CF57DEC00B9DDEC /* BEMAverageLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BEMAverageLine.m; sourceTree = "<group>"; };
+		078AD3791CF57DEC00B9DDEC /* BEMCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BEMCircle.h; sourceTree = "<group>"; };
+		078AD37A1CF57DEC00B9DDEC /* BEMCircle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BEMCircle.m; sourceTree = "<group>"; };
+		078AD37B1CF57DEC00B9DDEC /* BEMLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BEMLine.h; sourceTree = "<group>"; };
+		078AD37C1CF57DEC00B9DDEC /* BEMLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BEMLine.m; sourceTree = "<group>"; };
+		078AD37D1CF57DEC00B9DDEC /* BEMPermanentPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BEMPermanentPopupView.h; sourceTree = "<group>"; };
+		078AD37E1CF57DEC00B9DDEC /* BEMPermanentPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BEMPermanentPopupView.m; sourceTree = "<group>"; };
+		078AD37F1CF57DEC00B9DDEC /* BEMSimpleLineGraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BEMSimpleLineGraphView.h; sourceTree = "<group>"; };
+		078AD3801CF57DEC00B9DDEC /* BEMSimpleLineGraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BEMSimpleLineGraphView.m; sourceTree = "<group>"; };
+		078AD3861CF589FD00B9DDEC /* CustomGridPointView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomGridPointView.h; path = DotaYi_IAP/Interfac_Views/BEMLineView/CustomGridPointView.h; sourceTree = SOURCE_ROOT; };
+		078AD3871CF589FD00B9DDEC /* CustomGridPointView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomGridPointView.m; path = DotaYi_IAP/Interfac_Views/BEMLineView/CustomGridPointView.m; sourceTree = SOURCE_ROOT; };
+		078AD3891CF59AE100B9DDEC /* JJCTopDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JJCTopDataModel.h; path = DotaYi_IAP/Interfac_Views/BEMLineView/JJCTopDataModel.h; sourceTree = SOURCE_ROOT; };
+		078AD38A1CF59AE100B9DDEC /* JJCTopDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JJCTopDataModel.m; path = DotaYi_IAP/Interfac_Views/BEMLineView/JJCTopDataModel.m; sourceTree = SOURCE_ROOT; };
+		078AD38C1CF5A33C00B9DDEC /* MJGoodAtHeroModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MJGoodAtHeroModel.h; path = DotaYi_IAP/Interfac_Views/BEMLineView/MJGoodAtHeroModel.h; sourceTree = SOURCE_ROOT; };
+		078AD38D1CF5A33C00B9DDEC /* MJGoodAtHeroModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MJGoodAtHeroModel.m; path = DotaYi_IAP/Interfac_Views/BEMLineView/MJGoodAtHeroModel.m; sourceTree = SOURCE_ROOT; };
 		07A7D5431CD89C13007B5D5E /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHpple.h; sourceTree = "<group>"; };
 		07A7D5441CD89C13007B5D5E /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHpple.m; sourceTree = "<group>"; };
 		07A7D5451CD89C13007B5D5E /* TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHppleElement.h; sourceTree = "<group>"; };
@@ -870,6 +894,23 @@
 			path = APBeanParser;
 			sourceTree = "<group>";
 		};
+		078AD3761CF57DEC00B9DDEC /* BEMLineView */ = {
+			isa = PBXGroup;
+			children = (
+				078AD3771CF57DEC00B9DDEC /* BEMAverageLine.h */,
+				078AD3781CF57DEC00B9DDEC /* BEMAverageLine.m */,
+				078AD3791CF57DEC00B9DDEC /* BEMCircle.h */,
+				078AD37A1CF57DEC00B9DDEC /* BEMCircle.m */,
+				078AD37B1CF57DEC00B9DDEC /* BEMLine.h */,
+				078AD37C1CF57DEC00B9DDEC /* BEMLine.m */,
+				078AD37D1CF57DEC00B9DDEC /* BEMPermanentPopupView.h */,
+				078AD37E1CF57DEC00B9DDEC /* BEMPermanentPopupView.m */,
+				078AD37F1CF57DEC00B9DDEC /* BEMSimpleLineGraphView.h */,
+				078AD3801CF57DEC00B9DDEC /* BEMSimpleLineGraphView.m */,
+			);
+			path = BEMLineView;
+			sourceTree = "<group>";
+		};
 		07A7D5421CD89C13007B5D5E /* TFHpple */ = {
 			isa = PBXGroup;
 			children = (
@@ -1097,6 +1138,10 @@
 		07AC691F1CC0A6250030B298 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				078AD3891CF59AE100B9DDEC /* JJCTopDataModel.h */,
+				078AD38A1CF59AE100B9DDEC /* JJCTopDataModel.m */,
+				078AD38C1CF5A33C00B9DDEC /* MJGoodAtHeroModel.h */,
+				078AD38D1CF5A33C00B9DDEC /* MJGoodAtHeroModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1104,6 +1149,8 @@
 		07AC69201CC0A6250030B298 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				078AD3861CF589FD00B9DDEC /* CustomGridPointView.h */,
+				078AD3871CF589FD00B9DDEC /* CustomGridPointView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1564,6 +1611,7 @@
 		07AC6B401CC0A66C0030B298 /* Interfac_Views */ = {
 			isa = PBXGroup;
 			children = (
+				078AD3761CF57DEC00B9DDEC /* BEMLineView */,
 				075627F41CEEB2B900568B09 /* ASHorizontalScrollView */,
 				07AC6B411CC0A66C0030B298 /* AFViewShaker */,
 				07AC6B441CC0A66C0030B298 /* ARSegmentPageController */,
@@ -2375,9 +2423,11 @@
 				07AC6B241CC0A65D0030B298 /* NSString+TL.m in Sources */,
 				07AC6AC91CC0A65D0030B298 /* NSData+MimeType.m in Sources */,
 				07AC6C511CC0A66D0030B298 /* XQNewFeatureVC.m in Sources */,
+				078AD3881CF589FD00B9DDEC /* CustomGridPointView.m in Sources */,
 				07AC6C001CC0A66C0030B298 /* ARSegmentPageController.m in Sources */,
 				07AC6AEF1CC0A65D0030B298 /* DGActivityIndicatorTripleRingsAnimation.m in Sources */,
 				07AC6AEA1CC0A65D0030B298 /* DGActivityIndicatorRotatingSquaresAnimation.m in Sources */,
+				078AD38E1CF5A33C00B9DDEC /* MJGoodAtHeroModel.m in Sources */,
 				07AC6B341CC0A65D0030B298 /* UIImage+WebP.m in Sources */,
 				07AC6ABE1CC0A65D0030B298 /* CAAnimation+CoreBtnExtend.m in Sources */,
 				07DC15F11CDA04780054EA20 /* NSObject+Runtime.m in Sources */,
@@ -2400,8 +2450,10 @@
 				07AC6AF91CC0A65D0030B298 /* SVProgressHUD.m in Sources */,
 				075627FA1CEEB2B900568B09 /* ASHorizontalScrollView.m in Sources */,
 				07AC6C5C1CC0CD700030B298 /* CoreTFManagerVC.m in Sources */,
+				078AD3851CF57DEC00B9DDEC /* BEMSimpleLineGraphView.m in Sources */,
 				07DC15E21CDA04780054EA20 /* FMResultSet.m in Sources */,
 				07AC6AD01CC0A65D0030B298 /* DGActivityIndicatorBallBeatAnimation.m in Sources */,
+				078AD3841CF57DEC00B9DDEC /* BEMPermanentPopupView.m in Sources */,
 				07AC6AC31CC0A65D0030B298 /* MaskViewAnimView.m in Sources */,
 				841064AA1CC3B636008AAD95 /* MJViewController.m in Sources */,
 				07AC6B291CC0A65D0030B298 /* NSData+ImageContentType.m in Sources */,
@@ -2433,6 +2485,7 @@
 				07AC6AF11CC0A65D0030B298 /* DGActivityIndicatorView.m in Sources */,
 				07AC6AE11CC0A65D0030B298 /* DGActivityIndicatorCookieTerminatorAnimation.m in Sources */,
 				84900F801CECAE64002F2098 /* MJExtensionConst.m in Sources */,
+				078AD3821CF57DEC00B9DDEC /* BEMCircle.m in Sources */,
 				07AC6C4C1CC0A66D0030B298 /* UMPostTableViewCell.m in Sources */,
 				07AC6ABB1CC0A65D0030B298 /* CoreBtn.m in Sources */,
 				07DC15E91CDA04780054EA20 /* NSObject+Insert.m in Sources */,
@@ -2467,6 +2520,7 @@
 				841064AD1CC3B63F008AAD95 /* TTViewController.m in Sources */,
 				07AC6ACC1CC0A65D0030B298 /* NSURL+File.m in Sources */,
 				07DC15E41CDA04780054EA20 /* NSDictionary+Sqlite.m in Sources */,
+				078AD38B1CF59AE100B9DDEC /* JJCTopDataModel.m in Sources */,
 				07AC6B101CC0A65D0030B298 /* MASViewConstraint.m in Sources */,
 				07DC15DB1CDA04780054EA20 /* CoreModel.m in Sources */,
 				07AC6B0E1CC0A65D0030B298 /* MASLayoutConstraint.m in Sources */,
@@ -2536,6 +2590,7 @@
 				07AC6AF21CC0A65D0030B298 /* CoreStatus.m in Sources */,
 				07DC15DE1CDA04780054EA20 /* FMDatabase.m in Sources */,
 				07AC6AC71CC0A65D0030B298 /* CoreHttp.m in Sources */,
+				078AD3811CF57DEC00B9DDEC /* BEMAverageLine.m in Sources */,
 				07DC15EE1CDA04780054EA20 /* NSString+Stackoverflow.m in Sources */,
 				07DC158C1CD9D7D50054EA20 /* JKDBHelper.m in Sources */,
 				07AC6AD51CC0A65D0030B298 /* DGActivityIndicatorBallGridPulseAnimation.m in Sources */,
@@ -2546,6 +2601,7 @@
 				07AC6C221CC0A66D0030B298 /* KSAutoFootRefreshView.m in Sources */,
 				07AC6C5D1CC0CD700030B298 /* CoreTFKeyBoardToolBarView.m in Sources */,
 				07AC6B2E1CC0A65D0030B298 /* SDWebImageDownloaderOperation.m in Sources */,
+				078AD3831CF57DEC00B9DDEC /* BEMLine.m in Sources */,
 				07AC6C311CC0A66D0030B298 /* TLRootViewController.m in Sources */,
 				07AC6AD31CC0A65D0030B298 /* DGActivityIndicatorBallClipRotatePulseAnimation.m in Sources */,
 				0746A1001CDB4811007EC2AD /* HeroDetailInfoViewController.m in Sources */,

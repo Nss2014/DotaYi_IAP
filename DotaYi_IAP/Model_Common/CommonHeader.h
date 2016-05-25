@@ -299,6 +299,10 @@
 #define TEXT20_BOLD_FONT [UIFont fontWithName:@"Helvetica-Bold" size:20]
 //22号字体
 #define TEXT22_BOLD_FONT [UIFont fontWithName:@"Helvetica-Bold" size:22]
+//24号字体
+#define TEXT24_BOLD_FONT [UIFont fontWithName:@"Helvetica-Bold" size:24]
+//26号字体
+#define TEXT26_BOLD_FONT [UIFont fontWithName:@"Helvetica-Bold" size:26]
 
 #pragma mark - 花儿好看本地数据DEFAULT
 
@@ -361,7 +365,7 @@
 #define XLS_COLOR_MAIN_GRAY [UIColor colorWithRed:67.0/255 green:65.0/255  blue:68.0/255 alpha:1.0f]
 
 //绿色
-//#define XLS_COLOR_MAIN_GRAY [UIColor colorWithRed:31.0/255.0 green:187.0/255.0 blue:166.0/255.0 alpha:1.0]
+#define XLS_COLOR_MAIN_GREEN [UIColor colorWithRed:31.0/255.0 green:187.0/255.0 blue:166.0/255.0 alpha:1.0]
 
 //系统背景颜色
 #define COLOR_VIEW_BG [Tools colorFromHexCode:@"#F5F5F5"]

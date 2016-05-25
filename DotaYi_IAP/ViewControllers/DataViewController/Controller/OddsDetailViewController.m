@@ -9,6 +9,7 @@
 #import "OddsDetailViewController.h"
 #import "OddsDetailDataModel.h"
 #import "ASHorizontalScrollView.h"
+#import "OddsViewController.h"
 
 #define kCellHeight 60
 
@@ -93,11 +94,13 @@
                     
                     NSArray *getIntroduceArr = [Tools getHtmlValueArrayWithXPathParser:tfElement XPathQuery:@"//div[@class='scontent']"DetailXPathQuery:@"//font" DetailKey:nil];
 
-                    NSString *tempIntroducePriceString;
+                    NSString *tempIntroducePriceString = @"";
                     
-                    NSString *tempIntroduceBuyPlaceString;
+                    NSString *tempIntroduceBuyPlaceString = @"";
                     
                     NSString *tempIntroduceOtherString = @"";
+                    
+                    NSString *signChangeStr = @"";
                     
                     for (int i=0; i<getIntroduceArr.count; i++)
                     {
@@ -113,16 +116,14 @@
                         
                         if (getIntroduceArr.count > 4)
                         {
-                            NSString *signChangeStr = @"";
-                            
                             if (i > 3)
                             {
-                                tempIntroduceOtherString = [tempIntroduceOtherString stringByAppendingFormat:@"%@%@",signChangeStr,getIntroduceArr[i]];
-                                
-                                if (i > 4 && getIntroduceArr[i] != nil && ![getIntroduceArr[i] isEqualToString:@""])
+                                if (i > 4)
                                 {
                                     signChangeStr = @"\r\n\n";
                                 }
+                                
+                                tempIntroduceOtherString = [tempIntroduceOtherString stringByAppendingFormat:@"%@%@",[Tools exchangeNullToEmptyString:signChangeStr],[Tools exchangeNullToEmptyString:getIntroduceArr[i]]];
                             }
                         }
                     }
@@ -143,43 +144,46 @@
                     
                     if ([getComposeString isEqualToString:@"relation_9"])
                     {
-                        //有  取出 “合成需要” 数组//div[@id='slide09']//td[@class='noh']//table[@class='nobk']
-                        NSArray *needComposeArrElements = [xpathParser searchWithXPathQuery:@"//div[@id='slide09']"];
+                        NSArray *secondNeedElements = [xpathParser searchWithXPathQuery:@"//div[@id='tab1']"];
                         
-                        for (TFHppleElement *needElement in needComposeArrElements)
+                        for (TFHppleElement *thirdElement in secondNeedElements)
                         {
                             
-                            //link
-                            NSArray *tempNeedLinkArray = [Tools getHtmlValueArrayWithXPathParser:needElement XPathQuery:@"//table[@class='nobk']" DetailXPathQuery:@"//a" DetailKey:@"href"];
+                            NSArray *thirdNeedElements = [thirdElement searchWithXPathQuery:@"//td[@align='center']"];
                             
-                            //img
-                            NSArray *tempNeedImgArray = [Tools getHtmlValueArrayWithXPathParser:needElement XPathQuery:@"//table[@class='nobk']" DetailXPathQuery:@"//img" DetailKey:@"src"];
+                            NSLog(@"thirdNeedElements");
                             
-                            NSLog(@"tempNeedLinkArray %@",tempNeedLinkArray);
-                            
-                            
-                            NSLog(@"tempNeedImgArray %@",tempNeedImgArray);
-                            
-                            
-                            for (int i=0; i<tempNeedLinkArray.count; i++)
+                            for (TFHppleElement *finalElement in thirdNeedElements)
                             {
-                                NSString *needLinkStr = tempNeedLinkArray[i];
+                                NSLog(@"finalElement");
+                                //link
+                                NSArray *tempNeedLinkArray = [Tools getHtmlValueArrayWithXPathParser:finalElement XPathQuery:@"//td[@class='noh']" DetailXPathQuery:@"//a" DetailKey:@"href"];
                                 
-                                NSString *needImgStr;
+                                //img
+                                NSArray *tempNeedImgArray = [Tools getHtmlValueArrayWithXPathParser:finalElement XPathQuery:@"//td[@class='noh']" DetailXPathQuery:@"//img" DetailKey:@"src"];
                                 
-                                if (i < tempNeedImgArray.count)
+                                for (int i=0; i<tempNeedLinkArray.count/2; i++)
                                 {
-                                    needImgStr = tempNeedImgArray[i];
+                                    NSString *needLinkStr = tempNeedLinkArray[i];
+                                    
+                                    NSString *needImgStr;
+                                    
+                                    if (i < tempNeedImgArray.count)
+                                    {
+                                        needImgStr = tempNeedImgArray[i];
+                                    }
+                                    
+                                    DetailOddNeedObj *detailNeedObj = [[DetailOddNeedObj alloc] init];
+                                    
+                                    detailNeedObj.needOddLink = needLinkStr;
+                                    
+                                    detailNeedObj.needOddImg = needImgStr;
+                                    
+                                    [saveModel.oddsDetailNeedArray addObject:detailNeedObj];
                                 }
                                 
-                                DetailOddNeedObj *detailNeedObj = [[DetailOddNeedObj alloc] init];
-                                
-                                detailNeedObj.needOddLink = needLinkStr;
-                                
-                                detailNeedObj.needOddImg = needImgStr;
-                                
-                                [saveModel.oddsDetailNeedArray addObject:detailNeedObj];
                             }
+                            
                         }
                     }
                 }
@@ -247,29 +251,12 @@
     
     NSString *exchangedSpeedString = [showDetailText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];  //去除掉首尾的空白字符和换行字符
     
-    exchangedSpeedString = [exchangedSpeedString stringByReplacingOccurrencesOfString:@"\r\n\r\n" withString:@"\r\n"];
-    
-    exchangedSpeedString = [exchangedSpeedString stringByReplacingOccurrencesOfString:@"\r\n" withString:@"\n"];
-    
     CGSize skillDetaiSize = [Tools getAdaptionSizeWithText:exchangedSpeedString andFont:TEXT12_FONT andLabelWidth:SCREEN_WIDTH - 2 * PADDING_WIDTH];
     
     //背景
     UIImageView *heroBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH,PADDING_WIDTH + (SCREEN_WIDTH * HEROBG_SCALE - 50) * 2/5 + PADDING_WIDTH + skillDetaiSize.height + 30)];
-    
-//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-//        
-//        UIImage *backImg = [self blurryImage:[UIImage imageNamed:@"odds_bg_pic.jpg"] withBlurLevel:0.3];
-//        
-//        dispatch_sync(dispatch_get_main_queue(), ^{
-//            
-//            heroBgView.contentMode = UIViewContentModeScaleAspectFill;
-//            
-//            heroBgView.image = backImg;
-//        });
-//    });
 
-    heroBgView.backgroundColor = XLS_COLOR_MAIN_GRAY;
-    
+    heroBgView.backgroundColor = WHITE_COLOR;
     
     //头像
     UIImageView *heroHeaderImgView = [[UIImageView alloc] init];
@@ -287,15 +274,21 @@
     
     heroIntroduceLabel.font = TEXT12_BOLD_FONT;
     
-    heroIntroduceLabel.textColor = WHITE_COLOR;
+    heroIntroduceLabel.textColor = COLOR_TITLE_LIGHTGRAY;
     
     heroIntroduceLabel.textAlignment = NSTextAlignmentCenter;
     
     heroIntroduceLabel.numberOfLines = 0;
     
-    heroIntroduceLabel.text = exchangedSpeedString;
+    heroIntroduceLabel.text = [Tools exchangeNullToEmptyString:exchangedSpeedString];
     
     [heroBgView addSubview:heroIntroduceLabel];
+    
+    UIView *lineView = [[UIView alloc] init];
+    
+    lineView.backgroundColor = SEPRATELINE_GRAYCOLOR;
+    
+    [heroBgView addSubview:lineView];
     
     [heroHeaderImgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(heroBgView.mas_centerX);
@@ -311,12 +304,36 @@
         make.height.mas_equalTo(skillDetaiSize.height + 20);
     }];
     
+    [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(heroBgView.mas_left);
+        make.right.equalTo(heroBgView.mas_right);
+        make.bottom.equalTo(heroBgView.mas_bottom);
+        make.height.mas_equalTo(PIXL1_AUTO);
+    }];
+    
     self.viwTable.tableHeaderView = heroBgView;
 }
 
 -(void) oddDetailImgTaped:(UITapGestureRecognizer *) sender
 {
+    NSInteger selectIndex = sender.view.tag - 369;
     
+    if (selectIndex < self.oddsDetailModel.oddsDetailNeedArray.count)
+    {
+        NSArray *tempArr = [DetailOddNeedObj mj_objectArrayWithKeyValuesArray:self.oddsDetailModel.oddsDetailNeedArray];
+        
+        DetailOddNeedObj *detailOddObj = tempArr[selectIndex];
+        
+        OddsDetailViewController *oddDetailVC = [[OddsDetailViewController alloc] init];
+        
+        oddDetailVC.sendOddLink = detailOddObj.needOddLink;
+        
+        oddDetailVC.sendOddId = [Tools getOddIdFromLink:detailOddObj.needOddLink];
+        
+        [self setHidesBottomBarWhenPushed:YES];
+        
+        [self.navigationController pushViewController:oddDetailVC animated:YES];
+    }
 }
 
 #pragma mark 列表代理
@@ -400,6 +417,65 @@
     }];
     
     return cell;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    NSArray *tempModelArr = [DetailOddNeedObj mj_objectArrayWithKeyValuesArray:self.oddsDetailModel.oddsDetailNeedArray];
+    
+    if (tempModelArr.count)
+    {
+        return 30;
+    }
+    
+    return 0;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    NSArray *tempModelArr = [DetailOddNeedObj mj_objectArrayWithKeyValuesArray:self.oddsDetailModel.oddsDetailNeedArray];
+    
+    if (tempModelArr.count)
+    {
+        UIView *headerBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 30)];
+        
+        UILabel *rankOrderLabel = [[UILabel alloc] init];
+        
+        rankOrderLabel.text = @"合成需要";
+        
+        rankOrderLabel.font = TEXT14_BOLD_FONT;
+        
+        rankOrderLabel.textColor = COLOR_TITLE_LIGHTGRAY;
+        
+        [headerBackView addSubview:rankOrderLabel];
+        
+        [rankOrderLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(headerBackView.mas_left).offset(PADDING_WIDTH);
+            make.top.equalTo(headerBackView.mas_top);
+            make.bottom.equalTo(headerBackView.mas_bottom);
+            make.right.equalTo(headerBackView.mas_right).offset(-PADDING_WIDTH);
+        }];
+        
+        return headerBackView;
+    }
+    
+    return nil;
+}
+
+#pragma mark - 系统返回键类别  返回键响应
+-(BOOL) navigationShouldPopOnBackButton ///在这个方法里写返回按钮的事件处理
+{
+    for (UIViewController *tempVC in self.navigationController.viewControllers)
+    {
+        if ([tempVC isKindOfClass:[OddsViewController class]])
+        {
+            [self.navigationController popToViewController:tempVC animated:YES];
+            
+            return NO;
+        }
+    }
+    
+    return YES;
 }
 
 @end

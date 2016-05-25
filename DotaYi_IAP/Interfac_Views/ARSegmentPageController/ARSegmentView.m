@@ -62,11 +62,11 @@
     
     _segmentControl.selectedSegmentIndex = 0;
     
-    _segmentControl.tintColor = XLS_COLOR_MAIN_GRAY;
+    _segmentControl.tintColor = WHITE_COLOR;
     
 //    _segmentControl.tintColor = SEPRATELINE_GRAYCOLOR;
     
-    _segmentControl.backgroundColor = WHITE_COLOR;
+    _segmentControl.backgroundColor = XLS_COLOR_MAIN_GRAY;
     
     [self.segbackView addSubview:self.segmentControl];
     

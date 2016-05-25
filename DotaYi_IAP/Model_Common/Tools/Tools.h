@@ -70,6 +70,8 @@
 
 +(NSString *) getHeroIdFromLink:(NSString *) theLink;
 
++ (NSString *) getOddIdFromLink:(NSString *) theLink;
+
 
 @end
 

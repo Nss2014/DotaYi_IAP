@@ -69,15 +69,17 @@
     
     [self.window makeKeyAndVisible];
     
-    //自动登录
-    if (1)
+    //若本地Cookie不为空 则认为该用户的状态不失效
+    if ([Tools strForKey:LOGIN_COOKIE] != nil && ![[Tools strForKey:LOGIN_COOKIE] isKindOfClass:[NSNull class]])
     {
-        [self enterMainVC];
+        [Tools setBool:YES key:LOCAL_LOGINSTATUS];
     }
     else
     {
-        [self enterLoginVC];
+        [Tools setBool:NO key:LOCAL_LOGINSTATUS];
     }
+    
+    [self enterMainVC];
 }
 
 -(void) handleNavigationBar

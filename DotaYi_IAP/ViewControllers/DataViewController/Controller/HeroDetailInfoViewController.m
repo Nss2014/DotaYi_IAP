@@ -9,6 +9,7 @@
 #import "HeroDetailInfoViewController.h"
 #import "HeroDetailTableViewCell.h"
 #import "HeroViewController.h"
+#import "OddsDetailViewController.h"
 
 #define SKILLBORDER_WIDTH 5.0
 
@@ -1190,6 +1191,75 @@ const float kCellHeight = 60.0f;
     }
 }
 
+//初期装备点击
+-(void) heroOddsFirstImgTaped:(UITapGestureRecognizer *) sender
+{
+    NSInteger selectIndex = sender.view.tag - 369;
+    
+    if (selectIndex < self.heroDetailModel.detailHeroFirstRecommendEquipmentsArray.count)
+    {
+        NSArray *tempArr = [RecommendEqumentsModel mj_objectArrayWithKeyValuesArray:self.heroDetailModel.detailHeroFirstRecommendEquipmentsArray];
+        
+        RecommendEqumentsModel *equmentsModel = tempArr[selectIndex];
+        
+        OddsDetailViewController *oddsDetailVC = [[OddsDetailViewController alloc] init];
+        
+        oddsDetailVC.sendOddLink = equmentsModel.reLinkString;
+        
+        oddsDetailVC.sendOddId = [Tools getOddIdFromLink:equmentsModel.reLinkString];
+        
+        [self setHidesBottomBarWhenPushed:YES];
+        
+        [self.navigationController pushViewController:oddsDetailVC animated:YES];
+    }
+}
+
+//中期装备点击
+-(void) heroOddsSecondImgTaped:(UITapGestureRecognizer *) sender
+{
+    NSInteger selectIndex = sender.view.tag - 369;
+    
+    if (selectIndex < self.heroDetailModel.detailHeroSecondRecommendEquipmentsArray.count)
+    {
+        NSArray *tempArr = [RecommendEqumentsModel mj_objectArrayWithKeyValuesArray:self.heroDetailModel.detailHeroSecondRecommendEquipmentsArray];
+        
+        RecommendEqumentsModel *equmentsModel = tempArr[selectIndex];
+        
+        OddsDetailViewController *oddsDetailVC = [[OddsDetailViewController alloc] init];
+        
+        oddsDetailVC.sendOddLink = equmentsModel.reLinkString;
+        
+        oddsDetailVC.sendOddId = [Tools getOddIdFromLink:equmentsModel.reLinkString];
+        
+        [self setHidesBottomBarWhenPushed:YES];
+        
+        [self.navigationController pushViewController:oddsDetailVC animated:YES];
+    }
+}
+
+//后期装备点击
+-(void) heroOddsThirdImgTaped:(UITapGestureRecognizer *) sender
+{
+    NSInteger selectIndex = sender.view.tag - 369;
+    
+    if (selectIndex < self.heroDetailModel.detailHeroThirdRecommendEquipmentsArray.count)
+    {
+        NSArray *tempArr = [RecommendEqumentsModel mj_objectArrayWithKeyValuesArray:self.heroDetailModel.detailHeroThirdRecommendEquipmentsArray];
+        
+        RecommendEqumentsModel *equmentsModel = tempArr[selectIndex];
+        
+        OddsDetailViewController *oddsDetailVC = [[OddsDetailViewController alloc] init];
+        
+        oddsDetailVC.sendOddLink = equmentsModel.reLinkString;
+        
+        oddsDetailVC.sendOddId = [Tools getOddIdFromLink:equmentsModel.reLinkString];
+        
+        [self setHidesBottomBarWhenPushed:YES];
+        
+        [self.navigationController pushViewController:oddsDetailVC animated:YES];
+    }
+}
+
 #pragma mark 列表代理
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -1516,6 +1586,14 @@ const float kCellHeight = 60.0f;
                     
                     [hdImgView sd_setImageWithURL:[NSURL URLWithString:recommendEqumentsModel.reImgString] placeholderImage:[UIImage imageNamed:DEFAULT_WEBPIC_PIC]];
                     
+                    UITapGestureRecognizer *heroImgTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(heroOddsFirstImgTaped:)];
+                    
+                    hdImgView.userInteractionEnabled = YES;
+                    
+                    hdImgView.tag = 369 + i;
+                    
+                    [hdImgView addGestureRecognizer:heroImgTap];
+                    
                     [buttons addObject:hdImgView];
                 }
             }
@@ -1534,6 +1612,14 @@ const float kCellHeight = 60.0f;
                     
                     [hdImgView sd_setImageWithURL:[NSURL URLWithString:recommendEqumentsModel.reImgString] placeholderImage:[UIImage imageNamed:DEFAULT_WEBPIC_PIC]];
                     
+                    UITapGestureRecognizer *heroImgTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(heroOddsSecondImgTaped:)];
+                    
+                    hdImgView.userInteractionEnabled = YES;
+                    
+                    hdImgView.tag = 369 + i;
+                    
+                    [hdImgView addGestureRecognizer:heroImgTap];
+                    
                     [buttons addObject:hdImgView];
                 }
             }
@@ -1551,6 +1637,14 @@ const float kCellHeight = 60.0f;
                     NSLog(@"recommendEqumentsModel.reImgString %@",recommendEqumentsModel.reImgString);
                     
                     [hdImgView sd_setImageWithURL:[NSURL URLWithString:recommendEqumentsModel.reImgString] placeholderImage:[UIImage imageNamed:DEFAULT_WEBPIC_PIC]];
+                    
+                    UITapGestureRecognizer *heroImgTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(heroOddsThirdImgTaped:)];
+                    
+                    hdImgView.userInteractionEnabled = YES;
+                    
+                    hdImgView.tag = 369 + i;
+                    
+                    [hdImgView addGestureRecognizer:heroImgTap];
                     
                     [buttons addObject:hdImgView];
                 }

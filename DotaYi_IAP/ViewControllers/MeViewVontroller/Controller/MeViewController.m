@@ -53,7 +53,7 @@
 {
     if (!self.sendNavigationTitle)
     {
-        self.sendNavigationTitle = @"我";
+        self.sendNavigationTitle = @"战绩";
     }
     
     self.navigationItem.title = self.sendNavigationTitle;

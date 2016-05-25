@@ -38,7 +38,7 @@
     //首页
     MeViewController *meVC = [[MeViewController alloc] init];
     
-    [meVC.tabBarItem setTitle:@"我"];
+    [meVC.tabBarItem setTitle:@"战绩"];
     
     meVC.tabBarItem.image = [[UIImage imageNamed:@"tab_select_1"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
