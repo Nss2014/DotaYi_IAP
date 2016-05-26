@@ -367,6 +367,9 @@
 //绿色
 #define XLS_COLOR_MAIN_GREEN [UIColor colorWithRed:31.0/255.0 green:187.0/255.0 blue:166.0/255.0 alpha:1.0]
 
+//progressView淡绿色背景
+#define XLS_COLOR_BG_LIGHTGREEN [UIColor colorWithRed:148.0/255.0 green:223.0/255.0 blue:213.0/255.0 alpha:1.0]
+
 //系统背景颜色
 #define COLOR_VIEW_BG [Tools colorFromHexCode:@"#F5F5F5"]
 
@@ -400,11 +403,23 @@
  */
 #define SEGMENT_HEIGHT 40
 
+/**
+ *  section 小圆点高度
+ */
+#define SECTION_ROUNDHEIGHT 8
+
 
 /**
  *  英雄背景图宽高比例  320x250
  */
 #define HEROBG_SCALE 25.0/32
+
+
+/**
+ *  跳转appstore应用链接  id需替换
+ */
+#define TURNTO_APPSTORE_LINK @"https://itunes.apple.com/cn/app/yao-dao/id1087677202?l=zh&ls=1&mt=8"
+
 
 #pragma mark - 太平洋游戏网英雄&物品数据接口
 

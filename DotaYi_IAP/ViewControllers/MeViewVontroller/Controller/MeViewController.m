@@ -30,11 +30,6 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    [self initUI];
-    
-    //添加导航搜索按钮
-    [self addNavSearchButton];
 }
 
 - (void)viewDidLoad
@@ -42,6 +37,11 @@
     [super viewDidLoad];
     
     [self initData];
+    
+    [self initUI];
+    
+    //添加导航搜索按钮
+    [self addNavSearchButton];
 }
 
 -(void) initData
@@ -58,24 +58,15 @@
     
     self.navigationItem.title = self.sendNavigationTitle;
     
-    [self addEmptyTipsViewWithTitle:@"请使用11平台账号登录" IsShowButton:YES ButtonTitle:@"请登录"];
+//    [self addEmptyTipsViewWithTitle:@"请使用11平台账号登录" IsShowButton:YES ButtonTitle:@"请登录"];
     
-    BOOL localLoginStatus = [Tools boolForKey:LOCAL_LOGINSTATUS];
+    [self _setUp];
     
-    if (localLoginStatus)
-    {
-        [self _setUp];
-        
-        [self setChildVC];
-        
-        [self _baseConfigs];
-        
-        [self hideEmptyTipView];
-    }
-    else
-    {
-        [self showEmptyTipView];
-    }
+    [self setChildVC];
+    
+    [self _baseConfigs];
+    
+    [self hideEmptyTipView];
 }
 
 -(void) addNavSearchButton
@@ -261,24 +252,24 @@
     
     UINavigationController *loginNavController = [[UINavigationController alloc] initWithRootViewController:loginVC];
     
-    WS(ws);
-    
-    [loginVC refreshBlock:^{
-       
-        [ws hideEmptyTipView];
-        
-        [ws _setUp];
-        
-        [ws setChildVC];
-        
-        [ws _baseConfigs];
-        
-        //获取当前登录的用户ID
-        self.sendUserId = [Tools strForKey:LOGIN_RESPONSE_USERID];
-        
-        [ws addListDataRequestWithUserId];
-        
-    }];
+//    WS(ws);
+//    
+//    [loginVC refreshBlock:^{
+//       
+//        [ws hideEmptyTipView];
+//        
+//        [ws _setUp];
+//        
+//        [ws setChildVC];
+//        
+//        [ws _baseConfigs];
+//        
+//        //获取当前登录的用户ID
+//        self.sendUserId = [Tools strForKey:LOGIN_RESPONSE_USERID];
+//        
+//        [ws addListDataRequestWithUserId];
+//        
+//    }];
     
     [self presentViewController:loginNavController animated:YES completion:nil];
 }

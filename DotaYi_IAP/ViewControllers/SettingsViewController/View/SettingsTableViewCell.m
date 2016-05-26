@@ -173,7 +173,7 @@
     
     self.SS_userNameLabel.textAlignment = NSTextAlignmentCenter;
     
-    self.SS_userNameLabel.font = TEXT16_FONT;
+    self.SS_userNameLabel.font = TEXT16_BOLD_FONT;
     
     self.SS_userNameLabel.textColor = COLOR_TITLE_BLACK;
 }

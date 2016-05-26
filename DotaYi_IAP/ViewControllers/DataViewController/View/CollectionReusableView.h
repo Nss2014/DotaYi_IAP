@@ -10,6 +10,8 @@
 
 @interface CollectionReusableView : UICollectionReusableView
 
+@property (nonatomic,strong) UIView *signRoundView;
+
 @property(strong,nonatomic)UILabel *title;
 
 @end

@@ -59,8 +59,6 @@
     [self envalueSubViews];
     
     [self addTapGestureRecognizer];
-    
-    [self setLeftOnlyTextItem:@"取消"];
 }
 
 -(void) initMyUI
@@ -80,7 +78,7 @@
     [self.login_loginPlatformLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(ws.view.mas_top).offset(PADDING_WIDTH);
         make.centerX.equalTo(ws.view.mas_centerX);
-        make.width.mas_equalTo(SCREEN_WIDTH/4);
+        make.width.mas_equalTo(SCREEN_WIDTH/2);
         make.height.mas_equalTo(SCREEN_WIDTH/4);
     }];
     
@@ -196,9 +194,9 @@
     self.login_loginPlatformLabel.textAlignment = NSTextAlignmentCenter;
     
     
-    //测试代码
-    self.R13_frontView.RF_textField1.text = @"15814036226";
-    self.R13_frontView.RF_textField2.text = @"19900618";
+//    //测试代码
+//    self.R13_frontView.RF_textField1.text = @"15814036226";
+//    self.R13_frontView.RF_textField2.text = @"19900618";
 }
 
 -(void) verifyCOdeImageViewTaped
@@ -349,9 +347,9 @@
                 //使用block回调刷新首页数据
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
-                    _callBackBlock();
+                    AppDelegate *appDe = APPDELEGATE;
                     
-                    [self dismissViewControllerAnimated:YES completion:nil];
+                    [appDe enterMainVC];
                     
                 });
             }
@@ -504,9 +502,9 @@
     return verifyString;
 }
 
--(void) refreshBlock:(CallBackRefreshLoginBlock) callBackblock
-{
-    _callBackBlock = callBackblock;
-}
+//-(void) refreshBlock:(CallBackRefreshLoginBlock) callBackblock
+//{
+//    _callBackBlock = callBackblock;
+//}
 
 @end

@@ -10,8 +10,10 @@
 #import "BEMSimpleLineGraphView.h"
 #import "CustomGridPointView.h"
 #import "JJCTopDataModel.h"
+#import "MJGoodAtHeroModel.h"
+#import "GoodAtHeroTableViewCell.h"
 
-@interface JJCViewController ()<ARSegmentControllerDelegate,BEMSimpleLineGraphDataSource, BEMSimpleLineGraphDelegate>
+@interface JJCViewController ()<ARSegmentControllerDelegate,BEMSimpleLineGraphDataSource, BEMSimpleLineGraphDelegate,KSRefreshViewDelegate>
 
 @property (nonatomic,strong) ThreeGridView *threeGridView1;
 
@@ -25,6 +27,8 @@
 
 @property (nonatomic,strong) JJCTopDataModel *topDataModel;//顶部数据
 
+@property (nonatomic,strong) NSMutableArray *goodHeroDataArray;//擅长英雄数据源
+
 @end
 
 @implementation JJCViewController
@@ -37,7 +41,11 @@
     
     [self initUI];
     
+    //获取积分数据
     [self getListDataRequest];
+    
+    //获取走势图数据及擅长英雄数据
+    [self getTrendAndHeroData];
 }
 
 #pragma mark ARSegmentControllerDelegate
@@ -54,7 +62,9 @@
 
 -(void) initData
 {
-    self.arrayOfValues = [NSMutableArray arrayWithObjects:@"10",@"100",@"1",@"122",@"30",@"80", nil];
+    self.arrayOfValues = [NSMutableArray array];
+    
+    self.goodHeroDataArray = [NSMutableArray array];
 }
 
 -(void) initUI
@@ -68,12 +78,34 @@
     [Tools setExtraCellLineHidden:self.viwTable];
     
     [self addTableViewHeader];
+    
+    self.viwTable.header = [[KSDefaultHeadRefreshView alloc] initWithDelegate:self];
 }
 
 -(void) addTableViewHeader
 {
     //竞技场积分和走势图
-    UIView *headerBgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 120 + SCREEN_WIDTH * 0.62)];
+    UIView *headerBgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 130 + SCREEN_WIDTH * 0.62 + 30 + 40)];
+    
+    UIImageView *topHeadImgView = [[UIImageView alloc] init];
+    
+    [topHeadImgView sd_setImageWithURL:[NSURL URLWithString:@"http://static.7fgame.com/11General/UserIcon/0.jpg"] placeholderImage:[UIImage imageNamed:DEFAULT_USERHEADER_PIC]];
+    
+    topHeadImgView.layer.cornerRadius = 10.0;
+    
+    topHeadImgView.clipsToBounds = YES;
+    
+    [headerBgView addSubview:topHeadImgView];
+    
+    UILabel *topUserNameLabel = [[UILabel alloc] init];
+    
+    topUserNameLabel.text = [Tools strForKey:LOGIN_RESPONSE_USERNAME];
+    
+    topUserNameLabel.font = TEXT14_BOLD_FONT;
+    
+    topUserNameLabel.textColor = COLOR_TITLE_BLACK;
+    
+    [headerBgView addSubview:topUserNameLabel];
     
     self.threeGridView1 = [[ThreeGridView alloc] init];
     
@@ -112,6 +144,38 @@
     self.gridSepLineView.backgroundColor = CLEAR_COLOR;
     
     [headerBgView addSubview:self.gridSepLineView];
+    
+    UILabel *jjcTrendLabel = [[UILabel alloc] init];
+    
+    jjcTrendLabel.text = @"竞技场积分曲线";
+    
+    jjcTrendLabel.font = TEXT14_BOLD_FONT;
+    
+    jjcTrendLabel.textColor = COLOR_TITLE_BLACK;
+    
+    CGSize trendSize = [Tools getAdaptionSizeWithText:@"竞技场积分曲线" AndFont:TEXT14_BOLD_FONT andLabelHeight:30];
+    
+    [headerBgView addSubview:jjcTrendLabel];
+    
+    UILabel *detailJJCTrendLabel = [[UILabel alloc] init];
+    
+    detailJJCTrendLabel.text = @"（显示近3个月竞技场游戏记录）";
+    
+    detailJJCTrendLabel.font = TEXT12_FONT;
+    
+    detailJJCTrendLabel.textColor = COLOR_TITLE_LIGHTGRAY;
+    
+    [headerBgView addSubview:detailJJCTrendLabel];
+    
+    UIView *signColorTrendView = [[UIView alloc] init];
+    
+    signColorTrendView.backgroundColor = XLS_COLOR_MAIN_GREEN;
+    
+    signColorTrendView.layer.cornerRadius = SECTION_ROUNDHEIGHT/2;
+    
+    signColorTrendView.clipsToBounds = YES;
+    
+    [headerBgView addSubview:signColorTrendView];
     
     
     self.myGraph = [[BEMSimpleLineGraphView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.62)];
@@ -170,17 +234,31 @@
     
     WS(ws);
     
+    [topHeadImgView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(headerBgView.mas_left).offset(PADDING_WIDTH);
+        make.top.equalTo(headerBgView.mas_top).offset(PADDING_WIDTH + PADDING_WIDTH/2);
+        make.width.mas_equalTo(20);
+        make.height.mas_equalTo(20);
+    }];
+    
+    [topUserNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(topHeadImgView.mas_right).offset(PADDING_WIDTH/2);
+        make.right.equalTo(headerBgView.mas_right).offset(-PADDING_WIDTH);
+        make.top.equalTo(headerBgView.mas_top).offset(PADDING_WIDTH);
+        make.height.mas_equalTo(30);
+    }];
+    
     [self.threeGridView1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(headerBgView.mas_left);
         make.right.equalTo(headerBgView.mas_right);
-        make.top.equalTo(headerBgView.mas_top).offset(PADDING_WIDTH);
+        make.top.equalTo(topUserNameLabel.mas_bottom);
         make.height.mas_equalTo(50);
     }];
     
     [self.threeGridView2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(ws.threeGridView1.mas_left);
         make.right.equalTo(ws.threeGridView1.mas_right);
-        make.top.equalTo(ws.threeGridView1.mas_bottom);
+        make.top.equalTo(ws.threeGridView1.mas_bottom).offset(PADDING_WIDTH);
         make.height.equalTo(ws.threeGridView1.mas_height);
     }];
     
@@ -191,10 +269,31 @@
         make.height.mas_equalTo(PIXL1_AUTO);
     }];
     
+    [jjcTrendLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(headerBgView.mas_left).offset(PADDING_WIDTH + SECTION_ROUNDHEIGHT + 8);
+        make.top.equalTo(ws.threeGridView2.mas_bottom).offset(PADDING_WIDTH/2);
+        make.width.mas_equalTo(trendSize.width);
+        make.height.mas_equalTo(30);
+    }];
+    
+    [signColorTrendView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(jjcTrendLabel.mas_left).offset(-4);
+        make.centerY.equalTo(jjcTrendLabel.mas_centerY);
+        make.width.mas_equalTo(SECTION_ROUNDHEIGHT);
+        make.height.mas_equalTo(SECTION_ROUNDHEIGHT);
+    }];
+    
+    [detailJJCTrendLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(jjcTrendLabel.mas_right).offset(PADDING_WIDTH/2);
+        make.right.equalTo(headerBgView.mas_right);
+        make.top.equalTo(jjcTrendLabel.mas_top);
+        make.height.equalTo(jjcTrendLabel.mas_height);
+    }];
+    
     [self.myGraph mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(headerBgView.mas_left);
         make.right.equalTo(headerBgView.mas_right);
-        make.top.equalTo(ws.threeGridView2.mas_bottom).offset(PADDING_WIDTH);
+        make.top.equalTo(detailJJCTrendLabel.mas_bottom).offset(PADDING_WIDTH/2);
         make.height.mas_equalTo(SCREEN_WIDTH * 0.62);
     }];
     
@@ -209,7 +308,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return self.goodHeroDataArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -221,26 +320,44 @@
 {
     static NSString *indentifier = @"CellPortrait";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:indentifier];
+    GoodAtHeroTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:indentifier];
     
     if (!cell)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:indentifier];
+        cell = [[GoodAtHeroTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:indentifier];
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
+    
+    MJGoodAtHeroModel *getHeroDataModel = self.goodHeroDataArray[indexPath.row];
+    
+    [cell.goodHeroHeadImageView sd_setImageWithURL:[NSURL URLWithString:[Tools getPlatForm11HeroHeadImgWithHeroId:getHeroDataModel.heroId]] placeholderImage:[UIImage imageNamed:DEFAULT_USERHEADER_PIC]];
+    
+    cell.goodHeroNameLabel.text = getHeroDataModel.heroname;
+    
+    cell.goodHeroTotalUseLabel.text = getHeroDataModel.total;
+    
+    cell.goodHeroPointLabel.text = getHeroDataModel.score;
+    
+    cell.goodHeroWinChanceLabel.text = getHeroDataModel.p_win;
+    
+    NSString *newNormalV = [Tools getStringWithRemovedCharString:getHeroDataModel.p_win andChar:@"%"];
+    
+    CGFloat persentage = (ceil([newNormalV longLongValue]*100) / 100)/100;
+    
+    [cell.goodHeroWinChanceProgressView setProgress:persentage animated:NO];
     
     return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 30;
+    return 50;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView *headerBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 30)];
+    UIView *headerBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 50)];
     
     UILabel *rankOrderLabel = [[UILabel alloc] init];
     
@@ -252,14 +369,123 @@
     
     [headerBackView addSubview:rankOrderLabel];
     
+    UIView *signColorTrendView = [[UIView alloc] init];
+    
+    signColorTrendView.backgroundColor = XLS_COLOR_MAIN_GREEN;
+    
+    signColorTrendView.layer.cornerRadius = SECTION_ROUNDHEIGHT/2;
+    
+    signColorTrendView.clipsToBounds = YES;
+    
+    [headerBackView addSubview:signColorTrendView];
+    
+    UILabel *directHeroImgLabel = [[UILabel alloc] init];
+    
+    directHeroImgLabel.font = TEXT12_BOLD_FONT;
+    
+    directHeroImgLabel.text = @"英雄";
+    
+    directHeroImgLabel.textColor = COLOR_TITLE_BLACK;
+    
+    directHeroImgLabel.textAlignment = NSTextAlignmentCenter;
+    
+    [headerBackView addSubview:directHeroImgLabel];
+    
+    
+    UILabel *directHeroNameLabel = [[UILabel alloc] init];
+    
+    directHeroNameLabel.font = TEXT12_BOLD_FONT;
+    
+    directHeroNameLabel.text = @"英雄名";
+    
+    directHeroNameLabel.textColor = COLOR_TITLE_BLACK;
+    
+    directHeroNameLabel.textAlignment = NSTextAlignmentCenter;
+    
+    [headerBackView addSubview:directHeroNameLabel];
+    
+    UILabel *directHeroWinChanceLabel = [[UILabel alloc] init];
+    
+    directHeroWinChanceLabel.font = TEXT12_BOLD_FONT;
+    
+    directHeroWinChanceLabel.text = @"胜率";
+    
+    directHeroWinChanceLabel.textColor = COLOR_TITLE_BLACK;
+    
+    directHeroWinChanceLabel.textAlignment = NSTextAlignmentCenter;
+    
+    [headerBackView addSubview:directHeroWinChanceLabel];
+    
+    UILabel *directHeroPointLabel = [[UILabel alloc] init];
+    
+    directHeroPointLabel.font = TEXT12_BOLD_FONT;
+    
+    directHeroPointLabel.text = @"积分";
+    
+    directHeroPointLabel.textColor = COLOR_TITLE_BLACK;
+    
+    directHeroPointLabel.textAlignment = NSTextAlignmentCenter;
+    
+    [headerBackView addSubview:directHeroPointLabel];
+    
     [rankOrderLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(headerBackView.mas_left).offset(PADDING_WIDTH);
+        make.left.equalTo(headerBackView.mas_left).offset(PADDING_WIDTH + SECTION_ROUNDHEIGHT + 8);
         make.top.equalTo(headerBackView.mas_top);
-        make.bottom.equalTo(headerBackView.mas_bottom);
+        make.height.mas_equalTo(30);
         make.right.equalTo(headerBackView.mas_right).offset(-PADDING_WIDTH);
     }];
     
+    [signColorTrendView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(rankOrderLabel.mas_left).offset(-4);
+        make.centerY.equalTo(rankOrderLabel.mas_centerY);
+        make.width.mas_equalTo(SECTION_ROUNDHEIGHT);
+        make.height.mas_equalTo(SECTION_ROUNDHEIGHT);
+    }];
+    
+    [directHeroImgLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(headerBackView.mas_left).offset(PADDING_WIDTH);
+        make.top.equalTo(rankOrderLabel.mas_bottom);
+        make.width.mas_equalTo(40);
+        make.height.mas_equalTo(20);
+    }];
+    
+    [directHeroNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(directHeroImgLabel.mas_right).offset(PADDING_WIDTH);
+        make.top.equalTo(directHeroImgLabel.mas_top);
+        make.bottom.equalTo(directHeroImgLabel.mas_bottom);
+        make.width.mas_equalTo((SCREEN_WIDTH - 50 - 40)/5 + PADDING_WIDTH);
+    }];
+    
+    [directHeroWinChanceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(directHeroNameLabel.mas_right).offset(PADDING_WIDTH);
+        make.top.equalTo(directHeroNameLabel.mas_top);
+        make.bottom.equalTo(directHeroNameLabel.mas_bottom);
+        make.width.mas_equalTo((SCREEN_WIDTH - 50 - 40) * 3/5);
+    }];
+    
+    [directHeroPointLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(directHeroWinChanceLabel.mas_right).offset(PADDING_WIDTH);
+        make.top.equalTo(directHeroWinChanceLabel.mas_top);
+        make.bottom.equalTo(directHeroWinChanceLabel.mas_bottom);
+        make.width.mas_equalTo((SCREEN_WIDTH - 50 - 40)/5 - PADDING_WIDTH);
+    }];
+    
     return headerBackView;
+}
+
+//uitableview处理section的不悬浮，禁止section停留的方法，主要是这段代码
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat sectionHeaderHeight = 50;
+    
+    if (scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0)
+    {
+        scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
+        
+    } else if (scrollView.contentOffset.y>=sectionHeaderHeight)
+    {
+        scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
+    }
 }
 
 
@@ -294,6 +520,8 @@
 
 -(void) getListDataCallBack:(NSDictionary *) responseDic
 {
+    [self.viwTable headerFinishedLoading];
+    
     if (responseDic && ![responseDic isKindOfClass:[NSNull class]])
     {
         NSNumber *responseRet = responseDic[@"error"];
@@ -334,6 +562,70 @@
     }
 }
 
+-(void) getTrendAndHeroData
+{
+    NSString *urlString = @"http://score.5211game.com/RecordCenter/request/record";
+    
+    NSString *body = [NSString stringWithFormat:@"method=ladderheros&u=%@&t=10032",[Tools strForKey:LOGIN_RESPONSE_USERID]];
+    
+    [Tools platform11PostRequest:urlString ParamsBody:body target:self action:@selector(getTrendHeroDataCallBack:)];
+}
+
+-(void) getTrendHeroDataCallBack:(NSDictionary *) responseDic
+{
+    [self.viwTable headerFinishedLoading];
+    
+    if (responseDic && ![responseDic isKindOfClass:[NSNull class]])
+    {
+        NSNumber *responseRet = responseDic[@"error"];
+        
+        if ([responseRet isEqualToNumber:[NSNumber numberWithInteger:0]])
+        {
+            //请求成功
+            NSArray *getTrendArray = responseDic[@"heroRoadInfos"];
+            
+            [self.arrayOfValues removeAllObjects];
+            
+            [self.arrayOfValues addObjectsFromArray:getTrendArray];
+            
+            //将一个字典数组转成模型数组
+            NSArray *getJJCGoodHeroArray = [MJGoodAtHeroModel mj_objectArrayWithKeyValuesArray:responseDic[@"ratingHeros"]];
+            
+            [self.goodHeroDataArray removeAllObjects];
+            
+            [self.goodHeroDataArray addObjectsFromArray:getJJCGoodHeroArray];
+            
+            WS(ws);
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [ws.myGraph reloadGraph];
+                
+                [ws.viwTable reloadData];
+            });
+            
+        }
+    }
+    else
+    {
+        
+    }
+}
+
+#pragma mark - KSRefreshViewDelegate
+- (void)refreshViewDidLoading:(id)view
+{
+    if ([view isEqual:self.viwTable.header])
+    {
+        //获取积分数据
+        [self getListDataRequest];
+        
+        //获取走势图数据及擅长英雄数据
+        [self getTrendAndHeroData];
+        
+        return;
+    }
+}
 
 //5.17号下午18:00 获取的Cookie
 //uToken=CF003EBCE506CB81FF46583AABD756C775A948C8B2A4E4D0FCB1877E9F0C3427B4A5913A2011655870C89362B5EFCC0891E367BD7A9335847443F7F0898923A9276DBA5CFF2CFCDCE7FA3AAE61DA7AFD7CE4C5A977AB0B0E7D9FB554BEC9B1AAABD6C9A0BE1D6FD24887CF6AD2995AA876D052D6713826863A127774A877266BC4ABB1B12E0B259BDE049F4EFF4EA6A505D7E4456EE285E6071F9EF1A1C08099ED1319C01F0AA5EEDC5B84FC0B4CA58164592BDD00CE484B092AB19C56A8825068CC7373F8EF831F49C6E7FFD749FA7BA7F1DC3CFB261629180C069AB34147849E7AA28FB1237939C4011F2E1BE5E11C;

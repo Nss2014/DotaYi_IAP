@@ -10,8 +10,9 @@
 #import "CustomGridPointView.h"
 #import "JJCTopDataModel.h"
 #import "MJGoodAtHeroModel.h"
+#import "GoodAtHeroTableViewCell.h"
 
-@interface MJViewController ()<ARSegmentControllerDelegate>
+@interface MJViewController ()<ARSegmentControllerDelegate,KSRefreshViewDelegate>
 
 @property (nonatomic,strong) ThreeGridView *threeGridView1;
 
@@ -66,12 +67,34 @@
     [Tools setExtraCellLineHidden:self.viwTable];
     
     [self addTableViewHeader];
+    
+    self.viwTable.header = [[KSDefaultHeadRefreshView alloc] initWithDelegate:self];
 }
 
 -(void) addTableViewHeader
 {
     //竞技场积分和走势图
-    UIView *headerBgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 120)];
+    UIView *headerBgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 130 + 30)];
+    
+    UIImageView *topHeadImgView = [[UIImageView alloc] init];
+    
+    [topHeadImgView sd_setImageWithURL:[NSURL URLWithString:@"http://static.7fgame.com/11General/UserIcon/0.jpg"] placeholderImage:[UIImage imageNamed:DEFAULT_USERHEADER_PIC]];
+    
+    topHeadImgView.layer.cornerRadius = 10.0;
+    
+    topHeadImgView.clipsToBounds = YES;
+    
+    [headerBgView addSubview:topHeadImgView];
+    
+    UILabel *topUserNameLabel = [[UILabel alloc] init];
+    
+    topUserNameLabel.text = [Tools strForKey:LOGIN_RESPONSE_USERNAME];
+    
+    topUserNameLabel.font = TEXT14_BOLD_FONT;
+    
+    topUserNameLabel.textColor = COLOR_TITLE_BLACK;
+    
+    [headerBgView addSubview:topUserNameLabel];
     
     self.threeGridView1 = [[ThreeGridView alloc] init];
     
@@ -111,20 +134,33 @@
     
     [headerBgView addSubview:self.gridSepLineView];
     
-    
     WS(ws);
+    
+    [topHeadImgView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(headerBgView.mas_left).offset(PADDING_WIDTH);
+        make.top.equalTo(headerBgView.mas_top).offset(PADDING_WIDTH + PADDING_WIDTH/2);
+        make.width.mas_equalTo(20);
+        make.height.mas_equalTo(20);
+    }];
+    
+    [topUserNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(topHeadImgView.mas_right).offset(PADDING_WIDTH/2);
+        make.right.equalTo(headerBgView.mas_right).offset(-PADDING_WIDTH);
+        make.top.equalTo(headerBgView.mas_top).offset(PADDING_WIDTH);
+        make.height.mas_equalTo(30);
+    }];
     
     [self.threeGridView1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(headerBgView.mas_left);
         make.right.equalTo(headerBgView.mas_right);
-        make.top.equalTo(headerBgView.mas_top).offset(PADDING_WIDTH);
+        make.top.equalTo(topUserNameLabel.mas_bottom);
         make.height.mas_equalTo(50);
     }];
     
     [self.threeGridView2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(ws.threeGridView1.mas_left);
         make.right.equalTo(ws.threeGridView1.mas_right);
-        make.top.equalTo(ws.threeGridView1.mas_bottom);
+        make.top.equalTo(ws.threeGridView1.mas_bottom).offset(PADDING_WIDTH);
         make.height.equalTo(ws.threeGridView1.mas_height);
     }];
     
@@ -146,7 +182,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return self.goodHeroListArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -158,26 +194,44 @@
 {
     static NSString *indentifier = @"CellPortrait";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:indentifier];
+    GoodAtHeroTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:indentifier];
     
     if (!cell)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:indentifier];
+        cell = [[GoodAtHeroTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:indentifier];
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
+    
+    MJGoodAtHeroModel *getHeroDataModel = self.goodHeroListArray[indexPath.row];
+    
+    [cell.goodHeroHeadImageView sd_setImageWithURL:[NSURL URLWithString:[Tools getPlatForm11HeroHeadImgWithHeroId:getHeroDataModel.heroId]] placeholderImage:[UIImage imageNamed:DEFAULT_USERHEADER_PIC]];
+    
+    cell.goodHeroNameLabel.text = getHeroDataModel.heroname;
+    
+    cell.goodHeroTotalUseLabel.text = getHeroDataModel.total;
+    
+    cell.goodHeroPointLabel.text = getHeroDataModel.score;
+    
+    cell.goodHeroWinChanceLabel.text = getHeroDataModel.p_win;
+    
+    NSString *newNormalV = [Tools getStringWithRemovedCharString:getHeroDataModel.p_win andChar:@"%"];
+    
+    CGFloat persentage = (ceil([newNormalV longLongValue]*100) / 100)/100;
+    
+    [cell.goodHeroWinChanceProgressView setProgress:persentage animated:NO];
     
     return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 30;
+    return 50;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView *headerBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 30)];
+    UIView *headerBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 50)];
     
     UILabel *rankOrderLabel = [[UILabel alloc] init];
     
@@ -189,11 +243,105 @@
     
     [headerBackView addSubview:rankOrderLabel];
     
+    UIView *signColorTrendView = [[UIView alloc] init];
+    
+    signColorTrendView.backgroundColor = XLS_COLOR_MAIN_GREEN;
+    
+    signColorTrendView.layer.cornerRadius = SECTION_ROUNDHEIGHT/2;
+    
+    signColorTrendView.clipsToBounds = YES;
+    
+    [headerBackView addSubview:signColorTrendView];
+    
+    UILabel *directHeroImgLabel = [[UILabel alloc] init];
+    
+    directHeroImgLabel.font = TEXT12_BOLD_FONT;
+    
+    directHeroImgLabel.text = @"英雄";
+    
+    directHeroImgLabel.textColor = COLOR_TITLE_BLACK;
+    
+    directHeroImgLabel.textAlignment = NSTextAlignmentCenter;
+    
+    [headerBackView addSubview:directHeroImgLabel];
+    
+    
+    UILabel *directHeroNameLabel = [[UILabel alloc] init];
+    
+    directHeroNameLabel.font = TEXT12_BOLD_FONT;
+    
+    directHeroNameLabel.text = @"英雄名";
+    
+    directHeroNameLabel.textColor = COLOR_TITLE_BLACK;
+    
+    directHeroNameLabel.textAlignment = NSTextAlignmentCenter;
+    
+    [headerBackView addSubview:directHeroNameLabel];
+    
+    UILabel *directHeroWinChanceLabel = [[UILabel alloc] init];
+    
+    directHeroWinChanceLabel.font = TEXT12_BOLD_FONT;
+    
+    directHeroWinChanceLabel.text = @"胜率";
+    
+    directHeroWinChanceLabel.textColor = COLOR_TITLE_BLACK;
+    
+    directHeroWinChanceLabel.textAlignment = NSTextAlignmentCenter;
+    
+    [headerBackView addSubview:directHeroWinChanceLabel];
+    
+    UILabel *directHeroPointLabel = [[UILabel alloc] init];
+    
+    directHeroPointLabel.font = TEXT12_BOLD_FONT;
+    
+    directHeroPointLabel.text = @"MVP";
+    
+    directHeroPointLabel.textColor = COLOR_TITLE_BLACK;
+    
+    directHeroPointLabel.textAlignment = NSTextAlignmentCenter;
+    
+    [headerBackView addSubview:directHeroPointLabel];
+    
     [rankOrderLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(headerBackView.mas_left).offset(PADDING_WIDTH);
+        make.left.equalTo(headerBackView.mas_left).offset(PADDING_WIDTH + SECTION_ROUNDHEIGHT + 8);
         make.top.equalTo(headerBackView.mas_top);
-        make.bottom.equalTo(headerBackView.mas_bottom);
+        make.height.mas_equalTo(30);
         make.right.equalTo(headerBackView.mas_right).offset(-PADDING_WIDTH);
+    }];
+    
+    [signColorTrendView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(rankOrderLabel.mas_left).offset(-4);
+        make.centerY.equalTo(rankOrderLabel.mas_centerY);
+        make.width.mas_equalTo(SECTION_ROUNDHEIGHT);
+        make.height.mas_equalTo(SECTION_ROUNDHEIGHT);
+    }];
+    
+    [directHeroImgLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(headerBackView.mas_left).offset(PADDING_WIDTH);
+        make.top.equalTo(rankOrderLabel.mas_bottom);
+        make.width.mas_equalTo(40);
+        make.height.mas_equalTo(20);
+    }];
+    
+    [directHeroNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(directHeroImgLabel.mas_right).offset(PADDING_WIDTH);
+        make.top.equalTo(directHeroImgLabel.mas_top);
+        make.bottom.equalTo(directHeroImgLabel.mas_bottom);
+        make.width.mas_equalTo((SCREEN_WIDTH - 50 - 40)/5 + PADDING_WIDTH);
+    }];
+    
+    [directHeroWinChanceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(directHeroNameLabel.mas_right).offset(PADDING_WIDTH);
+        make.top.equalTo(directHeroNameLabel.mas_top);
+        make.bottom.equalTo(directHeroNameLabel.mas_bottom);
+        make.width.mas_equalTo((SCREEN_WIDTH - 50 - 40) * 3/5);
+    }];
+    
+    [directHeroPointLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(directHeroWinChanceLabel.mas_right).offset(PADDING_WIDTH);
+        make.top.equalTo(directHeroWinChanceLabel.mas_top);
+        make.bottom.equalTo(directHeroWinChanceLabel.mas_bottom);
+        make.width.mas_equalTo((SCREEN_WIDTH - 50 - 40)/5 - PADDING_WIDTH);
     }];
     
     return headerBackView;
@@ -210,6 +358,8 @@
 
 -(void) getListDataCallBack:(NSDictionary *) responseDic
 {
+    [self.viwTable headerFinishedLoading];
+    
     if (responseDic && ![responseDic isKindOfClass:[NSNull class]])
     {
         NSNumber *responseRet = responseDic[@"error"];
@@ -237,12 +387,46 @@
             
             [self.goodHeroListArray removeAllObjects];
             
-            [self.goodHeroListArray addObjectsFromArray:getMjGoodHeroArray];   
+            [self.goodHeroListArray addObjectsFromArray:getMjGoodHeroArray];
+            
+            WS(ws);
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [ws.viwTable reloadData];
+            });
         }
     }
     else
     {
         CoreSVPError(@"请求失败，请重试", nil);
+    }
+}
+
+//uitableview处理section的不悬浮，禁止section停留的方法，主要是这段代码
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat sectionHeaderHeight = 50;
+    
+    if (scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0)
+    {
+        scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
+        
+    } else if (scrollView.contentOffset.y>=sectionHeaderHeight)
+    {
+        scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
+    }
+}
+
+#pragma mark - KSRefreshViewDelegate
+- (void)refreshViewDidLoading:(id)view
+{
+    if ([view isEqual:self.viwTable.header])
+    {
+        //获取积分数据
+        [self getListDataRequest];
+        
+        return;
     }
 }
 

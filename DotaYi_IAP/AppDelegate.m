@@ -11,6 +11,12 @@
 #import "MobClick.h"
 #import "UMessage.h"
 #import "LoginViewController.h"
+#import "UMOpus.h"
+#import "UMSocial.h"
+#import "UMSocialWechatHandler.h"
+#import "UMSocialQQHandler.h"
+#import "UMFeedbackViewController.h"
+#import "UMFeedback.h"
 
 #define IOS_7_OR_LATER    ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
 #define IOS_8_OR_LATER    ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
@@ -59,6 +65,32 @@
     
     [MobClick updateOnlineConfig];  //在线参数配置
     
+    //分享
+    [UMSocialData openLog:NO];
+    
+    [UMSocialData setAppKey:UMENG_APPKEY];
+    
+    [UMSocialWechatHandler setWXAppId:kWechatAppID appSecret:kWechatAppSecret url:kWeiJuJuMainURI];
+    
+    [UMSocialQQHandler setQQWithAppId:kQQAppID appKey:kQQAppKey url:kWeiJuJuMainURI];
+    
+    //新浪微博  URL需要与微博后台填写一致
+//    [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:kSinaAppKey
+//                                              secret:kSinaAppSecret
+//                                         RedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
+    
+    //由于苹果审核政策需求，建议大家对未安装客户端平台进行隐藏，在设置QQ、微信AppID之后调用下面的方法，
+    [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToQQ,UMShareToQzone,UMShareToWechatSession,UMShareToWechatTimeline]];
+    
+    //打开语音输入  需要AVfoundation.framework
+    [UMOpus setAudioEnable:YES];
+    
+    [UMFeedback setAppkey:UMENG_APPKEY];
+    
+    [UMFeedback setLogEnabled:NO];
+    
+    [[UMFeedback sharedInstance] setFeedbackViewController:[UMFeedback feedbackViewController] shouldPush:YES];
+    
 }
 
 -(void) initRootViewController
@@ -72,14 +104,21 @@
     //若本地Cookie不为空 则认为该用户的状态不失效
     if ([Tools strForKey:LOGIN_COOKIE] != nil && ![[Tools strForKey:LOGIN_COOKIE] isKindOfClass:[NSNull class]])
     {
-        [Tools setBool:YES key:LOCAL_LOGINSTATUS];
+        if ([Tools boolForKey:LOCAL_LOGINSTATUS])
+        {
+            [self enterMainVC];
+        }
+        else
+        {
+            [self enterLoginVC];
+        }
     }
     else
     {
         [Tools setBool:NO key:LOCAL_LOGINSTATUS];
+        
+        [self enterLoginVC];
     }
-    
-    [self enterMainVC];
 }
 
 -(void) handleNavigationBar

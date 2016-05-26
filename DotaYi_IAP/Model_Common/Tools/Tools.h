@@ -72,6 +72,11 @@
 
 + (NSString *) getOddIdFromLink:(NSString *) theLink;
 
++(NSString *) getPlatForm11HeroHeadImgWithHeroId:(NSString *) aHeroId;
+
++(NSString *) getStringWithRemovedCharString:(NSString *)sendString  andChar:(NSString *)charString;
+
++(BOOL) IsHaveStringIn :(NSString*) wholeString findString:(NSString*) keyString;
 
 @end
 

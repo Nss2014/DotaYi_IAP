@@ -16,5 +16,7 @@
 
 -(void) enterMainVC;
 
+-(void) enterLoginVC;
+
 @end
 

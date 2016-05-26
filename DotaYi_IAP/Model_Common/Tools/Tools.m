@@ -373,6 +373,27 @@ NSString *const NewFeatureVersionKey = @"NewFeatureVersionKey";
     return getbool;
 }
 
++(BOOL) IsHaveStringIn :(NSString*) wholeString findString:(NSString*) keyString
+{
+    
+    NSLog(@"wholeString %@  keyString %@",wholeString,keyString);
+    
+    if(!wholeString || !keyString)
+    {
+        return NO;
+    }
+    NSRange range = [wholeString rangeOfString:keyString];//判断字符串是否包含
+    if (range.location ==NSNotFound)//不包含
+    {
+        return NO;
+    }
+    else
+    {
+        return  YES;
+    }
+    return NO;
+}
+
 // 是否应该显示版本新特性页面
 + (BOOL)canShowNewFeature
 {
@@ -713,6 +734,34 @@ NSString *const NewFeatureVersionKey = @"NewFeatureVersionKey";
     }
     
     return getHeroId;
+}
+
+//11平台 用英雄id获取英雄头像  链接拼接
++(NSString *) getPlatForm11HeroHeadImgWithHeroId:(NSString *) aHeroId
+{
+    return [NSString stringWithFormat:@"http://static.7fgame.com/11score/RecordCenter/img/dota/hero/%@.jpg",aHeroId];
+}
+
+//去除字符串中某个字符后得到新的字符串
++(NSString *) getStringWithRemovedCharString:(NSString *)sendString  andChar:(NSString *)charString
+{
+    NSCharacterSet *characterSet1 = [NSCharacterSet characterSetWithCharactersInString:charString];
+    
+    NSArray *array1 = [sendString componentsSeparatedByCharactersInSet:characterSet1];
+    
+    __block NSMutableString *finalStr = [[NSMutableString alloc] init];
+    
+    [array1 enumerateObjectsUsingBlock:^(id  __nonnull obj, NSUInteger idx, BOOL * __nonnull stop) {
+        
+        NSString *subString = (NSString *)obj;
+        if (subString)
+        {
+            [finalStr appendString:subString];
+        }
+        
+    }];
+    
+    return finalStr;
 }
 
 
