@@ -27,7 +27,7 @@
 {
     self = [super init];
     if (self) {
-        self.arrowImageView       = [[UIImageView alloc] initWithFrame:CGRectMake(KS_SCREEN_WIDTH/3 + 10, (KSRefreshView_Height - 40) / 2, 18, 36)];
+        self.arrowImageView       = [[UIImageView alloc] initWithFrame:CGRectMake(KS_SCREEN_WIDTH/3 + 10, (KSRefreshView_Height - 40) / 2, 15, 40)];
         self.arrowImageView.image = [UIImage imageNamed:@"KSRefresh.bundle/arrow.png"];
         
         self.arrowImageView.center = CGPointMake(SCREEN_WIDTH/2 - 9 - 20, self.arrowImageView.center.y);

@@ -507,28 +507,39 @@ const CGFloat kMessagesInputToolbarHeightDefault = 44.0f;
     [super viewWillAppear:animated];
     //    NSLog(@"topic and replies count: %d", self.topicAndReplies.count);
     
-    self.feedback.delegate = self;
-    self.mTableView.delegate = self;
-    [self refreshData];
-    [self scrollToBottomAnimated:YES];
-    self.previousBarStyle = self.navigationController.navigationBar.barStyle;
-    self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
+    WS(ws);
     
-    
-    self.inputToolBar.contactInfo = [self mutableDeepCopy:[[UMFeedback sharedInstance] getUserInfo]];
-    self.infoLabel.text = [NSString stringWithFormat:UM_Local(@"QQ: %@ Phone: %@ \nEmail: %@ Other: %@"),
-                           [self.inputToolBar.contactInfo valueForKeyPath:@"contact.qq"],
-                           [self.inputToolBar.contactInfo valueForKeyPath:@"contact.phone"],
-                           [self.inputToolBar.contactInfo valueForKeyPath:@"contact.email"],
-                           [self.inputToolBar.contactInfo valueForKeyPath:@"contact.plain"]];
-    
-    self.inputToolBar.inputTextView.text = @"";
-    
-    UIEdgeInsets insets = self.mTableView.contentInset;
-    insets.bottom = 0;
-    self.mTableView.contentInset = insets;
-    [self.view endEditing:YES];
-    [self updateLayoutWithOrientation:self.interfaceOrientation];
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        
+        ws.feedback.delegate = self;
+        ws.mTableView.delegate = self;
+        [ws refreshData];
+        
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            
+            [ws scrollToBottomAnimated:YES];
+            ws.previousBarStyle = ws.navigationController.navigationBar.barStyle;
+            ws.navigationController.navigationBar.barStyle = UIBarStyleDefault;
+            
+            
+            ws.inputToolBar.contactInfo = [ws mutableDeepCopy:[[UMFeedback sharedInstance] getUserInfo]];
+            ws.infoLabel.text = [NSString stringWithFormat:UM_Local(@"QQ: %@ Phone: %@ \nEmail: %@ Other: %@"),
+                                   [ws.inputToolBar.contactInfo valueForKeyPath:@"contact.qq"],
+                                   [ws.inputToolBar.contactInfo valueForKeyPath:@"contact.phone"],
+                                   [ws.inputToolBar.contactInfo valueForKeyPath:@"contact.email"],
+                                   [ws.inputToolBar.contactInfo valueForKeyPath:@"contact.plain"]];
+            
+            ws.inputToolBar.inputTextView.text = @"";
+            
+            UIEdgeInsets insets = ws.mTableView.contentInset;
+            insets.bottom = 0;
+            ws.mTableView.contentInset = insets;
+            [ws.view endEditing:YES];
+            [ws updateLayoutWithOrientation:ws.interfaceOrientation];
+            
+        });
+    });
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {

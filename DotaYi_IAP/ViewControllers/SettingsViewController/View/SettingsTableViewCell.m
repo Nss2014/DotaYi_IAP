@@ -173,9 +173,48 @@
     
     self.SS_userNameLabel.textAlignment = NSTextAlignmentCenter;
     
-    self.SS_userNameLabel.font = TEXT16_BOLD_FONT;
+    self.SS_userNameLabel.font = TEXT18_BOLD_FONT;
     
-    self.SS_userNameLabel.textColor = COLOR_TITLE_BLACK;
+    self.SS_userNameLabel.textColor = XLS_COLOR_MAIN_GREEN;
+}
+
+@end
+
+@implementation SettingSection2Cell
+
+-(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    
+    if (self)
+    {
+        self.S2_logoutButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        
+        self.S2_logoutButton.titleLabel.font = TEXT18_BOLD_FONT;
+        
+        [self.S2_logoutButton setTitle:@"退出登录" forState:UIControlStateNormal];
+        
+        [self.S2_logoutButton setTitleColor:XLS_COLOR_MAIN_GREEN forState:UIControlStateNormal];
+        
+        self.S2_logoutButton.layer.borderWidth = PIXL1_AUTO;
+        
+        self.S2_logoutButton.layer.borderColor = SEPRATELINE_GRAYCOLOR.CGColor;
+        
+        [self.contentView addSubview:self.S2_logoutButton];
+        
+        CGFloat padding = 10;
+        
+        WS(ws);
+        
+        [self.S2_logoutButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(ws.contentView.mas_left).offset(padding);
+            make.top.equalTo(ws.contentView.mas_top).offset(padding/2);
+            make.bottom.equalTo(ws.contentView.mas_bottom).offset(-padding/2);
+            make.right.equalTo(ws.contentView.mas_right).offset(-padding);
+        }];
+        
+    }
+    return self;
 }
 
 @end

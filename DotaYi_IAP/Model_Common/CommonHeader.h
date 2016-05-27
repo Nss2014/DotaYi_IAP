@@ -29,10 +29,6 @@
 
 #define TABBAR_HEIGHT 49
 
-/* -------------------花儿好看第三方平台Key--------------------*/
-
-#define UMENG_APPKEY @"56f3935567e58e84a9001450"// 免费证书版本
-
 #define kWeiJuJuMainURI @"http://www.weijuju.com"
 
 #define kAPPMainURI @"http://app.mobile.weijuju.com/weshare/shareArticle"
@@ -120,7 +116,7 @@
 #define WAIT_NUMBER 60
 
 //首页横向gridview数量
-#define COUNTPERCELL 4
+#define COUNTPERCELL 3
 
 //黄金分割比例
 #define GOLDENSEPARATE_SCALE 0.62
@@ -373,7 +369,7 @@
 //系统背景颜色
 #define COLOR_VIEW_BG [Tools colorFromHexCode:@"#F5F5F5"]
 
-#pragma mark - 花儿好看后台接口-------------------------------------------
+
 
 //版本号
 #define APPLICATION_VERSIN @"1.0"
@@ -381,6 +377,12 @@
 #define APP_HKBG_PLATFORM @"haokanbg"
 
 #define APP_HKBG_DEV @"ios"
+
+/**
+ *  妖刀 友盟key
+ */
+#define UMENG_APPKEY @"5747c17967e58e3a8a0000f6"
+
 
 /**
  *  默认加载图 200x200

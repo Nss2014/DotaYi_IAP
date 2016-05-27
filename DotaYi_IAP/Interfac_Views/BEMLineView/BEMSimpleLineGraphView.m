@@ -287,7 +287,7 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
         if ([self.delegate respondsToSelector:@selector(noDataLabelTextForLineGraph:)]) {
             noDataText = [self.delegate noDataLabelTextForLineGraph:self];
         }
-        self.noDataLabel.text = noDataText ?: NSLocalizedString(@"No Data", nil);
+        self.noDataLabel.text = noDataText ?: NSLocalizedString(@"无数据", nil);
 #else
         self.noDataLabel.text = @"Data is not loaded in Interface Builder";
 #endif

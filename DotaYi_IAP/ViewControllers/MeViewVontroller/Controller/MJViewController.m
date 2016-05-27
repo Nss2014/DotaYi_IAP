@@ -209,9 +209,9 @@
     
     cell.goodHeroNameLabel.text = getHeroDataModel.heroname;
     
-    cell.goodHeroTotalUseLabel.text = getHeroDataModel.total;
+    cell.goodHeroTotalUseLabel.text = [NSString stringWithFormat:@"%@",getHeroDataModel.total];
     
-    cell.goodHeroPointLabel.text = getHeroDataModel.score;
+    cell.goodHeroPointLabel.text = [NSString stringWithFormat:@"%@",getHeroDataModel.cscore];
     
     cell.goodHeroWinChanceLabel.text = getHeroDataModel.p_win;
     
@@ -294,7 +294,7 @@
     
     directHeroPointLabel.font = TEXT12_BOLD_FONT;
     
-    directHeroPointLabel.text = @"MVP";
+    directHeroPointLabel.text = @"积分";
     
     directHeroPointLabel.textColor = COLOR_TITLE_BLACK;
     
@@ -385,10 +385,15 @@
             //将一个字典数组转成模型数组
             NSArray *getMjGoodHeroArray = [MJGoodAtHeroModel mj_objectArrayWithKeyValuesArray:responseDic[@"mjheroInfos"]];
             
+            NSLog(@"getMjGoodHeroArray %ld",getMjGoodHeroArray.count);
+            
+            //排序
+            NSArray *getSortedArray = [Tools changeArray:getMjGoodHeroArray orderWithKey:@"cscore" ascending:NO];
+            
             [self.goodHeroListArray removeAllObjects];
             
-            [self.goodHeroListArray addObjectsFromArray:getMjGoodHeroArray];
-            
+            [self.goodHeroListArray addObjectsFromArray:getSortedArray];
+    
             WS(ws);
             
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -429,6 +434,5 @@
         return;
     }
 }
-
 
 @end

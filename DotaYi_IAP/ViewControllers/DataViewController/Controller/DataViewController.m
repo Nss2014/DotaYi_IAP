@@ -43,6 +43,8 @@
     self.viwTable.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - NAV_HEIGHT);
     
     [Tools setExtraCellLineHidden:self.viwTable];
+    
+    self.viwTable.scrollEnabled = NO;
 }
 
 -(void) cellGridViewFirstTaped:(UITapGestureRecognizer *) sender

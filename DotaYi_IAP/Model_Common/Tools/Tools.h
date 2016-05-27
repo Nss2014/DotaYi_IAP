@@ -78,5 +78,7 @@
 
 +(BOOL) IsHaveStringIn :(NSString*) wholeString findString:(NSString*) keyString;
 
++(NSArray *) changeArray:(NSArray *)dicArray orderWithKey:(NSString *)key ascending:(BOOL)yesOrNo;
+
 @end
 

@@ -131,15 +131,19 @@
     
     self.RF_textField1.keyboardType = UIKeyboardTypeNumberPad;
     
-    [self.RF_doneButton setTitleColor:WHITE_COLOR forState:UIControlStateNormal];
+    self.RF_doneButton.titleLabel.font = TEXT18_BOLD_FONT;
     
-    self.RF_doneButton.titleLabel.font = TEXT18_FONT;
+    [self.RF_doneButton setTitleColor:XLS_COLOR_MAIN_GREEN forState:UIControlStateNormal];
     
-    self.RF_doneButton.backgroundColor = XLS_COLOR_MAIN_GRAY;
+    self.RF_doneButton.layer.borderWidth = PIXL1_AUTO;
     
-    self.RF_doneButton.layer.cornerRadius = CORNERRADIUS_BUTTON;
+    self.RF_doneButton.layer.borderColor = SEPRATELINE_GRAYCOLOR.CGColor;
     
-    self.RF_doneButton.clipsToBounds = YES;
+//    self.RF_doneButton.backgroundColor = XLS_COLOR_MAIN_GREEN;
+    
+//    self.RF_doneButton.layer.cornerRadius = CORNERRADIUS_BUTTON;
+    
+//    self.RF_doneButton.clipsToBounds = YES;
 }
 
 #pragma mark - Setters

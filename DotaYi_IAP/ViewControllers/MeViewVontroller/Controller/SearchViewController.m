@@ -22,13 +22,27 @@
 
 @implementation SearchViewController
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self.searchBar becomeFirstResponder];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    [self initData];
+    WS(ws);
     
-    [self initUI];
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        
+        [ws initData];
+        
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            
+            [ws initUI];
+            
+        });
+    });
 }
 
 -(void) initData
@@ -122,8 +136,6 @@
         
         
         [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setTextColor:COLOR_TITLE_BLACK];
-        
-        [self.searchBar becomeFirstResponder];
     }
 }
 

@@ -764,5 +764,31 @@ NSString *const NewFeatureVersionKey = @"NewFeatureVersionKey";
     return finalStr;
 }
 
+/*
+**  数组对象按照某个key排序
+ 
+    参数说明：
+ 
+    dicArray：待排序的NSMutableArray。
+ 
+    key：按照排序的key。
+ 
+    yesOrNo：升序或降序排列，yes为升序，no为降序。
+ */
+
++(NSArray *) changeArray:(NSArray *)dicArray orderWithKey:(NSString *)key ascending:(BOOL)yesOrNo
+{
+    NSSortDescriptor *distanceDescriptor = [[NSSortDescriptor alloc] initWithKey:key
+                                                                       ascending:yesOrNo];
+    
+    NSArray *descriptors = [NSArray arrayWithObjects:distanceDescriptor,nil];
+    
+    NSArray *resultArray = [dicArray sortedArrayUsingDescriptors:descriptors];
+    
+//    [dicArray sortUsingDescriptors:descriptors];
+    
+    return resultArray;
+}
+
 
 @end

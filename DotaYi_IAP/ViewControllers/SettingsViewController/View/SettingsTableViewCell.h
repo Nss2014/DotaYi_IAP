@@ -33,3 +33,11 @@
 @property (nonatomic,strong) UILabel *SS_userNameLabel;
 
 @end
+
+@interface SettingSection2Cell : UITableViewCell
+
+@property (nonatomic,strong) UIView *S2_backGroundView;
+
+@property (nonatomic,strong) UIButton *S2_logoutButton;
+
+@end

@@ -215,6 +215,7 @@
 		07AC6C8A1CC0D4D90030B298 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 07AC6C891CC0D4D90030B298 /* libxml2.tbd */; };
 		07AC6C8C1CC0D4E00030B298 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 07AC6C8B1CC0D4E00030B298 /* libstdc++.tbd */; };
 		07AD6AE21CE31F4700D0D537 /* OddsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07AD6AE11CE31F4700D0D537 /* OddsDetailViewController.m */; };
+		07B545EE1CF843A200366E96 /* Platform11HeroDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07B545ED1CF843A200366E96 /* Platform11HeroDetailViewController.m */; };
 		07C273521CEEFBEB0093FDAC /* webBgPic_default.png in Resources */ = {isa = PBXBuildFile; fileRef = 07C273511CEEFBEB0093FDAC /* webBgPic_default.png */; };
 		07D7B7961CDAED63005E8FB0 /* CollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07D7B7931CDAED63005E8FB0 /* CollectionReusableView.m */; };
 		07D7B7971CDAED63005E8FB0 /* CollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 07D7B7951CDAED63005E8FB0 /* CollectionViewCell.m */; };
@@ -717,6 +718,8 @@
 		07AC6C8B1CC0D4E00030B298 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
 		07AD6AE01CE31F4700D0D537 /* OddsDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OddsDetailViewController.h; sourceTree = "<group>"; };
 		07AD6AE11CE31F4700D0D537 /* OddsDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OddsDetailViewController.m; sourceTree = "<group>"; };
+		07B545EC1CF843A200366E96 /* Platform11HeroDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Platform11HeroDetailViewController.h; sourceTree = "<group>"; };
+		07B545ED1CF843A200366E96 /* Platform11HeroDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Platform11HeroDetailViewController.m; sourceTree = "<group>"; };
 		07C273511CEEFBEB0093FDAC /* webBgPic_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = webBgPic_default.png; sourceTree = "<group>"; };
 		07D7B7921CDAED63005E8FB0 /* CollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionReusableView.h; sourceTree = "<group>"; };
 		07D7B7931CDAED63005E8FB0 /* CollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionReusableView.m; sourceTree = "<group>"; };
@@ -1231,6 +1234,8 @@
 				841064AC1CC3B63F008AAD95 /* TTViewController.m */,
 				074280DE1CF2B4740043A825 /* SearchViewController.h */,
 				074280DF1CF2B4740043A825 /* SearchViewController.m */,
+				07B545EC1CF843A200366E96 /* Platform11HeroDetailViewController.h */,
+				07B545ED1CF843A200366E96 /* Platform11HeroDetailViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2755,6 +2760,7 @@
 				07DCDF701CF709A00090974E /* cnvUILabel.m in Sources */,
 				07AC6B351CC0A65D0030B298 /* UIImageView+HighlightedWebCache.m in Sources */,
 				074280E31CF2E05F0043A825 /* HeroSkillsIntroduceTableViewCell.m in Sources */,
+				07B545EE1CF843A200366E96 /* Platform11HeroDetailViewController.m in Sources */,
 				07AC6B2D1CC0A65D0030B298 /* SDWebImageDownloader.m in Sources */,
 				84900F8C1CECC1EB002F2098 /* JJCHeroTableViewCell.m in Sources */,
 				07AC6B0D1CC0A65D0030B298 /* MASConstraintMaker.m in Sources */,

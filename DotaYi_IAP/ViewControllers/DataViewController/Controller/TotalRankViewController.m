@@ -77,15 +77,11 @@
     //竞技场总排行
     NSString *body = @"action=UserRankDatas";
     
-    CoreSVPLoading(nil, nil);
-    
     [Tools platform11PostRequest:DT_GETJJCRANK_URL ParamsBody:body target:self action:@selector(getTotalRankListDataCallBack:)];
 }
 
 -(void) getTotalRankListDataCallBack:(NSDictionary *) responseDic
 {
-    CoreSVPDismiss;
-    
     NSLog(@"responseDic %@",responseDic);
     
     NSString *responseMsg = responseDic[@"Message"];

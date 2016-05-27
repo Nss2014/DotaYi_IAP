@@ -16,29 +16,29 @@
 
 @property (nonatomic,copy) NSString *herotype;//"敏捷"
 
-@property (nonatomic,copy) NSString *total;//总场次
+@property (nonatomic,copy) NSNumber *total;//总场次
 
 @property (nonatomic,copy) NSString *exp;
 
-@property (nonatomic,copy) NSString *herokill;
+@property (nonatomic,copy) NSNumber *herokill;
 
-@property (nonatomic,copy) NSString *cscore;
+@property (nonatomic,copy) NSNumber *cscore;
 
-@property (nonatomic,copy) NSString *win;
+@property (nonatomic,copy) NSNumber *win;
 
-@property (nonatomic,copy) NSString *lost;
+@property (nonatomic,copy) NSNumber *lost;
 
-@property (nonatomic,copy) NSString *offline;
+@property (nonatomic,copy) NSNumber *offline;
 
 @property (nonatomic,copy) NSString *use;
 
-@property (nonatomic,copy) NSString *score;
+@property (nonatomic,copy) NSNumber *score;
 
 @property (nonatomic,copy) NSString *p_win;
 
 @property (nonatomic,copy) NSString *r_win;
 
-@property (nonatomic,copy) NSString *mvp;
+@property (nonatomic,copy) NSNumber *mvp;
 
 @property (nonatomic,copy) NSString *resv6;
 

@@ -334,9 +334,9 @@
     
     cell.goodHeroNameLabel.text = getHeroDataModel.heroname;
     
-    cell.goodHeroTotalUseLabel.text = getHeroDataModel.total;
+    cell.goodHeroTotalUseLabel.text = [NSString stringWithFormat:@"%@",getHeroDataModel.total];
     
-    cell.goodHeroPointLabel.text = getHeroDataModel.score;
+    cell.goodHeroPointLabel.text = [NSString stringWithFormat:@"%@",getHeroDataModel.score];
     
     cell.goodHeroWinChanceLabel.text = getHeroDataModel.p_win;
     
@@ -565,9 +565,12 @@
             //将一个字典数组转成模型数组
             NSArray *getJJCGoodHeroArray = [MJGoodAtHeroModel mj_objectArrayWithKeyValuesArray:responseDic[@"ratingHeros"]];
             
+            //排序
+            NSArray *getSortedArray = [Tools changeArray:getJJCGoodHeroArray orderWithKey:@"score" ascending:NO];
+            
             [self.goodHeroDataArray removeAllObjects];
             
-            [self.goodHeroDataArray addObjectsFromArray:getJJCGoodHeroArray];
+            [self.goodHeroDataArray addObjectsFromArray:getSortedArray];
             
             WS(ws);
             
@@ -615,6 +618,5 @@
         return;
     }
 }
-
 
 @end

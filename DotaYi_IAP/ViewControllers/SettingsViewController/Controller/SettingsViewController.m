@@ -37,7 +37,7 @@ static NSString *shareAppTitleString = @"妖刀｜最全面的dota1数据统计"
 
 -(void) initData
 {
-    self.sectionTwoTitlesArray = [NSArray arrayWithObjects:@"清除缓存",@"推荐给好友",@"建议与反馈",@"Appstore评分", nil];
+    self.sectionTwoTitlesArray = [NSArray arrayWithObjects:@"清除缓存",@"推荐给好友",@"建议与反馈",@"App Store评分", nil];
     
     self.listImagesNameArray = [NSMutableArray array];
     
@@ -63,7 +63,7 @@ static NSString *shareAppTitleString = @"妖刀｜最全面的dota1数据统计"
 #pragma mark 列表代理
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -75,6 +75,10 @@ static NSString *shareAppTitleString = @"妖刀｜最全面的dota1数据统计"
     else if (section == 1)
     {
         return self.sectionTwoTitlesArray.count;
+    }
+    else if (section == 2)
+    {
+        return 1;
     }
     
     return 0;
@@ -88,6 +92,10 @@ static NSString *shareAppTitleString = @"妖刀｜最全面的dota1数据统计"
         return 140;
     }
     else if (indexPath.section == 1)
+    {
+        return ORIGINAL_TABLECELL_HEIGHT;
+    }
+    else if (indexPath.section == 2)
     {
         return ORIGINAL_TABLECELL_HEIGHT;
     }
@@ -148,6 +156,23 @@ static NSString *shareAppTitleString = @"妖刀｜最全面的dota1数据统计"
         
         return cell;
     }
+    else if (indexPath.section == 2)
+    {
+        static NSString *identifier1 = @"cell2";
+        
+        SettingSection2Cell *cell = [tableView dequeueReusableCellWithIdentifier:identifier1];
+        
+        if (!cell)
+        {
+            cell = [[SettingSection2Cell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier1];
+        }
+        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        [cell.S2_logoutButton addTarget:self action:@selector(logoutBtnPressed) forControlEvents:UIControlEventTouchUpInside];
+        
+        return cell;
+    }
     
     static NSString *identifier = @"cell";
     
@@ -168,24 +193,24 @@ static NSString *shareAppTitleString = @"妖刀｜最全面的dota1数据统计"
     {
         if (indexPath.row == 0)
         {
-            //登录&退出登录
-            BOOL isLogin = [Tools boolForKey:LOCAL_LOGINSTATUS];
-            
-            if (isLogin)
-            {
-                LEActionSheet *actionSheet = [[LEActionSheet alloc] initWithTitle:@"确定要退出登录吗？"
-                                                                         delegate:self
-                                                                cancelButtonTitle:@"取消"
-                                                           destructiveButtonTitle:@"退出登录"
-                                                                otherButtonTitles:nil];
-                actionSheet.tag = 1010;
-                
-                [actionSheet showInView:self.view.window];
-            }
-            else
-            {
-                
-            }
+//            //登录&退出登录
+//            BOOL isLogin = [Tools boolForKey:LOCAL_LOGINSTATUS];
+//            
+//            if (isLogin)
+//            {
+//                LEActionSheet *actionSheet = [[LEActionSheet alloc] initWithTitle:@"确定要退出登录吗？"
+//                                                                         delegate:self
+//                                                                cancelButtonTitle:@"取消"
+//                                                           destructiveButtonTitle:@"退出登录"
+//                                                                otherButtonTitles:nil];
+//                actionSheet.tag = 1010;
+//                
+//                [actionSheet showInView:self.view.window];
+//            }
+//            else
+//            {
+//                
+//            }
         }
     }
     else if (indexPath.section == 1)
@@ -193,14 +218,12 @@ static NSString *shareAppTitleString = @"妖刀｜最全面的dota1数据统计"
         if (indexPath.row == 0)
         {
             //清理缓存
-            LEActionSheet *actionSheet = [[LEActionSheet alloc] initWithTitle:@"确认清除本地缓存？"
-                                                                     delegate:self
-                                                            cancelButtonTitle:@"取消"
-                                                       destructiveButtonTitle:@"清除缓存"
-                                                            otherButtonTitles:nil];
-            actionSheet.tag = 1011;
             
-            [actionSheet showInView:self.view.window];
+            UIAlertView *clearCaheAlert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确定清除本地缓存？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            
+            clearCaheAlert.tag = 2999;
+            
+            [clearCaheAlert show];
         }
         else if (indexPath.row == 1)
         {
@@ -334,6 +357,54 @@ static NSString *shareAppTitleString = @"妖刀｜最全面的dota1数据统计"
 }
 
 #pragma mark - clearCach end
+
+-(void) logoutBtnPressed
+{
+    //退出登录
+    UIAlertView *logoutAlert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确定要退出登录吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    
+    logoutAlert.tag = 1999;
+    
+    [logoutAlert show];
+}
+
+#pragma mark - UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == 1999)
+    {
+        if (buttonIndex == 0)
+        {
+            //取消
+        }
+        else if (buttonIndex == 1)
+        {
+            //退出登录
+            [Tools setBool:NO key:LOCAL_LOGINSTATUS];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                AppDelegate *appDe = APPDELEGATE;
+                
+                [appDe enterLoginVC];
+                
+            });
+        }
+    }
+    else if (alertView.tag == 2999)
+    {
+        if (buttonIndex == 0)
+        {
+            //取消
+        }
+        else if (buttonIndex == 1)
+        {
+            
+            //清理缓存
+            [self cleanrFilecache];
+        }
+    }
+}
 
 #pragma mark - LEActionSheetDelegate
 

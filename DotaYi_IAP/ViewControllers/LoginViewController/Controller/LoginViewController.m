@@ -143,15 +143,15 @@
 
 -(void) envalueSubViews
 {
-    UIImage *tempImage = [UIImage imageNamed:@"long_button_background_image"];
+//    UIImage *tempImage = [UIImage imageNamed:@"long_button_background_image"];
     
     self.R13_frontView.RF_doneButton.backgroundColor = CLEAR_COLOR;
     
     [self.R13_frontView.RF_doneButton setTitle:@"登录" forState:UIControlStateNormal];
     
-    [self.R13_frontView.RF_doneButton setBackgroundImage:tempImage forState:UIControlStateNormal];
-    
-    [self.R13_frontView.RF_doneButton setBackgroundImage:tempImage forState:UIControlStateHighlighted];
+//    [self.R13_frontView.RF_doneButton setBackgroundImage:tempImage forState:UIControlStateNormal];
+//    
+//    [self.R13_frontView.RF_doneButton setBackgroundImage:tempImage forState:UIControlStateHighlighted];
     
     [self.R13_frontView.RF_doneButton addTarget:self action:@selector(loginButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
@@ -187,9 +187,9 @@
     
     self.login_loginPlatformLabel.text = @"11平台登录";
     
-    self.login_loginPlatformLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:18];
+    self.login_loginPlatformLabel.font = TEXT18_BOLD_FONT;
     
-    self.login_loginPlatformLabel.textColor = COLOR_TITLE_BLACK;
+    self.login_loginPlatformLabel.textColor = XLS_COLOR_MAIN_GREEN;
     
     self.login_loginPlatformLabel.textAlignment = NSTextAlignmentCenter;
     

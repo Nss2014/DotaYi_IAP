@@ -62,15 +62,11 @@
     //DT_GETJJCRANK_URL
     NSString *body = @"action=HerosUserDatas";
     
-    CoreSVPLoading(nil, nil);
-    
     [Tools platform11PostRequest:DT_GETJJCRANK_URL ParamsBody:body target:self action:@selector(getHeroRankDataCallBack:)];
 }
 
 -(void) getHeroRankDataCallBack:(NSDictionary *) responseDic
 {
-    CoreSVPDismiss;
-    
     NSLog(@"responseDic %@",responseDic);
     
     NSString *responseMsg = responseDic[@"Message"];
