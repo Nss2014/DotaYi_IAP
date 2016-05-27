@@ -774,6 +774,10 @@ NSString *const NewFeatureVersionKey = @"NewFeatureVersionKey";
     key：按照排序的key。
  
     yesOrNo：升序或降序排列，yes为升序，no为降序。
+ 
+    NSArray 使用sortedArrayUsingComparator
+ 
+    NSMutableArray 使用sortUsingDescriptors
  */
 
 +(NSArray *) changeArray:(NSArray *)dicArray orderWithKey:(NSString *)key ascending:(BOOL)yesOrNo
@@ -786,7 +790,6 @@ NSString *const NewFeatureVersionKey = @"NewFeatureVersionKey";
     NSArray *resultArray = [dicArray sortedArrayUsingDescriptors:descriptors];
     
 //    [dicArray sortUsingDescriptors:descriptors];
-    
     return resultArray;
 }
 
