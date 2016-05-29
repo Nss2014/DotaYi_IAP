@@ -53,7 +53,7 @@ static NSString *shareAppTitleString = @"妖刀｜最全面的dota1数据统计"
     
     [self addTableView:UITableViewStylePlain separatorStyle:UITableViewCellSeparatorStyleNone];
     
-    self.viwTable.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - NAV_HEIGHT);
+    self.viwTable.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - NAV_HEIGHT - TABBAR_HEIGHT);
     
     [Tools setExtraCellLineHidden:self.viwTable];
     

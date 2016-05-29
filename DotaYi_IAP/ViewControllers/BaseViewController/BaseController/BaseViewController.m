@@ -567,21 +567,6 @@
     return [NSArray arrayWithArray:output];
 }
 
-//uitableview处理section的不悬浮，禁止section停留的方法，主要是这段代码
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    CGFloat sectionHeaderHeight = 30;
-    
-    if (scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0)
-    {
-        scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
-        
-    } else if (scrollView.contentOffset.y>=sectionHeaderHeight)
-    {
-        scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
-    }
-}
-
 #pragma mark - 暂无数据提示  仅label和button
 
 -(void) addEmptyTipsViewWithTitle:(NSString *)aTitle IsShowButton:(BOOL) showBtn ButtonTitle:(NSString *)theBtnTitle

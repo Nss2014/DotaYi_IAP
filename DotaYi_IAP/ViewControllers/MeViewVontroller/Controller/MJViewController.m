@@ -404,7 +404,7 @@
     }
     else
     {
-        CoreSVPError(@"请求失败，请重试", nil);
+        //CoreSVPError(@"请求失败，请重试", nil);
     }
 }
 

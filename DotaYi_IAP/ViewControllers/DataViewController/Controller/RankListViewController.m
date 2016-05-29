@@ -32,7 +32,7 @@
 
 -(void) initUI
 {
-    self.navigationItem.title = @"总排行榜";
+    self.navigationItem.title = @"排行榜";
     
     [self _setUp];
     
@@ -152,11 +152,11 @@
     
     if (index == 0)
     {
-        self.navigationItem.title = @"总排行榜";
+        
     }
     else if (index == 1)
     {
-        self.navigationItem.title = @"英雄排行榜";
+        
     }
 }
 

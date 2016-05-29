@@ -59,7 +59,7 @@
         [self.ST_iconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(ws.ST_backgroundView.mas_left).offset(2 * padding);
             make.centerY.equalTo(ws.ST_backgroundView.mas_centerY);
-            make.width.mas_equalTo(30);
+            make.width.mas_equalTo(20);
             make.height.equalTo(ws.ST_iconImageView.mas_width);
         }];
         

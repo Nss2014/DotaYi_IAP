@@ -1710,6 +1710,22 @@ const float kCellHeight = 60.0f;
     
 }
 
+//uitableview处理section的不悬浮，禁止section停留的方法，主要是这段代码
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    //根据section高度改变
+    CGFloat sectionHeaderHeight = 30;
+    
+    if (scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0)
+    {
+        scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
+        
+    } else if (scrollView.contentOffset.y>=sectionHeaderHeight)
+    {
+        scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
+    }
+}
+
 #pragma mark - 系统返回键类别  返回键响应
 -(BOOL) navigationShouldPopOnBackButton ///在这个方法里写返回按钮的事件处理
 {
