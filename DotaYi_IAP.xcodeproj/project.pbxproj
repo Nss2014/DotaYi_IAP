@@ -25,6 +25,7 @@
 		075627FB1CEEB2B900568B09 /* ASHorizontalScrollViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 075627F81CEEB2B900568B09 /* ASHorizontalScrollViewDelegate.m */; };
 		075627FC1CEEB2B900568B09 /* license.txt in Resources */ = {isa = PBXBuildFile; fileRef = 075627F91CEEB2B900568B09 /* license.txt */; };
 		075627FE1CEEBAC000568B09 /* officialWebPic_default.png in Resources */ = {isa = PBXBuildFile; fileRef = 075627FD1CEEBAC000568B09 /* officialWebPic_default.png */; };
+		0760EA7B1CFC435A00857406 /* settings_left_icon5.png in Resources */ = {isa = PBXBuildFile; fileRef = 0760EA7A1CFC435A00857406 /* settings_left_icon5.png */; };
 		0765619E1CEC66B0005B52B6 /* TotalRankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0765619D1CEC66B0005B52B6 /* TotalRankViewController.m */; };
 		076561A11CEC66BB005B52B6 /* HeroRankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 076561A01CEC66BB005B52B6 /* HeroRankViewController.m */; };
 		077118D11CE18AE800BD13CE /* OddsTypeInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 077118D01CE18AE800BD13CE /* OddsTypeInfoModel.m */; };
@@ -352,6 +353,7 @@
 		075627F81CEEB2B900568B09 /* ASHorizontalScrollViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASHorizontalScrollViewDelegate.m; sourceTree = "<group>"; };
 		075627F91CEEB2B900568B09 /* license.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = license.txt; sourceTree = "<group>"; };
 		075627FD1CEEBAC000568B09 /* officialWebPic_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = officialWebPic_default.png; sourceTree = "<group>"; };
+		0760EA7A1CFC435A00857406 /* settings_left_icon5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings_left_icon5.png; sourceTree = "<group>"; };
 		0765619C1CEC66B0005B52B6 /* TotalRankViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TotalRankViewController.h; sourceTree = "<group>"; };
 		0765619D1CEC66B0005B52B6 /* TotalRankViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TotalRankViewController.m; sourceTree = "<group>"; };
 		0765619F1CEC66BB005B52B6 /* HeroRankViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeroRankViewController.h; sourceTree = "<group>"; };
@@ -2381,6 +2383,7 @@
 				0719474E1CEDCB33000FEC50 /* settings_left_icon2.png */,
 				0719473F1CEDC9FD000FEC50 /* settings_left_icon3.png */,
 				071947421CEDC9FD000FEC50 /* settings_left_icon4.png */,
+				0760EA7A1CFC435A00857406 /* settings_left_icon5.png */,
 			);
 			path = setting_images;
 			sourceTree = "<group>";
@@ -2591,6 +2594,7 @@
 				07AC6C3B1CC0A66D0030B298 /* ToolViewInputText@2x.png in Resources */,
 				07DCDF5C1CF704BE0090974E /* UMSocialSDKResourcesNew.bundle in Resources */,
 				075627FC1CEEB2B900568B09 /* license.txt in Resources */,
+				0760EA7B1CFC435A00857406 /* settings_left_icon5.png in Resources */,
 				07AC6C3F1CC0A66D0030B298 /* umeng_add_photo@2x.png in Resources */,
 				07559A771CF451AC00B3A208 /* odds_bg_pic.jpg in Resources */,
 				07AC6C251CC0A66D0030B298 /* KSRefresh.bundle in Resources */,

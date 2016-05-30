@@ -171,6 +171,12 @@
     self.viwTable.footer         = [[KSAutoFootRefreshView alloc] initWithDelegate:self];
 }
 
+//只添加下拉刷新
+-(void) addKSHeaderRefresh
+{
+    self.viwTable.header         = [[KSDefaultHeadRefreshView alloc] initWithDelegate:self];
+}
+
 - (void)refreshViewDidLoading:(id)view
 {
     

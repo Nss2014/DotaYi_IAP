@@ -13,7 +13,7 @@
 #import "HeroDetailInfoViewController.h"
 #import "HeroDetailDataModel.h"
 
-@interface HeroViewController ()
+@interface HeroViewController ()<KSRefreshViewDelegate>
 
 @property (nonatomic,strong) HeroTypeInfoModel *saveMJHeroModel;
 
@@ -34,6 +34,8 @@
     [self creatCollectionViewData];
     
     [self setViewUI];
+    
+    self.collectionView.header = [[KSDefaultHeadRefreshView alloc] initWithDelegate:self];
 }
 
 -(void) setViewUI
@@ -282,6 +284,8 @@
         //主线程显示
         dispatch_async(dispatch_get_main_queue(), ^{
             
+            [ws.collectionView headerFinishedLoading];
+            
             [ws.collectionView reloadData];
             
         });
@@ -465,6 +469,41 @@
     }
     
     return getHeroId;
+}
+
+#pragma mark - KSRefreshViewDelegate
+- (void)refreshViewDidLoading:(id)view
+{
+    if ([view isEqual:self.collectionView.header])
+    {
+        //下拉刷新 删除表数据重新添加
+        
+        WS(ws);
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [HeroTypeInfoModel delete:1 resBlock:^(BOOL res) {
+                
+                //获取敏捷英雄数据
+                [ws getHeroDataWithTypeId:1];
+            }];
+            
+            [HeroTypeInfoModel delete:2 resBlock:^(BOOL res) {
+                
+                //获取智力英雄数据
+                [ws getHeroDataWithTypeId:2];
+            }];
+            
+            [HeroTypeInfoModel delete:3 resBlock:^(BOOL res) {
+                
+                //获取力量英雄数据
+                [ws getHeroDataWithTypeId:3];
+            }];
+            
+        });
+        
+        return;
+    }
 }
 
 @end
