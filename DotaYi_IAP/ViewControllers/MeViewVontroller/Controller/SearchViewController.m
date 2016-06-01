@@ -18,6 +18,8 @@
 
 @property (nonatomic,copy) NSString *searchText;//搜索关键词
 
+@property (nonatomic,strong) UIWebView *myWebView;
+
 @end
 
 @implementation SearchViewController
@@ -63,6 +65,12 @@
     [self.viwTable setTableHeaderView:self.searchBar];
     
     [Tools setExtraCellLineHidden:self.viwTable];
+    
+    self.myWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0,0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
+    
+    [self.myWebView setBackgroundColor:[UIColor whiteColor]];
+    
+    self.myWebView.delegate = self;
 }
 
 #pragma mark - search
@@ -79,7 +87,6 @@
     [self.dataSourceArray removeAllObjects];
     
     [self.viwTable reloadData];
-    
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
@@ -132,7 +139,7 @@
         
         self.searchBar.delegate             = self;
         
-        self.searchBar.placeholder          = @"搜索公众号";
+        self.searchBar.placeholder          = @"请输入11平台昵称";
         
         
         [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setTextColor:COLOR_TITLE_BLACK];
@@ -141,24 +148,99 @@
 
 -(void) requestWithPublicName:(NSString *)sendPublicName
 {
-//    NSString *encodeSearchString = [Tools encodeToPercentEscapeString:sendPublicName];
+    NSString *encodeSearchString = [Tools encodeToPercentEscapeString:sendPublicName];
+    
+    NSString *urlString = [NSString stringWithFormat:@"http://score.5211game.com/RecordCenter/?u=%@&t=10001",encodeSearchString];
+    
+//    NSString *body = [NSString stringWithFormat:@"u=%@&t=10001",encodeSearchString];
+    
+    NSLog(@"urlString %@",urlString);
+    
+    [self setCookie];
+    
+    NSData *data = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:urlString]];
+    
+    TFHpple *xpathParser = [[TFHpple alloc] initWithHTMLData:data];
+    
+    NSString *getResultStr = [Tools getHtmlValueWithXPathParser:xpathParser XPathQuery:@"//link[@rel='stylesheet']" DetailXPathQuery:nil DetailKey:@"href"];
+    
+    NSLog(@"getResultStr %@",getResultStr);
+    
+    
+    
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:60];
+    
+    [self.myWebView loadRequest:request];
+    
+    
+    
+//    NSMutableURLRequest * backRequest = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:urlString]];
+//
+//    [backRequest setTimeoutInterval:5.f];
 //    
-//    NSString *bodyURLStr = [NSString stringWithFormat:@"userToken=%@&pageidx=%ld&count=20&timestamp=%lld&random=%@&version=%@&dev=%@&platform=%@&param=%@",
-//                            [HP_Application sharedApplication].loginDataObj.login_userToken,
-//                            self.currentMainPage,
-//                            [Tools getCurrentTimeStamp],
-//                            [Tools getRandomSixthString],
-//                            APPLICATION_VERSIN,
-//                            APP_HK_DEV,
-//                            APP_HK_PLATFORM,
-//                            encodeSearchString
-//                            ];
+//    //将字符串转换成二进制数据
+//    NSData * postData = [body dataUsingEncoding:NSUTF8StringEncoding];
 //    
-//    NSString *urlString = [NSString stringWithFormat:@"%@&%@",HK_SEARCHOFFICIAL_URL,bodyURLStr];
+//    //设置http请求模式
+//    [backRequest setHTTPMethod:@"GET"];
+//    //设置POST正文的内容
+//    [backRequest setHTTPBody:postData];
 //    
-//    NSLog(@"urlString %@",urlString);
+//    [backRequest setValue:[Tools strForKey:LOGIN_COOKIE] forHTTPHeaderField:@"Cookie"];
 //    
-//    [CustomRequest asyncGetWithUrlString:urlString target:self action:@selector(searchPublicNameCallBack:)];
+//    [NSURLConnection sendAsynchronousRequest:backRequest queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+//        
+//        NSString *result = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+//        
+//        NSLog(@"resultresultresult%@", result);
+//        
+//        NSLog(@"response %@",response);
+//        
+//        if (result && ![result isEqualToString:@""])
+//        {
+//            
+//        }
+//        else
+//        {
+//            
+//        }
+//        
+//    }];
+}
+
+#pragma mark - UIWebViewDelegate
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    return  YES;
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    //获取所有html:
+    NSString *lJs = @"document.documentElement.innerHTML";
+    
+    NSString *lHtml1 = [self.myWebView stringByEvaluatingJavaScriptFromString:lJs];
+    
+    NSLog(@"lHtml1 %@",lHtml1);
+    
+}
+
+//设置cookie
+- (void)setCookie
+{
+    NSMutableDictionary *cookiePropertiesUser = [NSMutableDictionary dictionary];
+    [cookiePropertiesUser setObject:@"Cookie" forKey:NSHTTPCookieName];
+    [cookiePropertiesUser setObject:[Tools strForKey:LOGIN_COOKIE] forKey:NSHTTPCookieValue];
+    [cookiePropertiesUser setObject:@"http://score.5211game.com/" forKey:NSHTTPCookieDomain];
+    [cookiePropertiesUser setObject:@"/" forKey:NSHTTPCookiePath];
+    [cookiePropertiesUser setObject:@"0" forKey:NSHTTPCookieVersion];
+    
+    NSHTTPCookie *cookieuser = [NSHTTPCookie cookieWithProperties:cookiePropertiesUser];
+    
+    [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookieuser];
 }
 
 

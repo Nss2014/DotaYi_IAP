@@ -31,10 +31,12 @@
     
     [self initUI];
     
-    [self addTipViewUI];
+    [self setTableHeaderView];
+    
+    [self addKSHeaderRefresh];
 }
 
--(void) addTipViewUI
+-(void) setTableHeaderView
 {
     UILabel *tipsFromLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, -40, SCREEN_WIDTH, 30)];
     
@@ -48,7 +50,7 @@
     
     tipsFromLabel.textColor = COLOR_TITLE_LIGHTGRAY;
     
-    [self.viwTable addSubview:tipsFromLabel];
+    [self.viwTable setTableHeaderView:tipsFromLabel];
 }
 
 #pragma mark ARSegmentControllerDelegate
@@ -83,6 +85,8 @@
 -(void) getTotalRankListDataCallBack:(NSDictionary *) responseDic
 {
     NSLog(@"responseDic %@",responseDic);
+    
+    [self.viwTable headerFinishedLoading];
     
     NSString *responseMsg = responseDic[@"Message"];
     
@@ -241,14 +245,14 @@
         make.left.equalTo(headerBackView.mas_left);
         make.top.equalTo(headerBackView.mas_top);
         make.bottom.equalTo(headerBackView.mas_bottom);
-        make.width.equalTo(headerBackView.mas_width).multipliedBy(0.15);
+        make.width.equalTo(headerBackView.mas_width).multipliedBy(0.1);
     }];
     
     [rankUserNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(rankOrderLabel.mas_right);
         make.top.equalTo(rankOrderLabel.mas_top);
         make.bottom.equalTo(rankOrderLabel.mas_bottom);
-        make.width.equalTo(headerBackView.mas_width).multipliedBy(0.25);
+        make.width.equalTo(headerBackView.mas_width).multipliedBy(0.3);
     }];
     
     [rankPointLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -345,6 +349,18 @@
     }
     
     return @"";
+}
+
+#pragma mark - KSRefreshViewDelegate
+- (void)refreshViewDidLoading:(id)view
+{
+    if ([view isEqual:self.viwTable.header])
+    {
+        //下拉刷新
+        [self getTotalRankRequest];
+        
+        return;
+    }
 }
 
 @end

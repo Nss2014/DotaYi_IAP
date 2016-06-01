@@ -7,7 +7,7 @@
 //
 
 #import "HeroRankViewController.h"
-#import "JJCRankTableViewCell.h"
+#import "HeroRankTableViewCell.h"
 #import "JJCRankDataModel.h"
 
 @interface HeroRankViewController ()<ARSegmentControllerDelegate>
@@ -30,10 +30,12 @@
     
     [self initUI];
     
-    [self addTipViewUI];
+    [self setTableHeaderView];
+    
+    [self addKSHeaderRefresh];
 }
 
--(void) addTipViewUI
+-(void) setTableHeaderView
 {
     UILabel *tipsFromLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, -40, SCREEN_WIDTH, 30)];
     
@@ -47,7 +49,7 @@
     
     tipsFromLabel.textColor = COLOR_TITLE_LIGHTGRAY;
     
-    [self.viwTable addSubview:tipsFromLabel];
+    [self.viwTable setTableHeaderView:tipsFromLabel];
 }
 
 #pragma mark ARSegmentControllerDelegate
@@ -68,6 +70,8 @@
 -(void) getHeroRankDataCallBack:(NSDictionary *) responseDic
 {
     NSLog(@"responseDic %@",responseDic);
+    
+    [self.viwTable headerFinishedLoading];
     
     NSString *responseMsg = responseDic[@"Message"];
     
@@ -130,43 +134,24 @@
 {
     static NSString *identifier = @"cell";
     
-    JJCRankTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    HeroRankTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     
     if (!cell)
     {
-        cell = [[JJCRankTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        cell = [[HeroRankTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     
     DetailRankInfo *detailDataInfo = self.dataSourceArray[indexPath.row];
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    cell.rankOrderLabel.text = [NSString stringWithFormat:@"%ld",indexPath.row + 1];
+    [cell.heroRankHeadImageView sd_setImageWithURL:[NSURL URLWithString:[Tools getPlatForm11HeroHeadImgWithHeroId:detailDataInfo.HeroHashCode]] placeholderImage:[UIImage imageNamed:DEFAULT_USERHEADER_PIC]];
     
-    //英雄属性 0=力量 1=敏捷 2=智力
+    cell.heroRankHeroNameLabel.text = detailDataInfo.HeroName;
     
-    NSString *heroProperty = @"";
+    cell.heroRankHeroPointLabel.text = detailDataInfo.Ranking;
     
-    if ([detailDataInfo.HeroType isEqualToString:@"0"])
-    {
-        heroProperty = @"力量";
-    }
-    else if ([detailDataInfo.HeroType isEqualToString:@"1"])
-    {
-        heroProperty = @"敏捷";
-    }
-    else if ([detailDataInfo.HeroType isEqualToString:@"2"])
-    {
-        heroProperty = @"智力";
-    }
-    
-    cell.rankUserNameLabel.text = detailDataInfo.HeroName;
-    
-    cell.rankPointLabel.text = heroProperty;
-    
-    cell.rankTotalPlaysLabel.text = detailDataInfo.Ranking;
-    
-    cell.rankWinningProbabilityLabel.text = detailDataInfo.UserName;
+    cell.heroRankUserNameLabel.text = detailDataInfo.UserName;
     
     if (indexPath.row % 2 == 1)
     {
@@ -191,7 +176,7 @@
     
     UILabel *rankOrderLabel = [[UILabel alloc] init];
     
-    rankOrderLabel.text = @"排名";
+    rankOrderLabel.text = @"英雄";
     
     rankOrderLabel.font = TEXT12_BOLD_FONT;
     
@@ -212,18 +197,6 @@
     rankUserNameLabel.textAlignment = NSTextAlignmentCenter;
     
     [headerBackView addSubview:rankUserNameLabel];
-    
-    UILabel *rankPointLabel = [[UILabel alloc] init];
-    
-    rankPointLabel.text = @"英雄属性";
-    
-    rankPointLabel.font = TEXT12_BOLD_FONT;
-    
-    rankPointLabel.textColor = COLOR_TITLE_BLACK;
-    
-    rankPointLabel.textAlignment = NSTextAlignmentCenter;
-    
-    [headerBackView addSubview:rankPointLabel];
     
     UILabel *rankTotalPlaysLabel = [[UILabel alloc] init];
     
@@ -253,35 +226,28 @@
         make.left.equalTo(headerBackView.mas_left);
         make.top.equalTo(headerBackView.mas_top);
         make.bottom.equalTo(headerBackView.mas_bottom);
-        make.width.equalTo(headerBackView.mas_width).multipliedBy(0.15);
+        make.width.mas_equalTo(60);
     }];
     
     [rankUserNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(rankOrderLabel.mas_right);
         make.top.equalTo(rankOrderLabel.mas_top);
         make.bottom.equalTo(rankOrderLabel.mas_bottom);
-        make.width.equalTo(headerBackView.mas_width).multipliedBy(0.25);
-    }];
-    
-    [rankPointLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(rankUserNameLabel.mas_right);
-        make.top.equalTo(rankUserNameLabel.mas_top);
-        make.bottom.equalTo(rankUserNameLabel.mas_bottom);
-        make.width.equalTo(headerBackView.mas_width).multipliedBy(0.2);
+        make.width.mas_equalTo((SCREEN_WIDTH - 60) * 0.35);
     }];
     
     [rankTotalPlaysLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(rankPointLabel.mas_right);
-        make.top.equalTo(rankPointLabel.mas_top);
-        make.bottom.equalTo(rankPointLabel.mas_bottom);
-        make.width.equalTo(rankPointLabel.mas_width);
+        make.left.equalTo(rankUserNameLabel.mas_right);
+        make.top.equalTo(rankUserNameLabel.mas_top);
+        make.bottom.equalTo(rankUserNameLabel.mas_bottom);
+        make.width.mas_equalTo((SCREEN_WIDTH - 60) * 0.25);
     }];
     
     [rankWinningLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(rankTotalPlaysLabel.mas_right);
         make.top.equalTo(rankTotalPlaysLabel.mas_top);
         make.bottom.equalTo(rankTotalPlaysLabel.mas_bottom);
-        make.width.equalTo(rankTotalPlaysLabel.mas_width);
+        make.width.mas_equalTo((SCREEN_WIDTH - 60) * 0.4);
     }];
     
     return headerBackView;
@@ -307,5 +273,18 @@
         scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
     }
 }
+
+#pragma mark - KSRefreshViewDelegate
+- (void)refreshViewDidLoading:(id)view
+{
+    if ([view isEqual:self.viwTable.header])
+    {
+        //下拉刷新
+        [self getHeroRankRequest];
+        
+        return;
+    }
+}
+
 
 @end

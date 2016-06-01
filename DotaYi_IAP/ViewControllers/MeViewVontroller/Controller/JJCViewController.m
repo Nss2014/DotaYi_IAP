@@ -331,6 +331,8 @@
     
     MJGoodAtHeroModel *getHeroDataModel = self.goodHeroDataArray[indexPath.row];
     
+    NSLog(@"getPlatForm11HeroHeadImgWithHeroId %@",[Tools getPlatForm11HeroHeadImgWithHeroId:getHeroDataModel.heroId]);
+    
     [cell.goodHeroHeadImageView sd_setImageWithURL:[NSURL URLWithString:[Tools getPlatForm11HeroHeadImgWithHeroId:getHeroDataModel.heroId]] placeholderImage:[UIImage imageNamed:DEFAULT_USERHEADER_PIC]];
     
     cell.goodHeroNameLabel.text = getHeroDataModel.heroname;

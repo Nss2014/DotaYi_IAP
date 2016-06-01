@@ -35,7 +35,7 @@
     
     [self setViewUI];
     
-    self.collectionView.header = [[KSDefaultHeadRefreshView alloc] initWithDelegate:self];
+//    self.collectionView.header = [[KSDefaultHeadRefreshView alloc] initWithDelegate:self];
 }
 
 -(void) setViewUI

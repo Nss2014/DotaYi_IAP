@@ -11,10 +11,11 @@
 #import "UMSocial.h"
 #import "UMFeedbackViewController.h"
 #import "SGActionView.h"
+#import "QQGroupChatViewController.h"
 
-static NSString *shareAppString = @"妖刀｜最全面的dota1数据统计";
+static NSString *shareAppString = @"妖刀｜最全面的11平台dota1数据统计";
 
-static NSString *shareAppTitleString = @"妖刀｜最全面的dota1数据统计";
+static NSString *shareAppTitleString = @"妖刀｜最全面的11平台dota1数据统计";
 
 @interface SettingsViewController ()<LEActionSheetDelegate>
 
@@ -228,8 +229,11 @@ static NSString *shareAppTitleString = @"妖刀｜最全面的dota1数据统计"
         else if (indexPath.row == 1)
         {
             //加入QQ交流群
+            QQGroupChatViewController *qqgroupVC = [[QQGroupChatViewController alloc] init];
             
+            [self setHidesBottomBarWhenPushed:YES];
             
+            [self.navigationController pushViewController:qqgroupVC animated:YES];
         }
         else if (indexPath.row == 2)
         {
@@ -260,7 +264,7 @@ static NSString *shareAppTitleString = @"妖刀｜最全面的dota1数据统计"
 {
     UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 20)];
     
-    backView.backgroundColor = WHITE_COLOR;
+    backView.backgroundColor = CLEAR_COLOR;
     
     return backView;
 }

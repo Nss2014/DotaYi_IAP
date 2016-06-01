@@ -74,14 +74,14 @@
             make.left.equalTo(ws.contentView.mas_left);
             make.top.equalTo(ws.contentView.mas_top);
             make.bottom.equalTo(ws.contentView.mas_bottom);
-            make.width.equalTo(ws.contentView.mas_width).multipliedBy(0.15);
+            make.width.equalTo(ws.contentView.mas_width).multipliedBy(0.1);
         }];
         
         [self.rankUserNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(ws.rankOrderLabel.mas_right);
             make.top.equalTo(ws.rankOrderLabel.mas_top);
             make.bottom.equalTo(ws.rankOrderLabel.mas_bottom);
-            make.width.equalTo(ws.contentView.mas_width).multipliedBy(0.25);
+            make.width.equalTo(ws.contentView.mas_width).multipliedBy(0.3);
         }];
         
         [self.rankPointLabel mas_makeConstraints:^(MASConstraintMaker *make) {
