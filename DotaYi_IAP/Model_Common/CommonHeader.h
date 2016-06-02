@@ -416,6 +416,11 @@
  */
 #define HEROBG_SCALE 25.0/32
 
+/**
+ *  11英雄详细页头像大小
+ */
+#define HERODETAIL_IMGHEIGHT 60
+
 
 /**
  *  跳转appstore应用链接  id需替换

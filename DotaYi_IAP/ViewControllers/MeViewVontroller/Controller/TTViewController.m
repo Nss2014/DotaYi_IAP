@@ -12,6 +12,7 @@
 #import "JJCTopDataModel.h"
 #import "GoodAtHeroTableViewCell.h"
 #import "MJGoodAtHeroModel.h"
+#import "Platform11HeroDetailViewController.h"
 
 @interface TTViewController ()<ARSegmentControllerDelegate,BEMSimpleLineGraphDataSource, BEMSimpleLineGraphDelegate,KSRefreshViewDelegate>
 
@@ -214,8 +215,6 @@
     self.myGraph.colorTop = color;
     self.myGraph.colorBottom = color;
     self.myGraph.backgroundColor = color;
-    self.view.tintColor = color;
-    self.navigationController.navigationBar.tintColor = color;
     
     self.myGraph.animationGraphStyle = BEMLineAnimationFade;
     
@@ -348,6 +347,22 @@
     
     return cell;
 }
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    MJGoodAtHeroModel *getHeroDataModel = self.goodHeroDataArray[indexPath.row];
+    
+    Platform11HeroDetailViewController *detailHeroVC = [[Platform11HeroDetailViewController alloc] init];
+    
+    detailHeroVC.sendHeroModel = getHeroDataModel;
+    
+    detailHeroVC.isJJCType = NO;
+    
+    [self.parentViewController setHidesBottomBarWhenPushed:YES];
+    
+    [self.parentViewController.navigationController pushViewController:detailHeroVC animated:YES];
+}
+
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {

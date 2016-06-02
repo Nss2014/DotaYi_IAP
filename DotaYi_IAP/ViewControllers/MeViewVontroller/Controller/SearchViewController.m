@@ -156,58 +156,14 @@
     
     NSLog(@"urlString %@",urlString);
     
+    //目前搜素通过昵称拿不到userid  只能通过后台登录网页端拿到userid再传回来 
     [self setCookie];
-    
-    NSData *data = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:urlString]];
-    
-    TFHpple *xpathParser = [[TFHpple alloc] initWithHTMLData:data];
-    
-    NSString *getResultStr = [Tools getHtmlValueWithXPathParser:xpathParser XPathQuery:@"//link[@rel='stylesheet']" DetailXPathQuery:nil DetailKey:@"href"];
-    
-    NSLog(@"getResultStr %@",getResultStr);
-    
-    
     
     NSURL *url = [NSURL URLWithString:urlString];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:60];
     
     [self.myWebView loadRequest:request];
-    
-    
-    
-//    NSMutableURLRequest * backRequest = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:urlString]];
-//
-//    [backRequest setTimeoutInterval:5.f];
-//    
-//    //将字符串转换成二进制数据
-//    NSData * postData = [body dataUsingEncoding:NSUTF8StringEncoding];
-//    
-//    //设置http请求模式
-//    [backRequest setHTTPMethod:@"GET"];
-//    //设置POST正文的内容
-//    [backRequest setHTTPBody:postData];
-//    
-//    [backRequest setValue:[Tools strForKey:LOGIN_COOKIE] forHTTPHeaderField:@"Cookie"];
-//    
-//    [NSURLConnection sendAsynchronousRequest:backRequest queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-//        
-//        NSString *result = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//        
-//        NSLog(@"resultresultresult%@", result);
-//        
-//        NSLog(@"response %@",response);
-//        
-//        if (result && ![result isEqualToString:@""])
-//        {
-//            
-//        }
-//        else
-//        {
-//            
-//        }
-//        
-//    }];
 }
 
 #pragma mark - UIWebViewDelegate
@@ -231,12 +187,18 @@
 //设置cookie
 - (void)setCookie
 {
+    [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookieAcceptPolicy:NSHTTPCookieAcceptPolicyAlways];
+    
     NSMutableDictionary *cookiePropertiesUser = [NSMutableDictionary dictionary];
-    [cookiePropertiesUser setObject:@"Cookie" forKey:NSHTTPCookieName];
-    [cookiePropertiesUser setObject:[Tools strForKey:LOGIN_COOKIE] forKey:NSHTTPCookieValue];
-    [cookiePropertiesUser setObject:@"http://score.5211game.com/" forKey:NSHTTPCookieDomain];
-    [cookiePropertiesUser setObject:@"/" forKey:NSHTTPCookiePath];
-    [cookiePropertiesUser setObject:@"0" forKey:NSHTTPCookieVersion];
+    
+    if ([[Tools strForKey:LOGIN_COOKIE] length]) {
+        [cookiePropertiesUser setObject:@"Cookie" forKey:NSHTTPCookieName];//cookie的名字
+        [cookiePropertiesUser setObject:[Tools strForKey:LOGIN_COOKIE] forKey:NSHTTPCookieValue];//cookie的值
+        [cookiePropertiesUser setObject:[[NSDate date] dateByAddingTimeInterval:2629743] forKey:NSHTTPCookieExpires];//过期时间
+        [cookiePropertiesUser setObject:@"score.5211game.com" forKey:NSHTTPCookieDomain];//给那个网址设置
+        [cookiePropertiesUser setObject:@"/" forKey:NSHTTPCookiePath];
+        [cookiePropertiesUser setObject:@"0" forKey:NSHTTPCookieVersion];
+    }
     
     NSHTTPCookie *cookieuser = [NSHTTPCookie cookieWithProperties:cookiePropertiesUser];
     

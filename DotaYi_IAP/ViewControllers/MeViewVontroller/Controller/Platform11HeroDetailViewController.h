@@ -7,7 +7,12 @@
 //
 
 #import "BaseViewController.h"
+#import "MJGoodAtHeroModel.h"
 
 @interface Platform11HeroDetailViewController : BaseViewController
+
+@property (nonatomic,assign) BOOL isJJCType;//0=天梯  1=竞技场
+
+@property (nonatomic,copy) MJGoodAtHeroModel *sendHeroModel;
 
 @end

@@ -11,6 +11,7 @@
 #import "JJCTopDataModel.h"
 #import "MJGoodAtHeroModel.h"
 #import "GoodAtHeroTableViewCell.h"
+#import "Platform11MJHeroViewController.h"
 
 @interface MJViewController ()<ARSegmentControllerDelegate,KSRefreshViewDelegate>
 
@@ -223,6 +224,20 @@
     
     return cell;
 }
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    MJGoodAtHeroModel *getHeroDataModel = self.goodHeroListArray[indexPath.row];
+    
+    Platform11MJHeroViewController *detailHeroVC = [[Platform11MJHeroViewController alloc] init];
+    
+    detailHeroVC.sendHeroModel = getHeroDataModel;
+    
+    [self.parentViewController setHidesBottomBarWhenPushed:YES];
+    
+    [self.parentViewController.navigationController pushViewController:detailHeroVC animated:YES];
+}
+
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
