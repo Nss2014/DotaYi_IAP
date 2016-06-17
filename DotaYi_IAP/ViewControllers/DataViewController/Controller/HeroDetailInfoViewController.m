@@ -226,6 +226,8 @@ const float kCellHeight = 60.0f;
  
         ws.navigationItem.title = ws.heroDetailModel.detailHeroNameString;
         
+        [ws.viwTable headerFinishedLoading];
+        
         [ws.viwTable reloadData];
     });
 }
@@ -962,6 +964,8 @@ const float kCellHeight = 60.0f;
     self.viwTable.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT);
     
     [Tools setExtraCellLineHidden:self.viwTable];
+    
+    [self addKSHeaderRefresh];
 }
 
 -(void) addTableViewHeader
@@ -1740,6 +1744,30 @@ const float kCellHeight = 60.0f;
     }
     
     return YES;
+}
+
+#pragma mark - KSRefreshViewDelegate
+- (void)refreshViewDidLoading:(id)view
+{
+    if ([view isEqual:self.viwTable.header])
+    {
+        //下拉刷新 删除表数据重新添加
+        
+        WS(ws);
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [[HP_Application sharedApplication].store deleteObjectById:ws.sendHeroId fromTable:DB_HEROS];
+            
+            [ws getHeroDetailData];
+            
+            [ws.viwTable reloadData];
+            
+            [ws addTableViewHeader];
+        });
+        
+        return;
+    }
 }
 
 

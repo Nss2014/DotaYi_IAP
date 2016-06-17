@@ -11,10 +11,11 @@
 #import "UMSocial.h"
 #import "UMFeedbackViewController.h"
 #import "SGActionView.h"
+#import "QQGroupChatViewController.h"
 
-static NSString *shareAppString = @"妖刀｜最全面的dota1数据统计";
+static NSString *shareAppString = @"妖刀｜最全面的11平台dota1数据统计";
 
-static NSString *shareAppTitleString = @"妖刀｜最全面的dota1数据统计";
+static NSString *shareAppTitleString = @"妖刀｜最全面的11平台dota1数据统计";
 
 @interface SettingsViewController ()<LEActionSheetDelegate>
 
@@ -37,11 +38,11 @@ static NSString *shareAppTitleString = @"妖刀｜最全面的dota1数据统计"
 
 -(void) initData
 {
-    self.sectionTwoTitlesArray = [NSArray arrayWithObjects:@"清除缓存",@"推荐给好友",@"建议与反馈",@"App Store评分", nil];
+    self.sectionTwoTitlesArray = [NSArray arrayWithObjects:@"清除缓存",@"加入QQ交流群",@"推荐给好友",@"建议与反馈",@"App Store评分", nil];
     
     self.listImagesNameArray = [NSMutableArray array];
     
-    for (int i=0; i<4; i++)
+    for (int i=0; i<self.sectionTwoTitlesArray.count; i++)
     {
         [self.listImagesNameArray addObject:[NSString stringWithFormat:@"settings_left_icon%d.png",i+1]];
     }
@@ -227,11 +228,20 @@ static NSString *shareAppTitleString = @"妖刀｜最全面的dota1数据统计"
         }
         else if (indexPath.row == 1)
         {
+            //加入QQ交流群
+            QQGroupChatViewController *qqgroupVC = [[QQGroupChatViewController alloc] init];
+            
+            [self setHidesBottomBarWhenPushed:YES];
+            
+            [self.navigationController pushViewController:qqgroupVC animated:YES];
+        }
+        else if (indexPath.row == 2)
+        {
             //推荐给好友
             
             [self introduceToFriend];
         }
-        else if (indexPath.row == 2)
+        else if (indexPath.row == 3)
         {
             //建议与反馈
             UMFeedbackViewController *umVC = [[UMFeedbackViewController alloc] init];
@@ -240,7 +250,7 @@ static NSString *shareAppTitleString = @"妖刀｜最全面的dota1数据统计"
             
             [self.navigationController pushViewController:umVC animated:YES];
         }
-        else if (indexPath.row == 3)
+        else if (indexPath.row == 4)
         {
             //评分
             NSString *str = TURNTO_APPSTORE_LINK;
@@ -254,7 +264,7 @@ static NSString *shareAppTitleString = @"妖刀｜最全面的dota1数据统计"
 {
     UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 20)];
     
-    backView.backgroundColor = WHITE_COLOR;
+    backView.backgroundColor = CLEAR_COLOR;
     
     return backView;
 }

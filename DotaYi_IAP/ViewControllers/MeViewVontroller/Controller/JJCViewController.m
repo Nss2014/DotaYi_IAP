@@ -12,6 +12,7 @@
 #import "JJCTopDataModel.h"
 #import "MJGoodAtHeroModel.h"
 #import "GoodAtHeroTableViewCell.h"
+#import "Platform11HeroDetailViewController.h"
 
 @interface JJCViewController ()<ARSegmentControllerDelegate,BEMSimpleLineGraphDataSource, BEMSimpleLineGraphDelegate,KSRefreshViewDelegate>
 
@@ -225,8 +226,6 @@
     self.myGraph.colorTop = color;
     self.myGraph.colorBottom = color;
     self.myGraph.backgroundColor = color;
-    self.view.tintColor = color;
-    self.navigationController.navigationBar.tintColor = color;
     
     self.myGraph.animationGraphStyle = BEMLineAnimationFade;
     
@@ -330,6 +329,8 @@
     }
     
     MJGoodAtHeroModel *getHeroDataModel = self.goodHeroDataArray[indexPath.row];
+    
+    NSLog(@"getPlatForm11HeroHeadImgWithHeroId %@",[Tools getPlatForm11HeroHeadImgWithHeroId:getHeroDataModel.heroId]);
     
     [cell.goodHeroHeadImageView sd_setImageWithURL:[NSURL URLWithString:[Tools getPlatForm11HeroHeadImgWithHeroId:getHeroDataModel.heroId]] placeholderImage:[UIImage imageNamed:DEFAULT_USERHEADER_PIC]];
     
@@ -471,6 +472,21 @@
     }];
     
     return headerBackView;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    MJGoodAtHeroModel *getHeroDataModel = self.goodHeroDataArray[indexPath.row];
+    
+    Platform11HeroDetailViewController *detailHeroVC = [[Platform11HeroDetailViewController alloc] init];
+    
+    detailHeroVC.sendHeroModel = getHeroDataModel;
+    
+    detailHeroVC.isJJCType = YES;
+    
+    [self.parentViewController setHidesBottomBarWhenPushed:YES];
+    
+    [self.parentViewController.navigationController pushViewController:detailHeroVC animated:YES];
 }
 
 //uitableview处理section的不悬浮，禁止section停留的方法，主要是这段代码

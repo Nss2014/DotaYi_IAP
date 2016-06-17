@@ -18,6 +18,8 @@
 
 @property (nonatomic,copy) NSString *searchText;//搜索关键词
 
+@property (nonatomic,strong) UIWebView *myWebView;
+
 @end
 
 @implementation SearchViewController
@@ -63,6 +65,12 @@
     [self.viwTable setTableHeaderView:self.searchBar];
     
     [Tools setExtraCellLineHidden:self.viwTable];
+    
+    self.myWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0,0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
+    
+    [self.myWebView setBackgroundColor:[UIColor whiteColor]];
+    
+    self.myWebView.delegate = self;
 }
 
 #pragma mark - search
@@ -79,7 +87,6 @@
     [self.dataSourceArray removeAllObjects];
     
     [self.viwTable reloadData];
-    
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
@@ -132,7 +139,7 @@
         
         self.searchBar.delegate             = self;
         
-        self.searchBar.placeholder          = @"搜索公众号";
+        self.searchBar.placeholder          = @"请输入11平台昵称";
         
         
         [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setTextColor:COLOR_TITLE_BLACK];
@@ -141,24 +148,61 @@
 
 -(void) requestWithPublicName:(NSString *)sendPublicName
 {
-//    NSString *encodeSearchString = [Tools encodeToPercentEscapeString:sendPublicName];
-//    
-//    NSString *bodyURLStr = [NSString stringWithFormat:@"userToken=%@&pageidx=%ld&count=20&timestamp=%lld&random=%@&version=%@&dev=%@&platform=%@&param=%@",
-//                            [HP_Application sharedApplication].loginDataObj.login_userToken,
-//                            self.currentMainPage,
-//                            [Tools getCurrentTimeStamp],
-//                            [Tools getRandomSixthString],
-//                            APPLICATION_VERSIN,
-//                            APP_HK_DEV,
-//                            APP_HK_PLATFORM,
-//                            encodeSearchString
-//                            ];
-//    
-//    NSString *urlString = [NSString stringWithFormat:@"%@&%@",HK_SEARCHOFFICIAL_URL,bodyURLStr];
-//    
-//    NSLog(@"urlString %@",urlString);
-//    
-//    [CustomRequest asyncGetWithUrlString:urlString target:self action:@selector(searchPublicNameCallBack:)];
+    NSString *encodeSearchString = [Tools encodeToPercentEscapeString:sendPublicName];
+    
+    NSString *urlString = [NSString stringWithFormat:@"http://score.5211game.com/RecordCenter/?u=%@&t=10001",encodeSearchString];
+    
+//    NSString *body = [NSString stringWithFormat:@"u=%@&t=10001",encodeSearchString];
+    
+    NSLog(@"urlString %@",urlString);
+    
+    //目前搜素通过昵称拿不到userid  只能通过后台登录网页端拿到userid再传回来 
+    [self setCookie];
+    
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:60];
+    
+    [self.myWebView loadRequest:request];
+}
+
+#pragma mark - UIWebViewDelegate
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    return  YES;
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    //获取所有html:
+    NSString *lJs = @"document.documentElement.innerHTML";
+    
+    NSString *lHtml1 = [self.myWebView stringByEvaluatingJavaScriptFromString:lJs];
+    
+    NSLog(@"lHtml1 %@",lHtml1);
+    
+}
+
+//设置cookie
+- (void)setCookie
+{
+    [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookieAcceptPolicy:NSHTTPCookieAcceptPolicyAlways];
+    
+    NSMutableDictionary *cookiePropertiesUser = [NSMutableDictionary dictionary];
+    
+    if ([[Tools strForKey:LOGIN_COOKIE] length]) {
+        [cookiePropertiesUser setObject:@"Cookie" forKey:NSHTTPCookieName];//cookie的名字
+        [cookiePropertiesUser setObject:[Tools strForKey:LOGIN_COOKIE] forKey:NSHTTPCookieValue];//cookie的值
+        [cookiePropertiesUser setObject:[[NSDate date] dateByAddingTimeInterval:2629743] forKey:NSHTTPCookieExpires];//过期时间
+        [cookiePropertiesUser setObject:@"score.5211game.com" forKey:NSHTTPCookieDomain];//给那个网址设置
+        [cookiePropertiesUser setObject:@"/" forKey:NSHTTPCookiePath];
+        [cookiePropertiesUser setObject:@"0" forKey:NSHTTPCookieVersion];
+    }
+    
+    NSHTTPCookie *cookieuser = [NSHTTPCookie cookieWithProperties:cookiePropertiesUser];
+    
+    [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookieuser];
 }
 
 

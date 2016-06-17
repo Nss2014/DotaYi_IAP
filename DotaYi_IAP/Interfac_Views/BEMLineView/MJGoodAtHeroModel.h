@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MJGoodAtHeroModel : NSObject
+@interface MJGoodAtHeroModel : NSObject<NSCopying>
 
 @property (nonatomic,copy) NSString *heroId;//
 

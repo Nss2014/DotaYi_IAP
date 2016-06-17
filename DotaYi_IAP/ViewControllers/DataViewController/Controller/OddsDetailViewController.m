@@ -17,6 +17,12 @@
 
 @property (nonatomic,strong) OddsDetailDataModel *oddsDetailModel;
 
+@property (nonatomic,strong) UIImageView *heroBgView;
+
+@property (nonatomic,strong) UIImageView *heroHeaderImgView;
+
+@property (nonatomic,strong) UILabel *heroIntroduceLabel;
+
 @end
 
 @implementation OddsDetailViewController
@@ -225,6 +231,8 @@
         
         ws.navigationItem.title = ws.oddsDetailModel.oddsDetailName;
         
+        [ws.viwTable headerFinishedLoading];
+        
         [ws.viwTable reloadData];
     });
 }
@@ -243,6 +251,8 @@
     [Tools setExtraCellLineHidden:self.viwTable];
     
     [self addTableViewHeader];
+    
+    [self addKSHeaderRefresh];
 }
 
 -(void) addTableViewHeader
@@ -254,64 +264,74 @@
     CGSize skillDetaiSize = [Tools getAdaptionSizeWithText:exchangedSpeedString andFont:TEXT12_FONT andLabelWidth:SCREEN_WIDTH - 2 * PADDING_WIDTH];
     
     //背景
-    UIImageView *heroBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH,PADDING_WIDTH + (SCREEN_WIDTH * HEROBG_SCALE - 50) * 2/5 + PADDING_WIDTH + skillDetaiSize.height + 30)];
+    if (!self.heroBgView)
+    {
+        self.heroBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH,PADDING_WIDTH + (SCREEN_WIDTH * HEROBG_SCALE - 50) * 2/5 + PADDING_WIDTH + skillDetaiSize.height + 30)];
+    }
 
-    heroBgView.backgroundColor = WHITE_COLOR;
+
+    self.heroBgView.backgroundColor = WHITE_COLOR;
     
     //头像
-    UIImageView *heroHeaderImgView = [[UIImageView alloc] init];
+    if (!self.heroHeaderImgView)
+    {
+        self.heroHeaderImgView = [[UIImageView alloc] init];
+    }
     
-    heroHeaderImgView.layer.cornerRadius = (SCREEN_WIDTH * HEROBG_SCALE - 50)/5;
+    self.heroHeaderImgView.layer.cornerRadius = (SCREEN_WIDTH * HEROBG_SCALE - 50)/5;
     
-    heroHeaderImgView.clipsToBounds = YES;
+    self.heroHeaderImgView.clipsToBounds = YES;
     
-    [heroHeaderImgView sd_setImageWithURL:[NSURL URLWithString:self.oddsDetailModel.oddsDetailImg] placeholderImage:[UIImage imageNamed:DEFAULT_USERHEADER_PIC]];
+    [self.heroHeaderImgView sd_setImageWithURL:[NSURL URLWithString:self.oddsDetailModel.oddsDetailImg] placeholderImage:[UIImage imageNamed:DEFAULT_USERHEADER_PIC]];
     
-    [heroBgView addSubview:heroHeaderImgView];
+    [self.heroBgView addSubview:self.heroHeaderImgView];
     
     //介绍
-    UILabel *heroIntroduceLabel = [[UILabel alloc] init];
+    if (!self.heroIntroduceLabel)
+    {
+        self.heroIntroduceLabel = [[UILabel alloc] init];
+    }
     
-    heroIntroduceLabel.font = TEXT12_BOLD_FONT;
+    self.heroIntroduceLabel.font = TEXT12_BOLD_FONT;
     
-    heroIntroduceLabel.textColor = COLOR_TITLE_LIGHTGRAY;
+    self.heroIntroduceLabel.textColor = COLOR_TITLE_LIGHTGRAY;
     
-    heroIntroduceLabel.textAlignment = NSTextAlignmentCenter;
+    self.heroIntroduceLabel.textAlignment = NSTextAlignmentCenter;
     
-    heroIntroduceLabel.numberOfLines = 0;
+    self.heroIntroduceLabel.numberOfLines = 0;
     
-    heroIntroduceLabel.text = [Tools exchangeNullToEmptyString:exchangedSpeedString];
+    self.heroIntroduceLabel.text = [Tools exchangeNullToEmptyString:exchangedSpeedString];
     
-    [heroBgView addSubview:heroIntroduceLabel];
+    [self.heroBgView addSubview:self.heroIntroduceLabel];
     
     UIView *lineView = [[UIView alloc] init];
     
     lineView.backgroundColor = SEPRATELINE_GRAYCOLOR;
     
-    [heroBgView addSubview:lineView];
+    [self.heroBgView addSubview:lineView];
     
-    [heroHeaderImgView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(heroBgView.mas_centerX);
-        make.top.equalTo(heroBgView.mas_top).offset(PADDING_WIDTH);
+    [self.heroHeaderImgView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.heroBgView.mas_centerX);
+        make.top.equalTo(self.heroBgView.mas_top).offset(PADDING_WIDTH);
         make.height.mas_equalTo((SCREEN_WIDTH * HEROBG_SCALE - 50) * 2/5);
-        make.width.equalTo(heroHeaderImgView.mas_height);
+        make.width.equalTo(self.heroHeaderImgView.mas_height);
     }];
     
-    [heroIntroduceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(heroBgView.mas_left).offset(PADDING_WIDTH * 3);
-        make.top.equalTo(heroHeaderImgView.mas_bottom).offset(PADDING_WIDTH);
-        make.right.equalTo(heroBgView.mas_right).offset(-PADDING_WIDTH * 3);
+    [self.heroIntroduceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.heroBgView.mas_left).offset(PADDING_WIDTH * 3);
+        make.top.equalTo(self.heroHeaderImgView.mas_bottom).offset(PADDING_WIDTH);
+        make.right.equalTo(self.heroBgView.mas_right).offset(-PADDING_WIDTH * 3);
         make.height.mas_equalTo(skillDetaiSize.height + 20);
     }];
     
     [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(heroBgView.mas_left);
-        make.right.equalTo(heroBgView.mas_right);
-        make.bottom.equalTo(heroBgView.mas_bottom);
+        make.left.equalTo(self.heroBgView.mas_left);
+        make.right.equalTo(self.heroBgView.mas_right);
+        make.bottom.equalTo(self.heroBgView.mas_bottom);
         make.height.mas_equalTo(PIXL1_AUTO);
     }];
     
-    self.viwTable.tableHeaderView = heroBgView;
+    self.viwTable.tableHeaderView = self.heroBgView;
 }
 
 -(void) oddDetailImgTaped:(UITapGestureRecognizer *) sender
@@ -476,6 +496,30 @@
     }
     
     return YES;
+}
+
+#pragma mark - KSRefreshViewDelegate
+- (void)refreshViewDidLoading:(id)view
+{
+    if ([view isEqual:self.viwTable.header])
+    {
+        //下拉刷新 删除表数据重新添加
+        
+        WS(ws);
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [[HP_Application sharedApplication].store deleteObjectById:ws.sendOddId fromTable:DB_ODDSDETAIL];
+            
+            [ws getOddsDetailData];
+            
+            [ws.viwTable reloadData];
+            
+            [ws addTableViewHeader];
+        });
+        
+        return;
+    }
 }
 
 @end
