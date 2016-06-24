@@ -62,7 +62,6 @@
     
     [MobClick startWithAppkey:UMENG_APPKEY reportPolicy:BATCH channelId:nil];//channelId是渠道名  为nil或@""时默认会被被当作@"App Store"渠道
     
-    
     [MobClick updateOnlineConfig];  //在线参数配置
     
     //分享

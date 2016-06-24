@@ -40,8 +40,8 @@
     
     [self initUI];
     
-    //添加导航搜索按钮
-    [self addNavSearchButton];
+    //添加导航搜索按钮   功能暂未实现
+//    [self addNavSearchButton];
 }
 
 -(void) initData
