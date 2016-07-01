@@ -10,6 +10,8 @@
 #import "MeViewController.h"
 #import "DataViewController.h"
 #import "SettingsViewController.h"
+#import "VideoMainViewController.h"
+#import "VideoLeftViewController.h"
 
 @interface TLRootViewController ()
 
@@ -48,7 +50,17 @@
     
     [childVCArray addObject:meNavC];
     
-    //我的文件
+    //视频
+    VideoLeftViewController *leftMenuVC = [[VideoLeftViewController alloc] init];
+    
+    VideoMainViewController *mineVC = [[VideoMainViewController alloc] initWithLeftMenuViewController:leftMenuVC];
+    [mineVC.tabBarItem setTitle:@"视频"];
+    mineVC.tabBarItem.image = [[UIImage imageNamed:@"tab_select_1"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    mineVC.tabBarItem.selectedImage = [[UIImage imageNamed:@"tab_select_1"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UINavigationController *mineNavC = [[UINavigationController alloc] initWithRootViewController:mineVC];
+    [childVCArray addObject:mineNavC];
+    
+    //数据
     DataViewController *dataVC = [[DataViewController alloc] init];
     
     [dataVC.tabBarItem setTitle:@"数据"];
@@ -61,7 +73,7 @@
     
     [childVCArray addObject:dataNavC];
     
-    //电话咨询
+    //设置
     SettingsViewController *settingsVC = [[SettingsViewController alloc] init];
     
     [settingsVC.tabBarItem setTitle:@"设置"];

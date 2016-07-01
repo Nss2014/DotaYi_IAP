@@ -139,7 +139,7 @@
         
         cell.MG_firstItemView.grid_nameLabel.text = nameStr;
         
-        cell.MG_firstItemView.grid_ImageView.image = [UIImage imageNamed:@"main_leftNav_image"];
+        cell.MG_firstItemView.grid_ImageView.image = [UIImage imageNamed:@"umshare_qzone"];
         
         cell.MG_firstItemView.userInteractionEnabled = YES;
         
@@ -159,7 +159,7 @@
         
         cell.MG_secondItemView.grid_nameLabel.text = nameStr;
         
-        cell.MG_secondItemView.grid_ImageView.image = [UIImage imageNamed:@"main_leftNav_image"];
+        cell.MG_secondItemView.grid_ImageView.image = [UIImage imageNamed:@"umshare_qzone"];
         
         cell.MG_secondItemView.userInteractionEnabled = YES;
         
@@ -179,7 +179,7 @@
         
         cell.MG_thirdItemView.grid_nameLabel.text = nameStr;
         
-        cell.MG_thirdItemView.grid_ImageView.image = [UIImage imageNamed:@"main_leftNav_image"];
+        cell.MG_thirdItemView.grid_ImageView.image = [UIImage imageNamed:@"umshare_qzone"];
         
         cell.MG_thirdItemView.userInteractionEnabled = YES;
         

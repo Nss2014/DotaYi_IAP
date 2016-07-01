@@ -94,6 +94,7 @@
         [self setHidesBottomBarWhenPushed:NO];
     }
     
+    [_progressView removeFromSuperview];
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -207,6 +208,30 @@
 -(void) rightBarButtonDown
 {
     
+}
+
+#pragma mark - 网页进度条
+-(void) addNJKWebViewProgress:(UIWebView *) sendWebView;
+{
+    _progressProxy = [[NJKWebViewProgress alloc] init];
+    
+    sendWebView.delegate = _progressProxy;
+    
+    _progressProxy.webViewProxyDelegate = self;
+    
+    _progressProxy.progressDelegate = self;
+    
+    CGFloat progressBarHeight = 2.f;
+    
+    CGRect navigationBarBounds = self.navigationController.navigationBar.bounds;
+    
+    CGRect barFrame = CGRectMake(0, navigationBarBounds.size.height - progressBarHeight, navigationBarBounds.size.width, progressBarHeight);
+    
+    _progressView = [[NJKWebViewProgressView alloc] initWithFrame:barFrame];
+    
+    _progressView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+    
+    [self.navigationController.navigationBar addSubview:_progressView];
 }
 
 #pragma mark - 重新加载

@@ -37,8 +37,10 @@
 #import "ARSegmentControllerDelegate.h"
 #import "ARSegmentPageControllerHeaderProtocol.h"
 #import "ARSegmentControllerDelegate.h"
+#import "NJKWebViewProgressView.h"
+#import "NJKWebViewProgress.h"
 
-@interface BaseViewController : UIViewController <UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UIWebViewDelegate,DZNEmptyDataSetSource, DZNEmptyDataSetDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
+@interface BaseViewController : UIViewController <UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UIWebViewDelegate,DZNEmptyDataSetSource, DZNEmptyDataSetDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,NJKWebViewProgressDelegate>
 {
         //是否正在加载数据
     BOOL isloading;
@@ -65,6 +67,10 @@
 @property (nonatomic,assign) NSInteger currentMainPage;
 
 @property (nonatomic,assign) BOOL isFooterRefresh;
+
+@property (nonatomic,strong) NJKWebViewProgressView *progressView;
+
+@property (nonatomic,strong) NJKWebViewProgress *progressProxy;//网页进度
 
     //添加UITableView
 -(void)addTableView:(UITableViewStyle)style separatorStyle:(UITableViewCellSeparatorStyle)sepStyle;

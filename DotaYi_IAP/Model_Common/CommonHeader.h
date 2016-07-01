@@ -360,7 +360,7 @@
 //主题灰
 #define XLS_COLOR_MAIN_GRAY [UIColor colorWithRed:67.0/255 green:65.0/255  blue:68.0/255 alpha:1.0f]
 
-//绿色
+//绿色 #1FBBA6
 #define XLS_COLOR_MAIN_GREEN [UIColor colorWithRed:31.0/255.0 green:187.0/255.0 blue:166.0/255.0 alpha:1.0]
 
 //progressView淡绿色背景
@@ -369,6 +369,20 @@
 //系统背景颜色
 #define COLOR_VIEW_BG [Tools colorFromHexCode:@"#F5F5F5"]
 
+//文章侧栏背景色
+#define ARTICLELEFT_COLOR [UIColor colorWithRed:38.0/255 green:45.0/255  blue:54.0/255 alpha:1.0f]
+
+//侧栏选中颜色
+#define SELECTED_ARTICLELEFT_COLOR [UIColor colorWithRed:48.0/255 green:62.0/255  blue:72.0/255 alpha:1.0f]
+
+//文章左侧栏列表分割线颜色
+//深色
+#define ARTICLESEP_DEEP_COLOR [UIColor colorWithRed:27.0/255 green:34.0/255  blue:40.0/255 alpha:0.5f]
+//浅色65, 76, 86
+#define ARTICLESEP_TINT_COLOR [UIColor colorWithRed:65.0/255 green:71.0/255  blue:86.0/255 alpha:0.5f]
+
+//侧栏cell淡灰色
+#define ARTICLE_CELL_LIGHTGRAY [UIColor colorWithRed:67.0/255 green:65.0/255  blue:68.0/255 alpha:0.5f]
 
 
 //版本号
@@ -501,5 +515,8 @@
 
 //物品详细数据  按物品id存储
 #define DB_ODDSDETAIL @"oddsDetail_db"
+
+//视频频道列表数据
+#define DB_CHANNELLIST_DATA @"channel_list_db"
 
 #endif

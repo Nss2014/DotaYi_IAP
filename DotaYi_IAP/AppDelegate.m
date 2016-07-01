@@ -51,6 +51,8 @@
     [[HP_Application sharedApplication].store createTableWithName:DB_HEROS];
     
     [[HP_Application sharedApplication].store createTableWithName:DB_ODDSDETAIL];
+    
+    [[HP_Application sharedApplication].store createTableWithName:DB_CHANNELLIST_DATA];
 }
 
 -(void)handleUM:(NSDictionary *) launchOptions
