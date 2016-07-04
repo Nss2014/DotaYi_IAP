@@ -10,7 +10,7 @@
 
 @protocol ArtileLeftChannelDelegate <NSObject>
 
--(void) didSelectChannelWithChannleID:(NSString *) theChannelID  AndChannelName:(NSString *) theChannelName;//选择频道
+-(void) didSelectChannelWithChannleID:(NSString *) theChannelID  AndChannelName:(NSString *) theChannelName AndChannelImageUrl:(NSString *) theChannelImgUrl;//选择频道
 
 @end
 

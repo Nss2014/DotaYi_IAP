@@ -42,9 +42,9 @@
     
     [meVC.tabBarItem setTitle:@"战绩"];
     
-    meVC.tabBarItem.image = [[UIImage imageNamed:@"tab_select_1"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    meVC.tabBarItem.image = [[UIImage imageNamed:@"tab_normal_1"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
-    meVC.tabBarItem.selectedImage = [[UIImage imageNamed:@"tab_select_1"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    meVC.tabBarItem.selectedImage = [[UIImage imageNamed:@"tab_selected_1"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
     UINavigationController *meNavC = [[UINavigationController alloc] initWithRootViewController:meVC];
     
@@ -55,8 +55,8 @@
     
     VideoMainViewController *mineVC = [[VideoMainViewController alloc] initWithLeftMenuViewController:leftMenuVC];
     [mineVC.tabBarItem setTitle:@"视频"];
-    mineVC.tabBarItem.image = [[UIImage imageNamed:@"tab_select_1"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    mineVC.tabBarItem.selectedImage = [[UIImage imageNamed:@"tab_select_1"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    mineVC.tabBarItem.image = [[UIImage imageNamed:@"tab_normal_2"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    mineVC.tabBarItem.selectedImage = [[UIImage imageNamed:@"tab_selected_2"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     UINavigationController *mineNavC = [[UINavigationController alloc] initWithRootViewController:mineVC];
     [childVCArray addObject:mineNavC];
     
@@ -65,9 +65,9 @@
     
     [dataVC.tabBarItem setTitle:@"数据"];
     
-    dataVC.tabBarItem.image = [[UIImage imageNamed:@"tab_select_1"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    dataVC.tabBarItem.image = [[UIImage imageNamed:@"tab_normal_3"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
-    dataVC.tabBarItem.selectedImage = [[UIImage imageNamed:@"tab_select_2"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    dataVC.tabBarItem.selectedImage = [[UIImage imageNamed:@"tab_selected_3"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
     UINavigationController *dataNavC = [[UINavigationController alloc] initWithRootViewController:dataVC];
     
@@ -78,9 +78,9 @@
     
     [settingsVC.tabBarItem setTitle:@"设置"];
     
-    settingsVC.tabBarItem.image = [[UIImage imageNamed:@"tab_select_1"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    settingsVC.tabBarItem.image = [[UIImage imageNamed:@"tab_normal_4"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
-    settingsVC.tabBarItem.selectedImage = [[UIImage imageNamed:@"tab_select_3"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    settingsVC.tabBarItem.selectedImage = [[UIImage imageNamed:@"tab_selected_4"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
     UINavigationController *settingsNavC = [[UINavigationController alloc] initWithRootViewController:settingsVC];
     

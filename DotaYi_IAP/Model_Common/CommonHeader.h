@@ -413,6 +413,12 @@
  */
 #define DEFAULT_USERHEADER_PIC @"user_defaultHeader"
 
+/**
+ *  11视频封面图域名
+ */
+#define VIDEOCOVER_DOMAIN @"http://pic.7fgame.com/"
+
+
 
 /**
  *  segment高度
@@ -439,7 +445,7 @@
 /**
  *  跳转appstore应用链接  id需替换
  */
-#define TURNTO_APPSTORE_LINK @"https://itunes.apple.com/cn/app/yao-dao/id1087677202?l=zh&ls=1&mt=8"
+#define TURNTO_APPSTORE_LINK @"https://itunes.apple.com/cn/app/yao-dao/id1130784106?l=zh&ls=1&mt=8"
 
 
 #pragma mark - 太平洋游戏网英雄&物品数据接口

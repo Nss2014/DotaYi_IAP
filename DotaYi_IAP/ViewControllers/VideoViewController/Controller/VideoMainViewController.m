@@ -42,8 +42,6 @@
 //广告图片高度
 #define ADPICTURE_HEIGHT 200
 
-//11视频封面图域名
-#define VIDEOCOVER_DOMAIN @"http://pic.7fgame.com/"
 
 @interface VideoMainViewController ()<ArtileLeftChannelDelegate>
 
@@ -60,12 +58,6 @@
     [super viewWillAppear:animated];
     
     [self.adScrollView startAnimationTimer:ADTIMER_DURATION];
-    
-    //获取banner数据
-    [self getBannerDataRequest];
-    
-    //获取列表数据
-    [self requestAnchorListWithChannelID:@"1"];
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -81,7 +73,11 @@
     
     self.dataSourceArray = [NSMutableArray array];
     
+    self.selectedChannelName = @"2009";
+    
     self.selectedChannelId = @"1";
+    
+    self.selectedChannelImgUrl = @"/WTVupFiles/201401/10/small_316051665_f61af5b1773b483aaaa36e03955bea85.jpg";
     
     _distance = MainViewOriginXFromValue;
     
@@ -109,12 +105,18 @@
     
     [_mainView addSubview:self.viwTable];
     
-    [self setTableHeaderView];
+//    [self setTableHeaderView];
     
     [self addKSHeaderAndFooterRefresh];
     
     //获取左侧栏列表数据 并存储本地
     [self getAnchorListDataRequest];
+    
+    //获取banner数据
+    [self getBannerDataRequest];
+    
+    //获取列表数据
+    [self requestAnchorListWithChannelID:@"1"];
 }
 
 -(void) setTableHeaderView
@@ -140,6 +142,8 @@
 
 -(void) setAdPictureBanner:(NSArray *)sendArray
 {
+    [self setTableHeaderView];
+    
     //循环滚动广告的数据源在此设置
     NSMutableArray *viewsArray = [@[] mutableCopy];
     //广告栏图片
@@ -175,7 +179,7 @@
         
         UILabel *bottomAnnounceLabel = [[UILabel alloc] init];
         
-        bottomAnnounceLabel.font = TEXT12_FONT;
+        bottomAnnounceLabel.font = TEXT12_BOLD_FONT;
         
         bottomAnnounceLabel.textColor = WHITE_COLOR;
         
@@ -194,7 +198,7 @@
         
         publishDateLabel.textAlignment = NSTextAlignmentRight;
         
-        publishDateLabel.text = [NSString stringWithFormat:@"发布日期：%@",bannerObj.DateStringCode];
+        publishDateLabel.text = [NSString stringWithFormat:@"发布时间：%@",bannerObj.DateStringCode];
         
         [adImageView addSubview:publishDateLabel];
         
@@ -206,7 +210,7 @@
         }];
         
         [bottomAnnounceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(adImageView.mas_left).offset(2 * PADDING_WIDTH);
+            make.left.equalTo(adImageView.mas_left).offset(PADDING_WIDTH);
             make.right.equalTo(adImageView.mas_right).offset(-150);
             make.height.mas_equalTo(35);
             make.top.equalTo(bottomBackView.mas_top);
@@ -240,11 +244,9 @@
         
         CommonWebViewViewController *webDetailView = [[CommonWebViewViewController alloc] init];
         
-        webDetailView.webURLString = bannerObj.VideoUrl;
+        webDetailView.webURLString = [NSString stringWithFormat:@"http://video.5211game.com/main/play.aspx?id=%@",bannerObj.VideoId];
         
-        [ws setHidesBottomBarWhenPushed:YES];
-        
-        [ws.navigationController pushViewController:webDetailView animated:YES];
+        [ws presentViewController:webDetailView animated:YES completion:nil];
     };
 }
 
@@ -397,7 +399,7 @@
 
 #pragma mark - ArtileLeftChannelDelegate
 
--(void) didSelectChannelWithChannleID:(NSString *)theChannelID AndChannelName:(NSString *)theChannelName
+-(void) didSelectChannelWithChannleID:(NSString *) theChannelID  AndChannelName:(NSString *) theChannelName AndChannelImageUrl:(NSString *) theChannelImgUrl
 {
     //更新频道文章
     
@@ -421,6 +423,8 @@
     self.selectedChannelName = theChannelName;
     
     self.selectedChannelId = theChannelID;
+    
+    self.selectedChannelImgUrl = theChannelImgUrl;
     
     self.isLeftBarButtonSelected = NO;
     
@@ -581,40 +585,42 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return SCREEN_HEIGHT/20;
+    return 50;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView *headerBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT/20)];
+    UIView *headerBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 50)];
     
     headerBackView.backgroundColor = HRBACKVIEW_COLOR;
     
-    UILabel *frontMsgLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, SCREEN_WIDTH/2, SCREEN_HEIGHT/20)];
+    UIImageView *anchorHeadImageView = [[UIImageView alloc] init];
     
-    NSString *tempChannelName = self.selectedChannelName;
+    [anchorHeadImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",VIDEOCOVER_DOMAIN,self.selectedChannelImgUrl]] placeholderImage:[UIImage imageNamed:@"hot_anchor_icon"]];
     
-    if (self.selectedChannelName == nil || [self.selectedChannelName isKindOfClass:[NSNull class]])
-    {
-        tempChannelName = @"全部";
-        self.selectedChannelName = @"全部";
-    }
+    [headerBackView addSubview:anchorHeadImageView];
     
-    frontMsgLabel.text = [NSString stringWithFormat:@"%@/%@/%@",tempChannelName,@"文章",@"公众号"];
+    UILabel *frontMsgLabel = [[UILabel alloc] init];
     
-    frontMsgLabel.font = TEXT12_FONT;
+    frontMsgLabel.text = self.selectedChannelName;
+    
+    frontMsgLabel.font = TEXT12_BOLD_FONT;
     
     [headerBackView addSubview:frontMsgLabel];
     
-    UILabel *readNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - SCREEN_WIDTH * 0.15 - 10, 0, SCREEN_WIDTH * 0.15, SCREEN_HEIGHT/20)];
+    [anchorHeadImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(headerBackView.mas_left).offset(PADDING_WIDTH);
+        make.top.equalTo(headerBackView.mas_top).offset(PADDING_WIDTH/2);
+        make.bottom.equalTo(headerBackView.mas_bottom).offset(-PADDING_WIDTH/2);
+        make.width.equalTo(anchorHeadImageView.mas_height);
+    }];
     
-    readNumLabel.text = @"阅读数";
-    
-    readNumLabel.font = TEXT12_FONT;
-    
-    readNumLabel.textAlignment = NSTextAlignmentRight;
-    
-    [headerBackView addSubview:readNumLabel];
+    [frontMsgLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(anchorHeadImageView.mas_right).offset(PADDING_WIDTH);
+        make.bottom.equalTo(anchorHeadImageView.mas_bottom);
+        make.right.equalTo(headerBackView.mas_right).offset(-PADDING_WIDTH);
+        make.height.mas_equalTo(20);
+    }];
     
     return headerBackView;
 }
@@ -622,76 +628,14 @@
 #pragma mark -  点击行响应
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    AnchorVideoListData *videoObj = self.dataSourceArray[indexPath.row];
     
-//    SourceShareViewController *webDetailView = [[SourceShareViewController alloc] init];
-//    WS(ws);
-//    
-//    RankingArticleObj *rankingObj = self.dataSourceArray[indexPath.row];
-//    
-//    webDetailView.iscollected = rankingObj.hasCollected;
-//    
-//    if (rankingObj.articleUrl)
-//    {
-//        NSArray *subStr1Array = [rankingObj.articleUrl componentsSeparatedByString:@"&artileId="];
-//        
-//        NSString *subStr1;
-//        
-//        if (subStr1Array.count > 1)
-//        {
-//            subStr1 = subStr1Array[1];
-//        }
-//        if (subStr1)
-//        {
-//            NSArray *articleIDArray = [subStr1 componentsSeparatedByString:@"&hasCollected="];
-//            
-//            if (articleIDArray.count > 0)
-//            {
-//                NSString *articleID = [NSString stringWithFormat:@"%@",articleIDArray[0]];
-//                
-//                webDetailView.articlePassID = articleID;
-//            }
-//        }
-//        
-//        if([rankingObj.articleUrl rangeOfString:@"type=3"].location != NSNotFound)
-//        {
-//            //外调浏览器
-//            NSString *str = rankingObj.articleUrl;
-//            
-//            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
-//            return;
-//        }
-//        else
-//        {
-//            webDetailView.webURLString = rankingObj.articleUrl;
-//            
-//            [self.parentViewController setHidesBottomBarWhenPushed:YES];
-//            
-//            [self.parentViewController.navigationController pushViewController:webDetailView animated:YES];
-//        }
-//        
-//    }
-//    NSLog(@"webDetailView.articlePassID=%@",webDetailView.articlePassID);
-//    
-//    
-//    [webDetailView refreshBlock:^(NSString *theArticleID) {
-//        
-//        [ws.dataSourceArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//            
-//            RankingArticleObj *allRankingObj = (RankingArticleObj *)obj;
-//            
-//            if ([allRankingObj.articleId isEqualToString:theArticleID])
-//            {
-//                allRankingObj.hasCollected = @"0";
-//                
-//                *stop = YES;
-//            }
-//            
-//        }];
-//        
-//        [ws.viwTable reloadData];
-//        
-//    }];
-//    
+    CommonWebViewViewController *commonVC = [[CommonWebViewViewController alloc]init];
+    
+    commonVC.webURLString = [NSString stringWithFormat:@"http://video.5211game.com/main/play.aspx?relation=%@&id=%@",videoObj.RelationId,videoObj.VideoId];
+    
+    //使用 presentViewController 跳转
+    [self presentViewController:commonVC animated:YES completion:nil];
 }
 
 #pragma mark - KSRefreshViewDelegate
@@ -704,6 +648,9 @@
         self.isFooterRefresh = NO;
         
         self.currentMainPage = 0;
+        
+        //获取左侧栏列表数据 并存储本地
+        [self getAnchorListDataRequest];
         
         //获取banner数据
         [self getBannerDataRequest];

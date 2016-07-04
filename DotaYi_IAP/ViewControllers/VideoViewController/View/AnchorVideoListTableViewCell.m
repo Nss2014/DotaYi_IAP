@@ -27,7 +27,7 @@
         
         self.AH_titleLabel.textColor = COLOR_TITLE_BLACK;
         
-        self.AH_titleLabel.font = TEXT14_FONT;
+        self.AH_titleLabel.font = TEXT14_BOLD_FONT;
         
         self.AH_titleLabel.numberOfLines = 2;
         

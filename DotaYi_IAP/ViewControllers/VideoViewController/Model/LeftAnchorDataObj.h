@@ -12,7 +12,7 @@
 
 @property (nonatomic,copy) NSString *TagName;//主播名称
 
-@property (nonatomic,copy) NSString *AvatarUrl;
+@property (nonatomic,copy) NSString *AvatarUrl;//主播头像地址（不包含域名）
 
 @property (nonatomic,copy) NSString *UploadTimeStamp;
 

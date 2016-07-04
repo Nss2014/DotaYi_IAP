@@ -39,6 +39,7 @@
 #import "ARSegmentControllerDelegate.h"
 #import "NJKWebViewProgressView.h"
 #import "NJKWebViewProgress.h"
+#import <CoreMotion/CoreMotion.h>
 
 @interface BaseViewController : UIViewController <UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UIWebViewDelegate,DZNEmptyDataSetSource, DZNEmptyDataSetDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,NJKWebViewProgressDelegate>
 {

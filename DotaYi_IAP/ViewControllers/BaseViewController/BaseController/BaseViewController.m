@@ -13,6 +13,7 @@
 #import "MeViewController.h"
 #import "DataViewController.h"
 #import "SettingsViewController.h"
+#import "VideoMainViewController.h"
 
 @interface BaseViewController ()<DZNEmptyDataSetSource, DZNEmptyDataSetDelegate,UITextFieldDelegate,KSRefreshViewDelegate>
 
@@ -85,6 +86,8 @@
         ![self isKindOfClass:[DataViewController class]]
         &&
         ![self isKindOfClass:[SettingsViewController class]]
+        &&
+        ![self isKindOfClass:[VideoMainViewController class]]
         )
     {
         
@@ -181,11 +184,6 @@
 - (void)refreshViewDidLoading:(id)view
 {
     
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return NO;
 }
 
 -(void) clickLeftButton

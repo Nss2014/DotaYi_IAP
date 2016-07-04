@@ -14,6 +14,9 @@
 
 @property (nonatomic, strong) APJSONParser *APJSONParser;
 
+@property (nonatomic,assign) BOOL isRotation;
+
+
 -(void) enterMainVC;
 
 -(void) enterLoginVC;

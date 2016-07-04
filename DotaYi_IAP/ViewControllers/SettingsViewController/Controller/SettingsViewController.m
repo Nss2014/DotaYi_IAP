@@ -38,7 +38,7 @@ static NSString *shareAppTitleString = @"妖刀｜最全面的11平台dota1数�
 
 -(void) initData
 {
-    self.sectionTwoTitlesArray = [NSArray arrayWithObjects:@"清除缓存",@"加入QQ交流群",@"推荐给好友",@"建议与反馈",@"App Store评分", nil];
+    self.sectionTwoTitlesArray = [NSArray arrayWithObjects:@"清除缓存",@"加入QQ交流群",@"建议与反馈",@"App Store评分", nil];
     
     self.listImagesNameArray = [NSMutableArray array];
     
@@ -237,12 +237,10 @@ static NSString *shareAppTitleString = @"妖刀｜最全面的11平台dota1数�
         }
         else if (indexPath.row == 2)
         {
-            //推荐给好友
+            //推荐给好友  第一版未完成
+//            [self introduceToFriend];
             
-            [self introduceToFriend];
-        }
-        else if (indexPath.row == 3)
-        {
+            
             //建议与反馈
             UMFeedbackViewController *umVC = [[UMFeedbackViewController alloc] init];
             
@@ -250,12 +248,17 @@ static NSString *shareAppTitleString = @"妖刀｜最全面的11平台dota1数�
             
             [self.navigationController pushViewController:umVC animated:YES];
         }
-        else if (indexPath.row == 4)
+        else if (indexPath.row == 3)
         {
             //评分
             NSString *str = TURNTO_APPSTORE_LINK;
             
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+
+        }
+        else if (indexPath.row == 4)
+        {
+            
         }
     }
 }

@@ -187,4 +187,13 @@
     return _APJSONParser;
 }
 
+-(UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+    if (_isRotation) {
+        return UIInterfaceOrientationMaskLandscape;
+    }else {
+        return UIInterfaceOrientationMaskPortrait;
+    }
+    
+}
+
 @end

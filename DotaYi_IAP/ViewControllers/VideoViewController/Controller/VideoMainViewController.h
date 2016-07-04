@@ -22,7 +22,8 @@
 
 
 @property (nonatomic,copy) NSString *selectedChannelName;//已选频道名称  默认为左侧列表第一个
-@property (nonatomic,copy) NSString *selectedChannelId;
+@property (nonatomic,copy) NSString *selectedChannelId;//已选频道id
+@property (nonatomic,copy) NSString *selectedChannelImgUrl;//已选频道主播头像url 不包含域名
 
 - (instancetype)initWithLeftMenuViewController:(VideoLeftViewController *) leftMenuVC;
 

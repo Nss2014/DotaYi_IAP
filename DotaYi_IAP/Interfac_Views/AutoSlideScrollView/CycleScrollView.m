@@ -30,8 +30,8 @@
         if (!_pageControl) {
             NSInteger totalPageCounts = self.totalPageCount;
             CGFloat dotGapWidth = 8.0;
-            NSString *normalImageName = [@"AutoSlideScrollView.bundle" stringByAppendingPathComponent:@"page_state_normal.png"];
-            NSString *highlightImageName = [@"AutoSlideScrollView.bundle" stringByAppendingPathComponent:@"page_state_highlight.png"];
+            NSString *normalImageName = [@"AutoSlideScrollView.bundle" stringByAppendingPathComponent:@"page_state_highlight.png"];
+            NSString *highlightImageName = @"pagecontrol_select_icon.png";
             UIImage *normalDotImage = [UIImage imageNamed:normalImageName];
             UIImage *highlightDotImage = [UIImage imageNamed:highlightImageName];
             CGFloat pageControlWidth = totalPageCounts * normalDotImage.size.width + (totalPageCounts - 1) * dotGapWidth;

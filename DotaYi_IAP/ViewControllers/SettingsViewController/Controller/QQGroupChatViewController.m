@@ -25,7 +25,7 @@
     
     self.navigationItem.title = @"加入QQ交流群";
     
-    [self setWechatRightMoreBarButton];
+//    [self setWechatRightMoreBarButton];
     
     [self initUI];
 }
@@ -45,7 +45,7 @@
     
     self.groupQRCodeImageView.frame = CGRectMake((SCREEN_WIDTH - qq_width)/2, height + (SCREEN_HEIGHT - NAV_HEIGHT)/6, qq_width, (SCREEN_HEIGHT - NAV_HEIGHT)*2/3);
     
-    [self.groupQRCodeImageView sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:nil];
+    self.groupQRCodeImageView.image = [UIImage imageNamed:@"qq_group_qrcode.JPG"];
     
     [self.view addSubview:self.groupQRCodeImageView];
 }

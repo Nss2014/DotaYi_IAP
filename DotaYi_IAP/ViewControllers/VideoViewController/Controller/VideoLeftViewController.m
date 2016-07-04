@@ -159,7 +159,7 @@
     
     cell.AL_channelNameLabel.text = channelInfo.TagName;
     
-    cell.AL_iconImageView.image = [UIImage imageNamed:@"hot_anchor_icon"];
+    [cell.AL_iconImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",VIDEOCOVER_DOMAIN,channelInfo.AvatarUrl]] placeholderImage:[UIImage imageNamed:@"hot_anchor_icon"]];
     
     return cell;
 }
@@ -207,7 +207,7 @@
 {
     LeftAnchorDataObj *channelInfo = self.dataSourceArray[indexPath.row];
     
-    if (self.delegate && [self.delegate respondsToSelector:@selector(didSelectChannelWithChannleID:AndChannelName:)])
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didSelectChannelWithChannleID:AndChannelName:AndChannelImageUrl:)])
     {
         NSString *tempSendChannelId = [NSString stringWithFormat:@"%@",channelInfo.TagId];
         
@@ -216,7 +216,7 @@
             tempSendChannelId = @"1";
         }
         
-        [self.delegate didSelectChannelWithChannleID:tempSendChannelId AndChannelName:channelInfo.TagName];
+        [self.delegate didSelectChannelWithChannleID:tempSendChannelId AndChannelName:channelInfo.TagName AndChannelImageUrl:channelInfo.AvatarUrl];
     }
 }
 
@@ -240,8 +240,6 @@
         
     }
     
-    NSLog(@"getLocalChannelArray %@",getLocalChannelArray);
-    
     [self.viwTable reloadData];
 }
 
@@ -262,8 +260,6 @@
     NSArray *channelDicArray = [[HP_Application sharedApplication].store getObjectById:DB_CHANNELLIST_DATA fromTable:DB_CHANNELLIST_DATA];
     
     NSArray *modelArray = [LeftAnchorDataObj mj_objectArrayWithKeyValuesArray:channelDicArray];
-    
-    NSLog(@"modelArray %@",modelArray);
     
     return modelArray;
 }
