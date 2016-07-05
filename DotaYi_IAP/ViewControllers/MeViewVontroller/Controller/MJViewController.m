@@ -383,17 +383,20 @@
         {
             //请求成功
             
-            self.threeGridView1.customGridView1.gridTopValueLabel.text = [NSString stringWithFormat:@"%@",responseDic[@"mjInfos"][@"MingJiang"]];
-            
-            self.threeGridView1.customGridView2.gridTopValueLabel.text = [NSString stringWithFormat:@"%@",responseDic[@"mjInfos"][@"Sum"]];
-            
-            self.threeGridView1.customGridView3.gridTopValueLabel.text = [NSString stringWithFormat:@"%@",responseDic[@"mjInfos"][@"P_Win"]];
-            
-            self.threeGridView2.customGridView1.gridTopValueLabel.text = [NSString stringWithFormat:@"%@",responseDic[@"mjInfos"][@"Win"]];
-            
-            self.threeGridView2.customGridView2.gridTopValueLabel.text = [NSString stringWithFormat:@"%@",responseDic[@"mjInfos"][@"Lost"]];
-            
-            self.threeGridView2.customGridView3.gridTopValueLabel.text = [NSString stringWithFormat:@"%@",responseDic[@"mjInfos"][@"OfflineFormat"]];
+            if (responseDic[@"mjInfos"] && ![responseDic[@"mjInfos"] isKindOfClass:[NSNull class]])
+            {
+                self.threeGridView1.customGridView1.gridTopValueLabel.text = [NSString stringWithFormat:@"%@",responseDic[@"mjInfos"][@"MingJiang"]];
+                
+                self.threeGridView1.customGridView2.gridTopValueLabel.text = [NSString stringWithFormat:@"%@",responseDic[@"mjInfos"][@"Sum"]];
+                
+                self.threeGridView1.customGridView3.gridTopValueLabel.text = [NSString stringWithFormat:@"%@",responseDic[@"mjInfos"][@"P_Win"]];
+                
+                self.threeGridView2.customGridView1.gridTopValueLabel.text = [NSString stringWithFormat:@"%@",responseDic[@"mjInfos"][@"Win"]];
+                
+                self.threeGridView2.customGridView2.gridTopValueLabel.text = [NSString stringWithFormat:@"%@",responseDic[@"mjInfos"][@"Lost"]];
+                
+                self.threeGridView2.customGridView3.gridTopValueLabel.text = [NSString stringWithFormat:@"%@",responseDic[@"mjInfos"][@"OfflineFormat"]];
+            }
             
             //得到名将擅长英雄列表
             

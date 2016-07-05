@@ -531,17 +531,21 @@
             //请求成功
             self.topDataModel = [[JJCTopDataModel alloc] init];
             
+            if (responseDic[@"ttInfos"] && ![responseDic[@"ttInfos"] isKindOfClass:[NSNull class]])
+            {
+                self.threeGridView1.customGridView2.gridTopValueLabel.text = [NSString stringWithFormat:@"%@",responseDic[@"ttInfos"][@"Total"]];
+                
+                self.threeGridView1.customGridView3.gridTopValueLabel.text = [NSString stringWithFormat:@"%@",responseDic[@"ttInfos"][@"R_Win"]];
+                
+                self.threeGridView2.customGridView1.gridTopValueLabel.text = [NSString stringWithFormat:@"%@",responseDic[@"ttInfos"][@"Win"]];
+                
+                self.threeGridView2.customGridView2.gridTopValueLabel.text = [NSString stringWithFormat:@"%@",responseDic[@"ttInfos"][@"Lost"]];
+                
+                self.threeGridView2.customGridView3.gridTopValueLabel.text = [NSString stringWithFormat:@"%@",responseDic[@"ttInfos"][@"OfflineFormat"]];
+
+            }
+            
             self.threeGridView1.customGridView1.gridTopValueLabel.text = [NSString stringWithFormat:@"%@",responseDic[@"rating"]];
-            
-            self.threeGridView1.customGridView2.gridTopValueLabel.text = [NSString stringWithFormat:@"%@",responseDic[@"ttInfos"][@"Total"]];
-            
-            self.threeGridView1.customGridView3.gridTopValueLabel.text = [NSString stringWithFormat:@"%@",responseDic[@"ttInfos"][@"R_Win"]];
-            
-            self.threeGridView2.customGridView1.gridTopValueLabel.text = [NSString stringWithFormat:@"%@",responseDic[@"ttInfos"][@"Win"]];
-            
-            self.threeGridView2.customGridView2.gridTopValueLabel.text = [NSString stringWithFormat:@"%@",responseDic[@"ttInfos"][@"Lost"]];
-            
-            self.threeGridView2.customGridView3.gridTopValueLabel.text = [NSString stringWithFormat:@"%@",responseDic[@"ttInfos"][@"OfflineFormat"]];
 
         }
     }

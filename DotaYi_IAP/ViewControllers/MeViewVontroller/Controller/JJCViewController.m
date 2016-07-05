@@ -551,13 +551,16 @@
             
             self.topDataModel.topPointString = [NSString stringWithFormat:@"%@",responseDic[@"jjcRating"]];
             
-            self.topDataModel.topTotalPlayString = [NSString stringWithFormat:@"%@",responseDic[@"jjcInfos"][@"Total"]];
-            
-            self.topDataModel.topWinChanceString = [NSString stringWithFormat:@"%@",responseDic[@"jjcInfos"][@"P_Win"]];
-            
-            self.topDataModel.topWinPlayString = [NSString stringWithFormat:@"%@",responseDic[@"jjcInfos"][@"Win"]];
-            
-            self.topDataModel.topLosePlayString = [NSString stringWithFormat:@"%@",responseDic[@"jjcInfos"][@"Lost"]];
+            if (responseDic[@"jjcInfos"] && ![responseDic[@"jjcInfos"] isKindOfClass:[NSNull class]])
+            {
+                self.topDataModel.topTotalPlayString = [NSString stringWithFormat:@"%@",responseDic[@"jjcInfos"][@"Total"]];
+                
+                self.topDataModel.topWinChanceString = [NSString stringWithFormat:@"%@",responseDic[@"jjcInfos"][@"P_Win"]];
+                
+                self.topDataModel.topWinPlayString = [NSString stringWithFormat:@"%@",responseDic[@"jjcInfos"][@"Win"]];
+                
+                self.topDataModel.topLosePlayString = [NSString stringWithFormat:@"%@",responseDic[@"jjcInfos"][@"Lost"]];
+            }
             
             self.threeGridView1.customGridView1.gridTopValueLabel.text = self.topDataModel.topPointString;
             
