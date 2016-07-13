@@ -10,6 +10,4 @@
 
 @interface TabbarMainViewController : UITabBarController
 
-@property(nonatomic,copy)NSString *name;
-
 @end

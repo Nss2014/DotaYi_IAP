@@ -16,14 +16,6 @@
 
 @implementation TabbarMainViewController
 
--(NSString *)name
-{
-    if (!_name) {
-        _name=@"消息";
-    }
-    return _name;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -41,6 +33,7 @@
 -(void)addChildViewController:(UIViewController *)VC andTitle:(NSString *)title andImageName:(NSString *)imageName{
     
     VC.title=title;
+    
     VC.tabBarItem.image=[UIImage imageNamed:[NSString stringWithFormat:@"%@nor",imageName]];
     
     VC.tabBarItem.selectedImage=[UIImage imageNamed:[NSString stringWithFormat:@"%@press",imageName]];

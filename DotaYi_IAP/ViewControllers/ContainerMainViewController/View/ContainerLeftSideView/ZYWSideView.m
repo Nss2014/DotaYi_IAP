@@ -10,7 +10,7 @@
 #import "ZYWSideTableView.h"
 
 
-@interface ZYWSideView()<UIActionSheetDelegate>
+@interface ZYWSideView()<UIActionSheetDelegate,UITableViewDelegate,UITableViewDataSource>
 @property(nonatomic,weak)UIView *blackView;
 
 @property(nonatomic,strong)UIImageView *headImage;
@@ -88,6 +88,10 @@
 //
         sbv.backgroundColor=[UIColor clearColor];
         
+        sbv.dataSource = self;
+        
+        sbv.delegate = self;
+        
         //  =======================
         //       创建底部view的按钮
         UIButton *setBtn=[[UIButton alloc]initWithFrame:CGRectMake(0,0,48*2,48)];
@@ -124,37 +128,65 @@
         [self addSubview:footView];
         
     }
-    
-    //    注册通知观察者（接受通知，将记录跳转界面的值从主控制器传过来）
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(zhuchuanzuo:) name:@"主传左" object:nil];
-    
-    
-    
-    
     return  self ;
     
 }
 -(void)dealloc
 {
-    // 移除通知观察者.
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     NSLog(@"移除主传左通知对象");
 }
-//接受从主控制器传过来的值
--(void)zhuchuanzuo:(NSNotification *)notify{
-    
-    self.name=notify.object;
-}
+
 //点击了头像按钮（更换头像）
 -(void)changeHeaderImage{
     
+}
+
+//实现数据源方法
+-(NSInteger)numberOfRowsInSection:(NSInteger)section{
+    return 1;
+}
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 6;
+}
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    if (indexPath.row==0) {
+        cell.imageView.image=[UIImage imageNamed:@"sidebar_business"];
+        cell.textLabel.text=@"我的商城";
+    }else if (indexPath.row==1){
+        cell.imageView.image=[UIImage imageNamed:@"sidebar_purse"];
+        cell.textLabel.text=@"QQ钱包";
+    }else if (indexPath.row==2){
+        cell.imageView.image=[UIImage imageNamed:@"sidebar_decoration"];
+        cell.textLabel.text=@"个性装扮";
+    }else if (indexPath.row==3){
+        cell.imageView.image=[UIImage imageNamed:@"sidebar_favorit"];
+        cell.textLabel.text=@"我的收藏";
+    }else if (indexPath.row==4){
+        cell.imageView.image=[UIImage imageNamed:@"sidebar_album"];
+        cell.textLabel.text=@"我的相册";
+    }else{
+        cell.imageView.image=[UIImage imageNamed:@"sidebar_file"];
+        cell.textLabel.text=@"我的文件";
+    }
     
-//    NSLog(@"acac");
+    cell.backgroundColor=[UIColor clearColor];
+    cell.textLabel.textColor=[UIColor whiteColor];
+    //    点击cell时没有点击效果
+    cell.selectionStyle=UITableViewCellSelectionStyleNone;
     
-    //发送通知
-    [[NSNotificationCenter defaultCenter] postNotificationName:self.name object:nil];
+    return cell;
+    
     
 }
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didSelectRowAtIndex:)])
+    {
+        [self.delegate didSelectRowAtIndex:indexPath.row];
+    }
+}
+
 
 @end

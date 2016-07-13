@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol SideTableViewDelegate <NSObject>
+
+-(void) didSelectRowAtIndex:(NSInteger) index;
+
+@end
+
 @interface ZYWSideView : UIView
+
+@property (nonatomic,weak) id<SideTableViewDelegate> delegate;
 
 @end

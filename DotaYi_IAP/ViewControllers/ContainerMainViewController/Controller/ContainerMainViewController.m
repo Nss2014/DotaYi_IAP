@@ -11,7 +11,7 @@
 #import "TabbarMainViewController.h"
 #import "UIView+SHCZExt.h"
 
-@interface ContainerMainViewController ()
+@interface ContainerMainViewController ()<SideTableViewDelegate>
 
 @end
 
@@ -45,9 +45,12 @@
     
     //设置冰川背景图
     UIImageView *img=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"sidebar_bg"]];
+    
     img.frame=CGRectMake(0,0,self.view.frame.size.width,self.view.frame.size.height*0.4);
     
     [self.view addSubview:img];
+    
+    mainView.delegate = self;
     
     //添加
     [self.view addSubview:mainView];
@@ -164,4 +167,10 @@
         
     }
 }
+
+-(void) didSelectRowAtIndex:(NSInteger) index
+{
+    
+}
+
 @end
