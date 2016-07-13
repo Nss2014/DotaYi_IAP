@@ -20,7 +20,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor colorWithRed:13/255.0 green:184/255.0 blue:246/255.0 alpha:1];
+    self.view.backgroundColor = XLS_COLOR_MAIN_GREEN;
     
     [self addSubViews];
     

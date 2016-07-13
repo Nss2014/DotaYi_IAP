@@ -31,10 +31,10 @@
         
         [self.ST_backgroundView addSubview:self.ST_nameLabel];
         
-        self.ST_indicatorImageView = [[UIImageView alloc] init];
-        
-        [self.ST_backgroundView addSubview:self.ST_indicatorImageView];
-        
+//        self.ST_indicatorImageView = [[UIImageView alloc] init];
+//        
+//        [self.ST_backgroundView addSubview:self.ST_indicatorImageView];
+//        
         self.ST_clearCacheLabel = [[UILabel alloc] init];
         
         self.ST_clearCacheLabel.font = TEXT14_FONT;
@@ -70,15 +70,15 @@
             make.right.equalTo(ws.ST_backgroundView.mas_right).offset(-2 * padding);
         }];
         
-        [self.ST_indicatorImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(ws.ST_backgroundView.mas_right).offset(-padding);
-            make.centerY.equalTo(ws.ST_backgroundView.mas_centerY);
-            make.height.mas_equalTo(15);
-            make.width.mas_equalTo(15);
-        }];
+//        [self.ST_indicatorImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.right.equalTo(ws.ST_backgroundView.mas_right).offset(-padding);
+//            make.centerY.equalTo(ws.ST_backgroundView.mas_centerY);
+//            make.height.mas_equalTo(15);
+//            make.width.mas_equalTo(15);
+//        }];
         
         [self.ST_clearCacheLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(ws.ST_indicatorImageView.mas_left).offset(-padding/2);
+            make.left.equalTo(ws.ST_nameLabel.mas_right).offset(padding/2);
             make.centerY.equalTo(ws.ST_backgroundView.mas_centerY);
             make.height.equalTo(ws.ST_backgroundView.mas_height);
             make.width.mas_equalTo(100);

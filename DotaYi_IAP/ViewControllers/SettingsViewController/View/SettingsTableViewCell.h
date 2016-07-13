@@ -16,7 +16,7 @@
 
 @property (nonatomic,strong) UILabel *ST_nameLabel;
 
-@property (nonatomic,strong) UIImageView *ST_indicatorImageView;
+//@property (nonatomic,strong) UIImageView *ST_indicatorImageView;
 
 @property (nonatomic,strong) UILabel *ST_clearCacheLabel;
 

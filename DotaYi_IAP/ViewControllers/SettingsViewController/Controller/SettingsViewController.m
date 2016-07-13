@@ -142,7 +142,7 @@ static NSString *shareAppTitleString = @"妖刀｜最全面的11平台dota1数�
         
         cell.ST_nameLabel.text = self.sectionTwoTitlesArray[indexPath.row];
         
-        cell.ST_indicatorImageView.image = [UIImage imageNamed:@"arrow_point_icon"];
+//        cell.ST_indicatorImageView.image = [UIImage imageNamed:@"arrow_point_icon"];
         
         if (indexPath.row == 0)
         {
