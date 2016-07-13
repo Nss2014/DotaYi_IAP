@@ -551,6 +551,8 @@
             
             self.topDataModel.topPointString = [NSString stringWithFormat:@"%@",responseDic[@"jjcRating"]];
             
+            //若jjcInfos为null 表示竞技场当前赛季已关闭
+            
             if (responseDic[@"jjcInfos"] && ![responseDic[@"jjcInfos"] isKindOfClass:[NSNull class]])
             {
                 self.topDataModel.topTotalPlayString = [NSString stringWithFormat:@"%@",responseDic[@"jjcInfos"][@"Total"]];
@@ -560,19 +562,23 @@
                 self.topDataModel.topWinPlayString = [NSString stringWithFormat:@"%@",responseDic[@"jjcInfos"][@"Win"]];
                 
                 self.topDataModel.topLosePlayString = [NSString stringWithFormat:@"%@",responseDic[@"jjcInfos"][@"Lost"]];
+                
+                self.threeGridView1.customGridView1.gridTopValueLabel.text = self.topDataModel.topPointString;
+                
+                self.threeGridView1.customGridView2.gridTopValueLabel.text = self.topDataModel.topRankString;
+                
+                self.threeGridView1.customGridView3.gridTopValueLabel.text = self.topDataModel.topWinChanceString;
+                
+                self.threeGridView2.customGridView1.gridTopValueLabel.text = self.topDataModel.topTotalPlayString;
+                
+                self.threeGridView2.customGridView2.gridTopValueLabel.text = self.topDataModel.topWinPlayString;
+                
+                self.threeGridView2.customGridView3.gridTopValueLabel.text = self.topDataModel.topLosePlayString;
             }
-            
-            self.threeGridView1.customGridView1.gridTopValueLabel.text = self.topDataModel.topPointString;
-            
-            self.threeGridView1.customGridView2.gridTopValueLabel.text = self.topDataModel.topRankString;
-            
-            self.threeGridView1.customGridView3.gridTopValueLabel.text = self.topDataModel.topWinChanceString;
-            
-            self.threeGridView2.customGridView1.gridTopValueLabel.text = self.topDataModel.topTotalPlayString;
-            
-            self.threeGridView2.customGridView2.gridTopValueLabel.text = self.topDataModel.topWinPlayString;
-            
-            self.threeGridView2.customGridView3.gridTopValueLabel.text = self.topDataModel.topLosePlayString;
+            else
+            {
+                //当前赛季已关闭
+            }
         }
     }
     else

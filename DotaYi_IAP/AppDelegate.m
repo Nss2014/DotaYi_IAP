@@ -17,6 +17,7 @@
 #import "UMSocialQQHandler.h"
 #import "UMFeedbackViewController.h"
 #import "UMFeedback.h"
+#import "ContainerMainViewController.h"
 
 #define IOS_7_OR_LATER    ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
 #define IOS_8_OR_LATER    ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
@@ -41,6 +42,8 @@
     
     [self handleUM:launchOptions];
     
+    [self updateVersionMessageAlert];
+    
     return YES;
 }
 
@@ -53,6 +56,31 @@
     [[HP_Application sharedApplication].store createTableWithName:DB_ODDSDETAIL];
     
     [[HP_Application sharedApplication].store createTableWithName:DB_CHANNELLIST_DATA];
+}
+
+//版本更新提示
+-(void) updateVersionMessageAlert
+{
+    NSData *data = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:TURNTO_APPSTORE_LINK]];
+    
+    TFHpple *xpathParser = [[TFHpple alloc] initWithHTMLData:data];
+    
+    //获取线上版本
+    NSString *freshVerisonStr = [Tools getHtmlValueWithXPathParser:xpathParser XPathQuery:@"//span[@itemprop='softwareVersion']" DetailXPathQuery:nil DetailKey:nil];
+    
+    //获取本地版本
+    NSString *localVersionStr = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+    
+    //对比版本
+    if (![localVersionStr isEqualToString:freshVerisonStr])
+    {
+        //提示更新
+        UIAlertView *updateAlert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"功能更强大的新版出来啦\n是否更新？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"更新", nil];
+        
+        updateAlert.tag = 987;
+        
+        [updateAlert show];
+    }
 }
 
 -(void)handleUM:(NSDictionary *) launchOptions
@@ -142,13 +170,17 @@
 
 - (void)enterMainVC
 {
-    self.mainTabbarCtl = [[TLRootViewController alloc] init];
+//    self.mainTabbarCtl = [[TLRootViewController alloc] init];
+//    
+//    self.mainTabbarCtl.delegate = self;
+//    
+//    [self.window setRootViewController:self.mainTabbarCtl];
+//    
+//    [self.window addSubview:self.mainTabbarCtl.view];
     
-    self.mainTabbarCtl.delegate = self;
+    ContainerMainViewController *containerVC = [[ContainerMainViewController alloc] init];
     
-    [self.window setRootViewController:self.mainTabbarCtl];
-    
-    [self.window addSubview:self.mainTabbarCtl.view];
+    self.window.rootViewController = containerVC;
 }
 
 #pragma mark - 进入登录界面
@@ -194,6 +226,20 @@
         return UIInterfaceOrientationMaskPortrait;
     }
     
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == 987)
+    {
+        if (buttonIndex == 1)
+        {
+            //更新应用 跳转appstore
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:TURNTO_APPSTORE_LINK]];
+        }
+    }
 }
 
 @end
